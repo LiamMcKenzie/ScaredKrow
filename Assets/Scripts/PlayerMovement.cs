@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Animator animator;
     public float moveDistance = 1f;
-    public float moveTime = 0.5f;
+    public float moveTime = 0.2f;
     private bool isMoving = false;
 
 
@@ -38,6 +39,9 @@ public class PlayerMovement : MonoBehaviour
         Vector3 endPosition = startPosition + movement;
 
         float elapsedTime = 0;
+        animator.Play("player_jump", 0, 0);
+        //TODO: the jump animation is set at 0.2 seconds (12 frames), which is the same as the moveTime.
+        //If we plan on changing the moveTime we will also need to change the animation length.
 
         while (elapsedTime < moveTime)
         {
