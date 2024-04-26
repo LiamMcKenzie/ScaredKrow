@@ -13,7 +13,7 @@ using TMPro;
 /// </summary>
 /// <remarks>
 /// While this can be useful for determining the impact of the various game objects on performance,
-/// other factors, such as the size of the scene view window and the resolution of the game view window, can influence this.
+/// other factors, such as the size of the scene view window and the resolution of the game view window, also affect performance.
 /// </remarks>
 public class FPSCounter : MonoBehaviour
 {
