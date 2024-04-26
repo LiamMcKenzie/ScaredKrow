@@ -7,7 +7,6 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using System;
 
 /// <summary>
@@ -29,8 +28,8 @@ public class TileManager : MonoBehaviour
     [SerializeField] private float maxSpeed = 500; // maximum _speed
     [SerializeField] private TileGridChunk gridChunkA;  // The first grid chunk, should be a game object with a TileGridChunk component
     [SerializeField] private TileGridChunk gridChunkB;  // The second grid chunk, should be a game object with a TileGridChunk component
-    [SerializeField] private bool deactivateOffScreenTiles = true; // Whether to optimise the tiles (turns them off when they are not visible)
-    [SerializeField] private bool showTilesInViewport = false; // Whether to show the tiles in the viewport (will highlight the tiles on camera)
+    [SerializeField] private bool deactivateTilesOutsideViewport = true; // Whether to optimise the tiles (turns them off when they are not visible)
+    [SerializeField] private BufferArea viewportBufferArea = new(0.2f, 0.2f, 0.2f, 0.2f); // The buffer area around the camera viewport
     private Camera mainCamera;  // The main camera
     private List<List<TileController>> masterTileControllerList = new();    // The master tile controller list, a 2D list of all the tile controllers in the grid
 
@@ -85,11 +84,13 @@ public class TileManager : MonoBehaviour
         PopulateMasterGrid();
     }
 
+    /// <summary>
+    /// Move the tiles and handle the viewport
+    /// </summary>
     void Update()
     {
         MoveTiles();
-        if (deactivateOffScreenTiles) { DeactivateOffScreenTiles(); }
-        if (showTilesInViewport) { ShowTilesInViewport(); }
+        if (deactivateTilesOutsideViewport) { HandleViewport(); }
     }
 
     /// <summary>
@@ -164,30 +165,32 @@ public class TileManager : MonoBehaviour
         return result;
     }
 
-    private void DeactivateOffScreenTiles()
-    {
-        if (deactivateOffScreenTiles == false) { return; }
 
+    /// <summary>
+    /// Handle the viewport
+    /// If the tiles are outside the viewport, deactivate them to improve performance
+    /// NOTE: If the directional light is at a dramatic angle, shadows may pop in and out
+    /// To account for this, the buffer area should be increased in the direction of the light
+    /// </summary>
+    /// <remarks>
+    /// This, or a similar method could be used to limit player movement to the viewport
+    /// By iterating over the tiles with a negative buffer area, and setting those tiles to impassable, the player could be prevented from moving off screen
+    /// </remarks>
+    private void HandleViewport()
+    {
         foreach (var row in masterTileControllerList)
         {
-            // Only check the first tile in the row
-            var firstInRow = row[0];
-            var posX = firstInRow.transform.position.x;
-            // Check if the first in row is within the screen bounds
-            bool shouldBeActive = posX > 0 && posX < tilesHigh * tileSize;
-            // If the row is already in the correct state, do nothing
-            // This is written like this to avoid unnecessary calls to gameObject.SetActive
-            if (firstInRow.gameObject.activeSelf != shouldBeActive)
+            foreach (var tile in row)
             {
-                // Set all the tiles in the row to the correct state
-                foreach (var tileController in row)
+                bool isTileInViewport = tile.IsInViewport(mainCamera, viewportBufferArea);
+                // check if the active state matches the bool returned by IsInViewport
+                // this is to avoid unnecessary calls to SetActive which can be expensive
+                if (tile.gameObject.activeSelf != isTileInViewport)
                 {
-                    tileController.gameObject.SetActive(shouldBeActive);
+                    tile.gameObject.SetActive(isTileInViewport);
                 }
             }
         }
     }
-
-    private void ShowTilesInViewport() => masterTileControllerList.ForEach(row => row.ForEach(tile => tile.IsInViewport(mainCamera, true)));
 
 }

@@ -33,7 +33,7 @@ public class TileController : MonoBehaviour
     /// <param name="x">The x coordinate of the tile</param>
     /// <param name="z">The z coordinate of the tile</param>
     public void InitializeTileController(TileData tileData, int x, int z)
-    {       
+    {
         this.x = x;
         this.z = z;
         tilePrefab = tileData.tilePrefab;
@@ -100,15 +100,10 @@ public class TileController : MonoBehaviour
     /// This will be useful for keeping the player in the center of the screen
     /// And also for checking path viability
     /// </remarks>
-    public bool IsInViewport(Camera camera, bool highlight = false)
+    public bool IsInViewport(Camera camera, BufferArea bufferArea = new())
     {
         Vector3 screenPoint = camera.WorldToViewportPoint(transform.position);
-        bool inViewport = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
-        if (inViewport && highlight)
-        {
-            // set to light green
-            SetColor( new Color(0.5f, 1.0f, 0.5f));
-        }
+        bool inViewport = screenPoint.x > 0 - bufferArea.left && screenPoint.x < 1 + bufferArea.right && screenPoint.y > 0 - bufferArea.up && screenPoint.y < 1 + bufferArea.down;
         return inViewport;
     }
 
@@ -119,5 +114,22 @@ public class TileController : MonoBehaviour
     {
         this.color = color;
         tileInstance.GetComponent<Renderer>().material.color = color;
+    }
+}
+
+[System.Serializable]
+public struct BufferArea
+{
+    public float left;
+    public float right;
+    public float up;
+    public float down;
+
+    public BufferArea(float left = 0, float right = 0, float up = 0, float down = 0)
+    {
+        this.left = left;
+        this.right = right;
+        this.up = up;
+        this.down = down;
     }
 }
