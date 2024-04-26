@@ -21,10 +21,10 @@ using UnityEngine;
 [CreateAssetMenu]
 public class TileData : ScriptableObject
 {
-    public GameObject tilePrefab;
-    public bool isPassable = true;
-    public bool isHidingPlace = false;
-    public bool isRotatable = false;
+    public GameObject tilePrefab;   // The prefab of the tile
+    public bool isPassable = true;  // Can the player walk on this tile
+    public bool isHidingPlace = false;  // Can the player hide in this tile
+    public bool isRotatable = false;    // Does the tile contain a rotatable mesh (this should be the first child of the tile prefab if so)
 
     /// <summary>
     /// Creates a new tile controller
