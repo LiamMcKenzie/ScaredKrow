@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3cea536271ea4d1a8edc43d8e93d40e, type: 3}
-  m_Name: HayPile
+  m_Name: Rock
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 7748578564259642011, guid: 60212b285a52845108e11d410e7864e2,
+  tilePrefab: {fileID: 66894043003119744, guid: f33c408ead5464da9be061859e72c0f8,
     type: 3}
   isPassable: 1
   isHidingPlace: 0

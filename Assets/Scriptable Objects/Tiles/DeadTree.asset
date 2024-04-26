@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3cea536271ea4d1a8edc43d8e93d40e, type: 3}
   m_Name: DeadTree
   m_EditorClassIdentifier: 
-  quadPrefab: {fileID: 6256688731233862309, guid: 0e890f07ee738485ab06923892bbd482,
+  tilePrefab: {fileID: 6256688731233862309, guid: 0e890f07ee738485ab06923892bbd482,
     type: 3}
-  passable: 0
-  hidingPlace: 0
+  isPassable: 1
+  isHidingPlace: 0
   isRotatable: 1
