@@ -94,7 +94,7 @@ public class TileController : MonoBehaviour
     /// Checks if the tile is in the camera viewport
     /// </summary>
     /// <param name="camera">The camera to check the viewport of</param>
-    /// <param name="highlight">Whether to highlight the tile if it is in the viewport</param>
+    /// <param name="bufferArea">The buffer area around the camera viewport (see below for the struct definition)</param>
     /// <returns>Whether the tile is in the camera viewport</returns>
     /// <remarks>
     /// This will be useful for keeping the player in the center of the screen
@@ -102,8 +102,10 @@ public class TileController : MonoBehaviour
     /// </remarks>
     public bool IsInViewport(Camera camera, BufferArea bufferArea = new())
     {
+        // Convert the world position of the tile to a viewport position
+        // The viewport position is a Vector3 with values between 0 and 1
         Vector3 screenPoint = camera.WorldToViewportPoint(transform.position);
-        bool inViewport = screenPoint.x > 0 - bufferArea.left && screenPoint.x < 1 + bufferArea.right && screenPoint.y > 0 - bufferArea.up && screenPoint.y < 1 + bufferArea.down;
+        bool inViewport = screenPoint.x > 0 - bufferArea.left && screenPoint.x < 1 + bufferArea.right && screenPoint.y > 0 - bufferArea.down && screenPoint.y < 1 + bufferArea.up;
         return inViewport;
     }
 
@@ -117,6 +119,10 @@ public class TileController : MonoBehaviour
     }
 }
 
+/// <summary>
+/// A struct to hold the buffer area around the camera viewport
+/// Pretty much a Vector4 but more semantically named
+/// </summary>
 [System.Serializable]
 public struct BufferArea
 {
