@@ -29,11 +29,9 @@ public class TileManager : MonoBehaviour
     [SerializeField] private float maxSpeed = 500; // maximum _speed
     [SerializeField] private TileGridChunk gridChunkA;  // The first grid chunk, should be a game object with a TileGridChunk component
     [SerializeField] private TileGridChunk gridChunkB;  // The second grid chunk, should be a game object with a TileGridChunk component
-    [SerializeField] private bool optimiseTiles = true; // Whether to optimise the tiles (turns them off when they are not visible)
-    [SerializeField] private int baseOptimisationFrequency = 30; // The base optimisation frequency for a _speed of 1 (this value is divided by the _speed to get the optimisation frequency)
-
-    private int optimisationFrequency;  // The frequency in frames at which the optimisation call is made
-    private int optimiseCounter = 0;    // frame counter for optimisation
+    [SerializeField] private bool deactivateOffScreenTiles = true; // Whether to optimise the tiles (turns them off when they are not visible)
+    [SerializeField] private bool showTilesInViewport = false; // Whether to show the tiles in the viewport (will highlight the tiles on camera)
+    private Camera mainCamera;  // The main camera
     private List<List<TileController>> masterTileControllerList = new();    // The master tile controller list, a 2D list of all the tile controllers in the grid
 
     #region Singleton
@@ -62,9 +60,6 @@ public class TileManager : MonoBehaviour
         {
             // Ensure _speed is proper range
             _speed = Mathf.Clamp(value, 0, maxSpeed);
-            
-            // Update the optimisation rate when the _speed changes
-            SetOptimisationRate();
         }
     }
 
@@ -82,18 +77,19 @@ public class TileManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        mainCamera = Camera.main;
         gridChunkA.transform.position = Vector3.zero;
         gridChunkB.transform.position = new Vector3(tilesHigh * tileSize, 0, 0);
         gridChunkA.GenerateTileGrid(Vector3.zero, tilesWide, tilesHigh, tileSize, difficultyProfile);
         gridChunkB.GenerateTileGrid(new Vector3(tilesHigh * tileSize, 0, 0), tilesWide, tilesHigh, tileSize, difficultyProfile);
         PopulateMasterGrid();
-        SetOptimisationRate();
     }
 
     void Update()
     {
         MoveTiles();
-        OptimiseTiles();
+        if (deactivateOffScreenTiles) { DeactivateOffScreenTiles(); }
+        if (showTilesInViewport) { ShowTilesInViewport(); }
     }
 
     /// <summary>
@@ -114,7 +110,6 @@ public class TileManager : MonoBehaviour
         Vector3 newPosition = new(tilesHigh * tileSize, 0, 0);
         tileGrid.transform.position = newPosition;
         tileGrid.GenerateTileGrid(newPosition, tilesWide, tilesHigh, tileSize, difficultyProfile);
-        optimiseCounter = optimisationFrequency;
         // Position the other tile group at 0
         otherTileGrid.RecenterTiles();
 
@@ -169,14 +164,9 @@ public class TileManager : MonoBehaviour
         return result;
     }
 
-    // as _speed increases, the frequency of optimisation increases
-    private void SetOptimisationRate() => optimisationFrequency = (_speed <= 1) ? baseOptimisationFrequency : baseOptimisationFrequency / (int)_speed;
-
-    private void OptimiseTiles()
+    private void DeactivateOffScreenTiles()
     {
-        optimiseCounter++;
-
-        if (optimiseTiles == false || optimiseCounter < optimisationFrequency) { return; }
+        if (deactivateOffScreenTiles == false) { return; }
 
         foreach (var row in masterTileControllerList)
         {
@@ -196,8 +186,8 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
-
-        optimiseCounter = 0;
     }
+
+    private void ShowTilesInViewport() => masterTileControllerList.ForEach(row => row.ForEach(tile => tile.IsInViewport(mainCamera, true)));
 
 }
