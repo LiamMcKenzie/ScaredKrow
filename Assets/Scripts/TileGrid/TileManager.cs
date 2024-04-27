@@ -22,7 +22,6 @@ public class TileManager : MonoBehaviour
     [Header("Tile Generation Settings")]
     public DifficultyProfile difficultyProfile; // The difficulty profile, a struct containing the tile probabilities and the amount of water rows
 
-
     [Header("Grid Settings")]
     [SerializeField] private TileGridChunk[] gridChunks = new TileGridChunk[2]; // The two grid chunks, should be game objects with a TileGridChunk component
     [SerializeField] private int tilesWide = 15;    // width of each grid chunk (z-axis)
@@ -249,5 +248,4 @@ public class TileManager : MonoBehaviour
         }
         return result;
     }
-
 }
