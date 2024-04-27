@@ -477,7 +477,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTileData: {fileID: 11400000, guid: 58e5549279d5346a6aece000213abde3, type: 2}
-  waterTileData: {fileID: 11400000, guid: 1b49473dfcf5044c893eb75c98da9cac, type: 2}
+  defaultTileColor: {r: 0.7830189, g: 0.71665215, b: 0.25485048, a: 0}
+  altRowDarkAmt: 0.9
   difficultyProfile:
     tileProbabilities:
     - tileData: {fileID: 11400000, guid: 31d2e1158995e48c6a87694979091d76, type: 2}
@@ -491,18 +492,20 @@ MonoBehaviour:
       amountOfRows: 2
     - rowTileData: {fileID: 11400000, guid: 298ca93e2e30c40b8ba06e3f037219c0, type: 2}
       amountOfRows: 2
-    amtOfWaterRows: 2
-  defaultTileColor: {r: 0.7830189, g: 0.71665215, b: 0.25485048, a: 0}
-  altRowDarkAmt: 0.9
+  gridChunks:
+  - {fileID: 21613309}
+  - {fileID: 647543281}
   tilesWide: 15
   tilesHigh: 14
   tileSize: 1
   _speed: 1
   maxSpeed: 500
-  gridChunkA: {fileID: 21613309}
-  gridChunkB: {fileID: 647543281}
-  deactivateOffScreenTiles: 1
-  showTilesInViewport: 0
+  deactivateTilesOutsideViewport: 1
+  viewportBufferArea:
+    left: 0.15
+    right: 0.04
+    up: 0.04
+    down: 0.2
 --- !u!4 &1014501491
 Transform:
   m_ObjectHideFlags: 0
