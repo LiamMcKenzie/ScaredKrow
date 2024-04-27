@@ -13,6 +13,7 @@ using UnityEngine;
 /// </summary>
 public class TileController : MonoBehaviour
 {
+    [Header("Tile Coordinates")]
     [SerializeField] private int x; // The x coordinate of the tile
     [SerializeField] private int z; // The z coordinate of the tile
 
@@ -97,7 +98,7 @@ public class TileController : MonoBehaviour
     /// <param name="bufferArea">The buffer area around the camera viewport (see below for the struct definition)</param>
     /// <returns>Whether the tile is in the camera viewport</returns>
     /// <remarks>
-    /// This will be useful for keeping the player in the center of the screen
+    /// This will also be useful for keeping the player in the play area
     /// And also for checking path viability
     /// </remarks>
     public bool IsInViewport(Camera camera, BufferArea bufferArea = new())

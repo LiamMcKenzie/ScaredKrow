@@ -22,6 +22,8 @@ using UnityEngine;
 public class TileData : ScriptableObject
 {
     public GameObject tilePrefab;   // The prefab of the tile
+
+    [Header("Tile Settings")]
     public bool isPassable = true;  // Can the player walk on this tile
     public bool isHidingPlace = false;  // Can the player hide in this tile
     public bool isRotatable = false;    // Does the tile contain a rotatable mesh (this should be the first child of the tile prefab if so)
