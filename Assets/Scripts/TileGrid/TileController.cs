@@ -122,7 +122,6 @@ public class TileController : MonoBehaviour
 
 /// <summary>
 /// A struct to hold the buffer area around the camera viewport
-/// Pretty much a Vector4 but more semantically named
 /// </summary>
 [System.Serializable]
 public struct BufferArea
