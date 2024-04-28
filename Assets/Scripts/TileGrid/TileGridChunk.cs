@@ -47,9 +47,6 @@ public class TileGridChunk : MonoBehaviour
         // Clear the existing chunk
         ClearTiles();
 
-        // Shuffle the tile probabilities (ensures equally weighted probabilities are random)
-        difficultyProfile.ShuffleProbabilities();
-
         // This dictionary will store the row number (x) and the tile data for that row
         Dictionary<int, TileData> rowDictionary = GenerateRows(tilesHigh, difficultyProfile.rowSettings);
 
