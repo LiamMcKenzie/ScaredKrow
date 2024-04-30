@@ -9,26 +9,47 @@ public class PlayerMovement : MonoBehaviour
     public float moveTime = 0.2f;
     private bool isMoving = false;
 
+    private Vector3 bufferedDirection = Vector3.zero;
 
     void Update()
     {
         //This is obviously not a great way of doing this.
         //This could be changed with the new input system but I just wanted to quickly test this.
-        if (Input.GetKeyDown(KeyCode.UpArrow) && !isMoving)
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            StartCoroutine(MovePlayer(Vector3.right * moveDistance));
+            BufferDirection(Vector3.right * moveDistance);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && !isMoving)
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            StartCoroutine(MovePlayer(Vector3.left * moveDistance));
+            BufferDirection(Vector3.left * moveDistance);
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) && !isMoving)
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            StartCoroutine(MovePlayer(Vector3.forward * moveDistance));
+            BufferDirection(Vector3.forward * moveDistance);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && !isMoving)
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            StartCoroutine(MovePlayer(Vector3.back * moveDistance));
+            BufferDirection(Vector3.back * moveDistance);
+        }
+
+        //check if we are not moving and there is a buffered direction
+        if (!isMoving && bufferedDirection != Vector3.zero)
+        {
+            StartCoroutine(MovePlayer(bufferedDirection));
+            bufferedDirection = Vector3.zero; //reset buffered direction  
+        }
+    }
+
+    void BufferDirection(Vector3 direction)
+    {
+        if (!isMoving)
+        {
+            StartCoroutine(MovePlayer(direction));  //player isn't moving so move normally
+        }
+        else
+        {
+            bufferedDirection = direction;  //player is moving so buffer the direction
         }
     }
 
@@ -40,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
         float elapsedTime = 0;
         animator.Play("player_jump", 0, 0);
+
         //TODO: the jump animation is set at 0.2 seconds (12 frames), which is the same as the moveTime.
         //If we plan on changing the moveTime we will also need to change the animation length.
 
