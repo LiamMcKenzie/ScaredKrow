@@ -68,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
         while (elapsedTime < moveTime)
         {
             transform.position = Vector3.Lerp(startPosition, endPosition, (elapsedTime / moveTime));
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), (elapsedTime / moveTime));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
