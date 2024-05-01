@@ -28,9 +28,9 @@ public class CrowManager : MonoBehaviour
         Vector3 startPos = crow.transform.position;
         Vector3 endPos = new Vector3(endXPos, startPos.y, startPos.z);
 
-        while (elapsedTime < 5f)
+        while (elapsedTime < moveDuration)
         {
-            crow.transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / 5f);
+            crow.transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / moveDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
