@@ -7,6 +7,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Manages the grid of tiles
@@ -14,7 +15,9 @@ using System.Collections.Generic;
 /// </summary>
 public class TileManager : MonoBehaviour
 {
+    public GameObject playerPrefab;
     [Header("Tile Settings")]
+    public Vector2 playerStartCoords = new(1, 7);    // The starting coordinates of the player  
     public TileData defaultTileData;    // The default tile data (empty grass tile)
     public Color defaultTileColor = new(200, 183, 65);  // The base color of the tiles, defaults to a hayish color
     public float altRowDarkAmt = 0.9f;  // The amount to darken the alternate rows by
@@ -35,6 +38,7 @@ public class TileManager : MonoBehaviour
     [Header("Optimisation Settings")]
     [SerializeField] private bool deactivateTilesOutsideViewport = true; // Whether to optimise the tiles (turns them off when they are not visible)
     [SerializeField] private BufferArea viewportBufferArea = new(0.2f, 0.2f, 0.2f, 0.2f); // The buffer area around the camera viewport
+    [SerializeField] private GameManager gameManager; // The game manager
 
     private Camera mainCamera;  // The main camera
     private List<List<TileController>> masterTileControllerList = new();    // The master tile controller list, a 2D list of all the tile controllers in the grid
@@ -88,16 +92,6 @@ public class TileManager : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-
-        gridChunks[0].transform.position = Vector3.zero;
-        gridChunks[1].transform.position = UpperChunkPosition;
-
-        foreach (TileGridChunk gridChunk in gridChunks)
-        {
-            gridChunk.GenerateTileGrid(tilesWide, tilesHigh, tileSize, difficultyProfile);
-        }
-
-        PopulateMasterGrid(gridChunks[0]);
     }
 
     /// <summary>
@@ -105,6 +99,7 @@ public class TileManager : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (gameManager.gameStarted == false) return;
         foreach (TileGridChunk gridChunk in gridChunks)
         {
             gridChunk.MoveTiles(Speed);
@@ -116,6 +111,23 @@ public class TileManager : MonoBehaviour
         {
             HandleViewport();
         }
+    }
+
+    /// <summary>
+    /// Start the game
+    /// </summary>
+    public void InitTileGrid()
+    {
+        
+        gridChunks[0].transform.position = Vector3.zero;
+        gridChunks[1].transform.position = UpperChunkPosition;
+
+        foreach (TileGridChunk gridChunk in gridChunks)
+        {
+            gridChunk.GenerateTileGrid(tilesWide, tilesHigh, tileSize, difficultyProfile);
+        }
+
+        PopulateMasterGrid(gridChunks[0]);
     }
 
     /// <summary>
@@ -247,5 +259,15 @@ public class TileManager : MonoBehaviour
             result += "\n";
         }
         return result;
+    }
+
+    /// <summary>
+    /// Instantiate a prefab on a tile
+    /// </summary>
+    /// <param name="prefab">The prefab to instantiate</param>
+    /// <param name="coords">The coordinates of the tile to instantiate the prefab on</param>
+    public void InstantiateOnTile(GameObject prefab, TileGridCoords coords)
+    {
+        masterTileControllerList[coords.x][coords.z].InstantiateOnThisTile(prefab);
     }
 }
