@@ -16,11 +16,15 @@ using UnityEngine;
 public class TileGridChunk : MonoBehaviour
 {
     public List<List<TileController>> tileControllerList = new(); // 2D list of tile controllers in this chunk
-    private TileManager tileManager;
+    public TileManager tileManager;
+    public GameManager gameManager;
 
     void Start()
     {
+        // log if gameManger is null
+        if (gameManager == null) { Debug.Log("GameManager is null"); }
         tileManager = TileManager.instance;
+
     }
 
     /// <summary>
@@ -89,6 +93,7 @@ public class TileGridChunk : MonoBehaviour
         // This dictionary will store the row number (x) and the tile data for that row
         Dictionary<int, TileData> rowDictionary = new();
 
+        
         // Iterate through each row setting
         foreach (RowSetting rowSetting in rowSettings)
         {
@@ -100,7 +105,7 @@ public class TileGridChunk : MonoBehaviour
 
                 // If the row number is not already in the dictionary, add it
                 // This could be a while loop to ensure each row is added, but the distribution seems pretty good as is
-                if (rowDictionary.ContainsKey(randomRow) == false)
+                if (rowDictionary.ContainsKey(randomRow) == false )
                 {
                     rowDictionary.Add(randomRow, rowSetting.rowTileData);
                 }
@@ -118,6 +123,12 @@ public class TileGridChunk : MonoBehaviour
     /// <param name="tileProbabilities">A list of tile probabilities. These are structs that contain the tile data and the probability of that tile appearing</param>
     private TileData SelectTileData(int x, Dictionary<int, TileData> rowDictionary, List<TileProbability> tileProbabilities)
     {
+        // make the player start row a default tile
+        if (gameManager.gameStarted == false && x == gameManager.playerStartCoords.x ) 
+        { 
+            return tileManager.defaultTileData;
+        }
+
         // If the row number is in the dictionary, return the tile data for that row
         if (rowDictionary.ContainsKey(x))
         {
