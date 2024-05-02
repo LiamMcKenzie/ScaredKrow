@@ -167,6 +167,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e1c5d541f7e43bbac71200d51361f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileManager: {fileID: 1014501489}
+  gameManager: {fileID: 101821160}
+--- !u!1 &101821159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 101821161}
+  - component: {fileID: 101821160}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &101821160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101821159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96701d1631e2644c9890b09518e59fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 6991368005552487036, guid: b2ed011ac1ea54524a03634600711f56,
+    type: 3}
+  tileManager: {fileID: 1014501489}
+  playerStartCoords:
+    x: 5
+    z: 5
+  gameStarted: 0
+--- !u!4 &101821161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101821159}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &286670810
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e1c5d541f7e43bbac71200d51361f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileManager: {fileID: 1014501489}
+  gameManager: {fileID: 101821160}
 --- !u!1 &794834109
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,6 +531,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db641637c3f34406b04f97d3a0c2923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 0}
+  playerStartCoords: {x: 1, y: 7}
   defaultTileData: {fileID: 11400000, guid: 58e5549279d5346a6aece000213abde3, type: 2}
   defaultTileColor: {r: 0.7830189, g: 0.71665215, b: 0.25485048, a: 0}
   altRowDarkAmt: 0.9
@@ -498,7 +555,7 @@ MonoBehaviour:
   tilesWide: 15
   tilesHigh: 14
   tileSize: 1
-  _speed: 1
+  _speed: 0.5
   maxSpeed: 500
   deactivateTilesOutsideViewport: 1
   viewportBufferArea:
@@ -506,6 +563,7 @@ MonoBehaviour:
     right: 0.04
     up: 0.04
     down: 0.2
+  gameManager: {fileID: 101821160}
 --- !u!4 &1014501491
 Transform:
   m_ObjectHideFlags: 0
@@ -993,6 +1051,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1915738682}
+  - {fileID: 101821161}
   - {fileID: 1717241410}
   - {fileID: 1014501491}
   - {fileID: 1442115071}
