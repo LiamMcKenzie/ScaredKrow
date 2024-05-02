@@ -68,6 +68,15 @@ public class TileController : MonoBehaviour
     }
 
     /// <summary>
+    /// Instantiates a prefab on this tile and makes it a child of the tile
+    /// </summary>
+    /// <param name="prefab">The prefab to instantiate</param>
+    public void InstantiateOnThisTile(GameObject prefab)
+    {
+        Instantiate(prefab, transform.position, prefab.transform.rotation, transform);
+    }
+
+    /// <summary>
     /// Sets the x and z coordinates of the tile
     /// </summary>
     /// <param name="x">The x coordinate of the tile</param>
