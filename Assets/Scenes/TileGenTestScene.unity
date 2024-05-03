@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18178011, g: 0.22745012, b: 0.3074199, a: 1}
+  m_IndirectSpecularColor: {r: 0.18178049, g: 0.22745068, b: 0.3074211, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96701d1631e2644c9890b09518e59fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 6991368005552487036, guid: b2ed011ac1ea54524a03634600711f56,
+  playerPrefab: {fileID: 6404457502676479793, guid: b2ed011ac1ea54524a03634600711f56,
     type: 3}
   tileManager: {fileID: 1014501489}
   playerStartCoords:
@@ -531,7 +531,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db641637c3f34406b04f97d3a0c2923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 6404457502676479793, guid: b2ed011ac1ea54524a03634600711f56,
+    type: 3}
   playerStartCoords: {x: 1, y: 7}
   defaultTileData: {fileID: 11400000, guid: 58e5549279d5346a6aece000213abde3, type: 2}
   defaultTileColor: {r: 0.7830189, g: 0.71665215, b: 0.25485048, a: 0}
