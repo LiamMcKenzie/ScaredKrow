@@ -62,21 +62,21 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator MovePlayer(Vector3 movement)
     {
         isMoving = true; 
-        Vector3 startPosition = transform.position; 
-        Vector3 endPosition = startPosition + movement;
+        
 
         //tile the player wants to move to.
         TileGridCoords desiredGridPosition = new(gridPosition.x + Mathf.FloorToInt(movement.x), gridPosition.z + Mathf.FloorToInt(movement.z));
-        Debug.Log($"{desiredGridPosition.x} {desiredGridPosition.z}"); //Grid positon
-        Debug.Log(TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z]);
+        //Debug.Log($"{desiredGridPosition.x} {desiredGridPosition.z}"); //Grid positon
+        //Debug.Log(TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z]);
 
         gameObject.transform.SetParent(TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z].gameObject.transform);
         gridPosition = desiredGridPosition;
 
+        Vector3 startPosition = transform.localPosition; 
+        Vector3 endPosition = startPosition + movement;
+
         //NOTE: at some point we need to check if the desired tile is valid, before moving. if not, break from this coroutine
         //is moving should also only be assigned if a move is valid
-
-        //BUG: player movement doesn't match grid correctly. if you move side to side you will notice the player doesn't follow the grid movement.
 
         float elapsedTime = 0;
         animator.Play("player_jump", 0, 0);
@@ -86,13 +86,14 @@ public class PlayerMovement : MonoBehaviour
 
         while (elapsedTime < moveTime)
         {
-            transform.position = Vector3.Lerp(startPosition, endPosition, (elapsedTime / moveTime));
+            transform.localPosition = Vector3.Lerp(startPosition, Vector3.zero, (elapsedTime / moveTime));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), (elapsedTime / moveTime));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        transform.position = endPosition;
+        //transform.position = endPosition;
+        transform.localPosition = Vector3.zero;
 
         isMoving = false;
     }
