@@ -8,8 +8,14 @@ public class PlayerMovement : MonoBehaviour
     public float moveDistance = 1f;
     public float moveTime = 0.2f;
     private bool isMoving = false;
+    public TileGridCoords gridPosition; 
 
     private Vector3 bufferedDirection = Vector3.zero;
+
+    void Start()
+    {
+        gridPosition = GameManager.instance.playerStartCoords;
+    }
 
     void Update()
     {
@@ -58,6 +64,10 @@ public class PlayerMovement : MonoBehaviour
         isMoving = true;
         Vector3 startPosition = transform.position; 
         Vector3 endPosition = startPosition + movement;
+
+        Debug.Log(movement);
+        gridPosition = new(gridPosition.x + Mathf.FloorToInt(movement.x), gridPosition.z + Mathf.FloorToInt(movement.z));
+        Debug.Log($"{gridPosition.x} {gridPosition.z}");
 
         float elapsedTime = 0;
         animator.Play("player_jump", 0, 0);
