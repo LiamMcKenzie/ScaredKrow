@@ -41,7 +41,9 @@ public class TileManager : MonoBehaviour
     [SerializeField] private GameManager gameManager; // The game manager
 
     private Camera mainCamera;  // The main camera
-    private List<List<TileController>> masterTileControllerList = new();    // The master tile controller list, a 2D list of all the tile controllers in the grid
+
+    //Changed to be public for testing, was originally private -Liam
+    public List<List<TileController>> masterTileControllerList = new();    // The master tile controller list, a 2D list of all the tile controllers in the grid
 
     #region Singleton
     public static TileManager instance;

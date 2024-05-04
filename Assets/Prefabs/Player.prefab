@@ -154,3 +154,6 @@ MonoBehaviour:
   animator: {fileID: 2090794006302226085}
   moveDistance: 1
   moveTime: 0.2
+  gridPosition:
+    x: 0
+    z: 0
