@@ -18,7 +18,7 @@ public class TileController : MonoBehaviour
     [SerializeField] private int z; // The z coordinate of the tile
 
     private GameObject tilePrefab;  // The prefab of the tile
-    private bool isPassable;    // Can the player walk on this tile
+    public bool isPassable;    // Can the player walk on this tile //NOTE: changed from private to public. For use in PlayerMovement check -Liam
     private bool isHidingPlace; // Can the player hide in this tile
     private bool isRotatable;   // Does the tile contain a rotatable mesh (this should be the first child of the tile prefab if so) 
 
