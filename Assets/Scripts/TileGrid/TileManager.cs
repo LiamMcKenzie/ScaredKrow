@@ -8,6 +8,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 
 /// <summary>
 /// Manages the grid of tiles
@@ -15,6 +16,7 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class TileManager : MonoBehaviour
 {
+    public UnityEvent GridRepositioned;
     public GameObject playerPrefab;
     [Header("Tile Settings")]
     //public Vector2 playerStartCoords = new(1, 7);    // The starting coordinates of the player  NOTE: is this unused? there is also a playerstartcoords value in gamemanager
@@ -28,7 +30,7 @@ public class TileManager : MonoBehaviour
     [Header("Grid Settings")]
     [SerializeField] private TileGridChunk[] gridChunks = new TileGridChunk[2]; // The two grid chunks, should be game objects with a TileGridChunk component
     [SerializeField] private int tilesWide = 15;    // width of each grid chunk (z-axis)
-    [SerializeField] private int tilesHigh = 10;   // height of each grid chunk (x-axis)
+    [SerializeField] public int tilesHigh = 10;   // height of each grid chunk (x-axis)
     [SerializeField] private float tileSize = 1f;   // size of each tile
 
     [Header("Speed Settings")]
@@ -168,8 +170,10 @@ public class TileManager : MonoBehaviour
 
         // Position the other tile group at 0 (this ensures there is no gap between the two chunks)
         otherGridChunk.RecenterTiles();
-
+        
         PopulateMasterGrid(otherGridChunk);
+
+        GridRepositioned.Invoke();
     }
 
     /// <summary>

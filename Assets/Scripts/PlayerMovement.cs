@@ -18,6 +18,12 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         gridPosition = GameManager.instance.playerStartCoords;
+        TileManager.instance.GridRepositioned.AddListener(OnGridRepositioned);
+    }
+
+    void OnGridRepositioned()
+    {
+        gridPosition.x -= TileManager.instance.tilesHigh;
     }
 
     void Update()
@@ -67,22 +73,29 @@ public class PlayerMovement : MonoBehaviour
         //tile the player wants to move to.
         TileGridCoords desiredGridPosition = new(gridPosition.x + Mathf.FloorToInt(movement.x), gridPosition.z + Mathf.FloorToInt(movement.z));
 
+        animator.Play("player_jump", 0, 0); //plays the jump animation
+        
+        /*
         if(TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z].isPassable == false) //checks if the desired tile is not passable.  
         {
             yield break; //exits this IEnumerator. if the desired tile is passable then all the code below runs
-        }
+        }*/
 
         isMoving = true; 
+        bool canMove = TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z].isPassable;
 
-        gameObject.transform.SetParent(TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z].gameObject.transform); //sets he players parent
-        gridPosition = desiredGridPosition; //updates the grid position to the desired position
+        if(canMove)
+        {
+            gameObject.transform.SetParent(TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z].gameObject.transform); //sets he players parent
+            gridPosition = desiredGridPosition; //updates the grid position to the desired position
+
+        }
 
         //after the player is assigned a new parent, its position relative to the parent will be off by 1 unit roughly.
         Vector3 startPosition = transform.localPosition; //relative to the new parent, which has just been set above
         Vector3 endPosition = Vector3.zero; //0,0,0 is perfectly center with the new parent. 
 
         float elapsedTime = 0;
-        animator.Play("player_jump", 0, 0); //plays the jump animation
 
         //TODO: the jump animation is set at 0.2 seconds (12 frames), which is the same as the moveTime.
         //If we plan on changing the moveTime we will also need to change the animation length.
@@ -90,7 +103,11 @@ public class PlayerMovement : MonoBehaviour
         //smoothly moves/rotates the player towards the desired position/rotation
         while (elapsedTime < moveTime)
         {
-            transform.localPosition = Vector3.Lerp(startPosition, endPosition, (elapsedTime / moveTime));
+            if(canMove)
+            {
+                transform.localPosition = Vector3.Lerp(startPosition, endPosition, (elapsedTime / moveTime));
+
+            }
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), (elapsedTime / moveTime));
             elapsedTime += Time.deltaTime;
             yield return null;
