@@ -1,5 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+/*
+ * File: CrowCollsion.cs
+ * Purpose: Checks if the Crows 'shadow' collider has hit the player    
+ * Author: Devon
+ * Notes:  - Just a very basic implementation at this stage (Debug log). 
+ *         - Will have more functionality of decreasing the players health when we have that added
+ */
 using UnityEngine;
 
 public class CrowCollision : MonoBehaviour
@@ -10,7 +15,7 @@ public class CrowCollision : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Crow collided with the player!");
-            //Add more functionality later after collision (i.e damaging player)
+            //Add more functionality later (i.e damaging player)
         }
     }
 }

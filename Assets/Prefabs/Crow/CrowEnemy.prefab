@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c60d48066cb1f5c41b8cda2cd48b3972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionCount: 0
 --- !u!54 &2005262826162338547
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -245,7 +244,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 96ff9ab9dbb78df48b46d8ab5b20c186,
         type: 3}
       propertyPath: m_Name
-      value: CrowTest2 1
+      value: CrowEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 96ff9ab9dbb78df48b46d8ab5b20c186,
         type: 3}
@@ -332,40 +331,8 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8086202759157732171}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 970951486213478545, guid: 96ff9ab9dbb78df48b46d8ab5b20c186,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9190061231780674784}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96ff9ab9dbb78df48b46d8ab5b20c186, type: 3}
---- !u!1 &4621884593019207516 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 970951486213478545, guid: 96ff9ab9dbb78df48b46d8ab5b20c186,
-    type: 3}
-  m_PrefabInstance: {fileID: 5574815013398833101}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &9190061231780674784
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4621884593019207516}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 717720852511821093, guid: 96ff9ab9dbb78df48b46d8ab5b20c186, type: 3}
 --- !u!4 &5392781048790351910 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 96ff9ab9dbb78df48b46d8ab5b20c186,
