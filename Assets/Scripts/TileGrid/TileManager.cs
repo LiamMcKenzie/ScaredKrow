@@ -8,6 +8,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 
 /// <summary>
 /// Manages the grid of tiles
@@ -15,9 +16,10 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class TileManager : MonoBehaviour
 {
+    public UnityEvent GridRepositioned;
     public GameObject playerPrefab;
     [Header("Tile Settings")]
-    public Vector2 playerStartCoords = new(1, 7);    // The starting coordinates of the player  
+    //public Vector2 playerStartCoords = new(1, 7);    // The starting coordinates of the player  NOTE: is this unused? there is also a playerstartcoords value in gamemanager
     public TileData defaultTileData;    // The default tile data (empty grass tile)
     public Color defaultTileColor = new(200, 183, 65);  // The base color of the tiles, defaults to a hayish color
     public float altRowDarkAmt = 0.9f;  // The amount to darken the alternate rows by
@@ -28,7 +30,7 @@ public class TileManager : MonoBehaviour
     [Header("Grid Settings")]
     [SerializeField] private TileGridChunk[] gridChunks = new TileGridChunk[2]; // The two grid chunks, should be game objects with a TileGridChunk component
     [SerializeField] private int tilesWide = 15;    // width of each grid chunk (z-axis)
-    [SerializeField] private int tilesHigh = 10;   // height of each grid chunk (x-axis)
+    [SerializeField] public int tilesHigh = 10;   // height of each grid chunk (x-axis)
     [SerializeField] private float tileSize = 1f;   // size of each tile
 
     [Header("Speed Settings")]
@@ -41,7 +43,9 @@ public class TileManager : MonoBehaviour
     [SerializeField] private GameManager gameManager; // The game manager
 
     private Camera mainCamera;  // The main camera
-    private List<List<TileController>> masterTileControllerList = new();    // The master tile controller list, a 2D list of all the tile controllers in the grid
+
+    //Changed to be public for testing, was originally private -Liam
+    public List<List<TileController>> masterTileControllerList = new();    // The master tile controller list, a 2D list of all the tile controllers in the grid
 
     #region Singleton
     public static TileManager instance;
@@ -166,8 +170,10 @@ public class TileManager : MonoBehaviour
 
         // Position the other tile group at 0 (this ensures there is no gap between the two chunks)
         otherGridChunk.RecenterTiles();
-
+        
         PopulateMasterGrid(otherGridChunk);
+
+        GridRepositioned.Invoke();
     }
 
     /// <summary>

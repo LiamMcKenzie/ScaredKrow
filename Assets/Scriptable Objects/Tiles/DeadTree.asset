@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 6256688731233862309, guid: 0e890f07ee738485ab06923892bbd482,
     type: 3}
-  isPassable: 1
+  isPassable: 0
   isHidingPlace: 0
   isRotatable: 1
