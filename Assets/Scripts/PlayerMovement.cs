@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 /// <summary>
 /// Controls the player movement, and player grid position
@@ -82,13 +82,15 @@ public class PlayerMovement : MonoBehaviour
         }*/
 
         isMoving = true; 
-        bool canMove = TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z].isPassable;
+        TileController currentTile = TileManager.instance.masterTileControllerList[gridPosition.x][gridPosition.z]; //gets the current tile
+        TileController desiredTile = TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z]; //gets the desired tile
+        bool canMove = desiredTile.isPassable; //checks if the desired tile is passable and not a boundary
 
         if(canMove)
         {
-            gameObject.transform.SetParent(TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z].gameObject.transform); //sets he players parent
+            currentTile.containsPlayer = false; //removes the player from the current tile
+            desiredTile.PlayerEntersTile(transform); //sets he players parent
             gridPosition = desiredGridPosition; //updates the grid position to the desired position
-
         }
 
         //after the player is assigned a new parent, its position relative to the parent will be off by 1 unit roughly.
