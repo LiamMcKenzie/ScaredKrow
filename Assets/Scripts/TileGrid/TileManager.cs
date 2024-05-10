@@ -43,6 +43,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] private GameManager gameManager; // The game manager
 
     private Camera mainCamera;  // The main camera
+    private GameObject player;  //player game object
 
     //Changed to be public for testing, was originally private -Liam
     public List<List<TileController>> masterTileControllerList = new();    // The master tile controller list, a 2D list of all the tile controllers in the grid
@@ -96,6 +97,7 @@ public class TileManager : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     /// <summary>
@@ -228,6 +230,26 @@ public class TileManager : MonoBehaviour
     /// </remarks>
     private void HandleViewport()
     {
+        //Player camera movement
+        
+        Vector3 playerPosInViewport = mainCamera.WorldToViewportPoint(player.transform.position);
+        Debug.Log(playerPosInViewport);
+
+        float speedPoint = 0.3f; //when should the camera speed up, 0.5 half way up the screen
+        float speedIncrease = 5f; //used in the lerp function
+
+        if (playerPosInViewport.y > speedPoint)
+        {
+            //normalize position from range 0.5-1 to 0-1
+            float normalizedPosition = (playerPosInViewport.y - speedPoint) / speedPoint;
+            float exponentialPosition = Mathf.Pow(normalizedPosition, 2); 
+            Speed = Mathf.Lerp(0.5f, speedIncrease, exponentialPosition);
+        }
+        else
+        {
+            Speed = 0.5f;
+        }
+
         foreach (var row in masterTileControllerList)
         {
             foreach (var tile in row)
