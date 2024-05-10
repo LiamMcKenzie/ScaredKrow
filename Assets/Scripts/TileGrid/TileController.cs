@@ -21,11 +21,13 @@ public class TileController : MonoBehaviour
     public bool isPassable;    // Can the player walk on this tile //NOTE: changed from private to public. For use in PlayerMovement check -Liam
     private bool isHidingPlace; // Can the player hide in this tile
     private bool isRotatable;   // Does the tile contain a rotatable mesh (this should be the first child of the tile prefab if so) 
+    public bool containsPlayer;
 
     private const int NAME_LENGTH = 7;  // The length of the name to display in the ToString method
     private TileGridChunk parentChunk;  // The grid chunk this tile is in
     private Color color;    // The color of the tile (the quad that represents the tile)
     private GameObject tileInstance;    // The instance of the tile prefab
+
 
     /// <summary>
     /// Initializes the tile controller with the tile data
@@ -71,9 +73,10 @@ public class TileController : MonoBehaviour
     /// Instantiates a prefab on this tile and makes it a child of the tile
     /// </summary>
     /// <param name="prefab">The prefab to instantiate</param>
-    public void InstantiateOnThisTile(GameObject prefab)
+    public GameObject InstantiateOnThisTile(GameObject prefab)
     {
-        Instantiate(prefab, transform.position, prefab.transform.rotation, transform);
+        GameObject newObject = Instantiate(prefab, transform.position, prefab.transform.rotation, transform);
+        return newObject;
     }
 
     /// <summary>
@@ -126,6 +129,16 @@ public class TileController : MonoBehaviour
     {
         this.color = color;
         tileInstance.GetComponent<Renderer>().material.color = color;
+    }
+
+    /// <summary>
+    /// Makes the provided game object a child of the tile
+    /// </summary>
+    /// <param name="gameObject">The game object to make a child of the tile</param>
+    public void PlayerEntersTile(Transform playerTransform)
+    {
+        containsPlayer = true;
+        playerTransform.SetParent(transform);
     }
 }
 
