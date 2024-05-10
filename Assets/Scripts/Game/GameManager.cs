@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     public bool gameStarted; // Whether the game has started
     [SerializeField] private Camera mainCamera; // The main camera
+    [SerializeField] private GameoverTriggerArea gameoverTriggerArea; // The game over trigger area
+    [SerializeField] private GameObject GameoverPanel; // The game over panel
 
     [Header("Player Settings")]
     [SerializeField] private GameObject playerPrefab; // The player prefab
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TileManager tileManager; // The tile manager
 
     [Header("Speed Settings")]
+    [SerializeField] private float initSpeed = 1; // The initial speed
     [SerializeField] private float speedIncrement = 0.05f; // backing field for Speed property
     [SerializeField] private float _speed = 1; // backing field for Speed property
     [SerializeField] private float maxSpeed = 500; // maximum speed
@@ -72,11 +75,11 @@ public class GameManager : MonoBehaviour
         Speed = _speed;
     }
 
-    private void Start()
+    void Start()
     {
         speedBeforeCatchup = Speed;
-
-        StartGame();
+        gameoverTriggerArea.gameoverEvent.AddListener(GameOver);
+        Init();
     }
 
     void Update()
@@ -98,13 +101,41 @@ public class GameManager : MonoBehaviour
 
     }
     /// <summary>
-    /// Start the game by initializing the tile grid and spawning the player
+    /// Initialise game state
     /// </summary>
-    public void StartGame()
+    public void Init()
     {
+        GameoverPanel.SetActive(false);
         tileManager.InitTileGrid();
         SpawnPlayer();
         gameStarted = true;
+    }
+
+    /// <summary>
+    /// Reset the game
+    /// </summary>
+    public void Reset()
+    {
+        Speed = initSpeed;
+        Init();
+    }
+
+    /// <summary>
+    /// Quit the game
+    /// </summary>
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    /// <summary>
+    /// End the game
+    /// </summary>
+    public void GameOver()
+    {
+        gameStarted = false;
+        GameoverPanel.SetActive(true);
+        Destroy(playerController.gameObject);
     }
 
     /// <summary>
@@ -118,7 +149,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Increase game speed to catch up to the player
     /// </summary>
-    public void Catchup()
+    private void Catchup()
     {
         // If we are not already catching up, store the speed before catchup
         if (!isCatchingUp) { speedBeforeCatchup = Speed; }
@@ -132,7 +163,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Stop catching up to the player
     /// </summary>
-    public void StopCatchup()
+    private void StopCatchup()
     {
         if (isCatchingUp == false) return;
 
