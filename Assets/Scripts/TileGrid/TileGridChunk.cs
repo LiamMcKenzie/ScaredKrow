@@ -24,7 +24,6 @@ public class TileGridChunk : MonoBehaviour
         // log if gameManger is null
         if (gameManager == null) { Debug.Log("GameManager is null"); }
         tileManager = TileManager.instance;
-
     }
 
     /// <summary>
@@ -48,6 +47,9 @@ public class TileGridChunk : MonoBehaviour
     /// <param name="difficultyProfile">Contains the probabilities/amounts of the various tile types</param>
     public void GenerateTileGrid(int tilesWide, int tilesHigh, float tileSize, DifficultyProfile difficultyProfile)
     {
+        int boundaryLeft = difficultyProfile.boundaryLeft;
+        int boundaryRight = difficultyProfile.boundaryRight;
+
         // Clear the existing chunk
         ClearTiles();
 
@@ -64,16 +66,28 @@ public class TileGridChunk : MonoBehaviour
             for (int z = 0; z < tilesWide; z++)
             {
                 // Get the tile data for this cell
-                TileData tileData = SelectTileData(x, rowDictionary, difficultyProfile.tileProbabilities);
+                TileData tileData = SelectTileData(x, z, rowDictionary, difficultyProfile.tileProbabilities, difficultyProfile.boundaryLeft, difficultyProfile.boundaryRight);
 
                 // Create a tile controller for this cell
                 TileController tileController = tileData.CreateTileController(transform, x, z);
 
+
                 // Calculate the world position of the cell
                 Vector3 worldPosition = CalculateWorldPosition(x, z, tileSize);
 
+                // bool isLight = x % 2 == 0;
+
+                bool withinBounds = z >= boundaryRight && z <= tilesWide - boundaryLeft;
+                bool evenRow = x % 2 == 0;
+
                 // Instantiate the tile prefab at the world position
-                tileController.InstantiateTile(worldPosition, this, x % 2 == 0);
+                tileController.InstantiateTile(worldPosition, this, light: withinBounds && evenRow);
+                
+                bool isRight = z < boundaryRight;
+                if (z == boundaryRight - 1 || z == tilesWide - boundaryLeft + 1)
+                {
+                    tileController.BuildFence(isRight);
+                }
 
                 // Add the tile controller to the row list
                 row.Add(tileController);
@@ -121,7 +135,7 @@ public class TileGridChunk : MonoBehaviour
     /// <param name="x">This is the loop counter from the outer for loop in GenerateTileGrid. This corresponds to the row number of the grid chunk.</param>
     /// <param name="rowDictionary">A dictionary containing random row number indices (x) and the tile data for that row</param>
     /// <param name="tileProbabilities">A list of tile probabilities. These are structs that contain the tile data and the probability of that tile appearing</param>
-    private TileData SelectTileData(int x, Dictionary<int, TileData> rowDictionary, List<TileProbability> tileProbabilities)
+    private TileData SelectTileData(int x, int z, Dictionary<int, TileData> rowDictionary, List<TileProbability> tileProbabilities, int boundaryLeft, int boundaryRight)
     {
         // make the player start row a default tile
         if (gameManager.gameStarted == false && x == gameManager.playerStartCoords.x ) 
@@ -134,6 +148,13 @@ public class TileGridChunk : MonoBehaviour
         {
             return rowDictionary[x];
         }
+
+        // if z is less than the left boundary or greater than the right boundary, return the default tile
+        if (z < boundaryRight || z > tileManager.tilesWide - boundaryLeft) 
+        {
+            return tileManager.defaultTileData;
+        }
+
         // Otherwise, select a tile data based on the probabilities    
 
         // There's a total probability of 100% for all tiles
