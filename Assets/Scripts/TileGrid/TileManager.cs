@@ -233,7 +233,6 @@ public class TileManager : MonoBehaviour
         //Player camera movement
         
         Vector3 playerPosInViewport = mainCamera.WorldToViewportPoint(player.transform.position);
-        Debug.Log(playerPosInViewport);
 
         float speedPoint = 0.3f; //when should the camera speed up, 0.5 half way up the screen
         float speedIncrease = 5f; //used in the lerp function

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TileManager tileManager; // The tile manager
     public TileGridCoords playerStartCoords = new( x:5, z:5 ); // The starting coordinates of the player
     public bool gameStarted; // Whether the game has started
+    public int score; 
 
     #region Singleton
     public static GameManager instance;
