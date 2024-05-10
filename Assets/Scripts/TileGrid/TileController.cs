@@ -17,7 +17,9 @@ public class TileController : MonoBehaviour
     [SerializeField] private int x; // The x coordinate of the tile
     [SerializeField] private int z; // The z coordinate of the tile
 
+    private const float Z_ADJUST_AMT = 0.45f; // The amount to adjust the z position of the fence by
     private GameObject tilePrefab;  // The prefab of the tile
+    private GameObject fencePrefab; // The fence mesh for this tile
     public bool isPassable;    // Can the player walk on this tile //NOTE: changed from private to public. For use in PlayerMovement check -Liam
     private bool isHidingPlace; // Can the player hide in this tile
     private bool isRotatable;   // Does the tile contain a rotatable mesh (this should be the first child of the tile prefab if so) 
@@ -43,6 +45,7 @@ public class TileController : MonoBehaviour
         isPassable = tileData.isPassable;
         isHidingPlace = tileData.isHidingPlace;
         isRotatable = tileData.isRotatable;
+        fencePrefab = tileData.fencePrefab;
     }
 
     /// <summary>
@@ -67,6 +70,26 @@ public class TileController : MonoBehaviour
         SetColor(light ? color : color * TileManager.instance.altRowDarkAmt);
 
         return tileInstance;
+    }
+
+    /// <summary>
+    /// Builds a fence on this tile
+    /// </summary>
+    /// <param name="isRight">Whether the fence should be on the right side of the tile</param>
+    /// <returns>The instance of the fence prefab</returns>
+    public GameObject BuildFence(bool isRight)
+    {
+        isPassable = false;
+        if (fencePrefab == null)
+        {
+            Debug.LogWarning("No fence prefab set for this tile");
+            return null;
+        }
+        float zAdjust = isRight ? Z_ADJUST_AMT : -Z_ADJUST_AMT;
+        Vector3 relativePosition = new Vector3(0.5f, 0, zAdjust);
+        Vector3 worldPosition = transform.TransformPoint(relativePosition);
+        GameObject fenceInstance = Instantiate(fencePrefab, worldPosition, fencePrefab.transform.rotation, transform);
+        return fenceInstance;
     }
 
     /// <summary>
