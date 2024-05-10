@@ -7,7 +7,6 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Tilemaps;
 using UnityEngine.Events;
 
 /// <summary>
@@ -32,8 +31,6 @@ public class TileManager : MonoBehaviour
     [SerializeField] private int tilesWide = 15;    // width of each grid chunk (z-axis)
     [SerializeField] public int tilesHigh = 10;   // height of each grid chunk (x-axis)
     [SerializeField] private float tileSize = 1f;   // size of each tile
-
-
 
     [Header("Optimisation Settings")]
     [SerializeField] private bool deactivateTilesOutsideViewport = true; // Whether to optimise the tiles (turns them off when they are not visible)
@@ -98,7 +95,6 @@ public class TileManager : MonoBehaviour
     /// </summary>
     public void InitTileGrid()
     {
-        
         gridChunks[0].transform.position = Vector3.zero;
         gridChunks[1].transform.position = UpperChunkPosition;
 
