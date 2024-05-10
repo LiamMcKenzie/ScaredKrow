@@ -1,12 +1,16 @@
 /*
  * File: CatchupArea.cs
- * Purpose: Trigger area for camera to catch up to player
+ * Purpose: Trigger area for "camera" to catch up to player
  * Author: Johnathan
  * Contributions: Assisted by GitHub Copilot
  */
 
 using UnityEngine;
 
+/// <summary>
+// This class controls a trigger area for the catchup function of the Game Manager. 
+// When the player enters this area, the game speed increases to move the player back out of the trigger
+/// </summary>
 public class CatchupArea : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager; // The player object
