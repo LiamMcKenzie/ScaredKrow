@@ -28,7 +28,7 @@ public class TileManager : MonoBehaviour
 
     [Header("Grid Settings")]
     [SerializeField] private TileGridChunk[] gridChunks = new TileGridChunk[2]; // The two grid chunks, should be game objects with a TileGridChunk component
-    [SerializeField] private int tilesWide = 15;    // width of each grid chunk (z-axis)
+    [SerializeField] public int tilesWide = 15;    // width of each grid chunk (z-axis)
     [SerializeField] public int tilesHigh = 10;   // height of each grid chunk (x-axis)
     [SerializeField] private float tileSize = 1f;   // size of each tile
 
