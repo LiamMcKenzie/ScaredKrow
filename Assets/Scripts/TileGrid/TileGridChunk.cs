@@ -83,6 +83,7 @@ public class TileGridChunk : MonoBehaviour
                 // Instantiate the tile prefab at the world position
                 tileController.InstantiateTile(worldPosition, this, light: withinBounds && evenRow);
                 
+                // Check if it should be a fence tile
                 bool isRight = z < boundaryRight;
                 if (z == boundaryRight - 1 || z == tilesWide - boundaryLeft + 1)
                 {
