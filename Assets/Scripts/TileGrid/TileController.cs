@@ -76,6 +76,11 @@ public class TileController : MonoBehaviour
     public GameObject InstantiateOnThisTile(GameObject prefab)
     {
         GameObject newObject = Instantiate(prefab, transform.position, prefab.transform.rotation, transform);
+        // check if newobject has player tag
+        if (newObject.CompareTag("Player"))
+        {
+            containsPlayer = true;
+        }
         return newObject;
     }
 
