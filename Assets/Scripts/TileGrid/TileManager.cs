@@ -22,6 +22,7 @@ public class TileManager : MonoBehaviour
     public TileData defaultTileData;    // The default tile data (empty grass tile)
     public Color defaultTileColor = new(200, 183, 65);  // The base color of the tiles, defaults to a hayish color
     public float altRowDarkAmt = 0.9f;  // The amount to darken the alternate rows by
+    public float outOfBoundsDarkAmt = 0.75f;  // The amount to darken out of bounds tiles by
 
     [Header("Tile Generation Settings")]
     public DifficultyProfile difficultyProfile; // The difficulty profile, a struct containing the tile probabilities and the amount of water rows
