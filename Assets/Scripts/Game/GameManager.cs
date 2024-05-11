@@ -41,16 +41,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TileManager tileManager; // The tile manager
 
     [Header("Speed Settings")]
-    [SerializeField] private float speedIncrement = 0.05f; // backing field for Speed property
-    [SerializeField] private float _speed = 1; // backing field for Speed property
-    [SerializeField] private float maxSpeed = 500; // maximum speed
-    [SerializeField] private float catchupSpeed = 2; // The speed at which the player catches up
+    [SerializeField] private float _speed = 1; // backing field for Speed property (this is the actual speed of the game)
+    [SerializeField] private float speedIncrement = 0.05f; // amount to increase the speed by as the game progresses
+    [SerializeField] private float catchupSpeed = 8; // speed to catch up to the player
+    [SerializeField] private float maxBaseSpeed = 4; // The maximum speed of the game independent of the catchup mechanic
     [SerializeField] private float accelerationCurve = 1.5f; // The speed at which the "camera" catches up to player (lower is faster)
     [SerializeField] private float decelerationCurve = 0.5f; // The speed at which the "camera" slows back down (lower is faster)
-    [SerializeField] private float decelerationTolerance = 0.1f; // The tolerance for the speed to be considered back to normal
+    
+    private float baseSpeed; // The speed of the game independent of the catchup mechanic
+    private float initSpeed = 1; // The initial speed  
+    private float decelerationTolerance = 0.1f; // The tolerance for the speed to be considered back to normal
     private float currentVelocity = 0f;
-    private float initSpeed = 1; // The initial speed
-    private float speedBeforeCatchup; // The speed before catchup is initiated
+  
+
     private bool isCatchingUp;
     public bool playerInCatchupZone = false;
 
@@ -65,7 +68,7 @@ public class GameManager : MonoBehaviour
         set
         {
             // Ensure _speed is proper range
-            _speed = Mathf.Clamp(value, 0, maxSpeed);
+            _speed = Mathf.Clamp(value, 0, catchupSpeed);
         }
     }
 
@@ -90,23 +93,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameStarted == false) return;
 
-        // Check if the player is in the catchup zone
-        if (playerInCatchupZone)
-        {
-            Catchup();
-        }
-        else
-        {
-            StopCatchup();
-        }
-
-        Speed += speedIncrement * Time.deltaTime;
-
-        // if catching up, also increaes the speed before catchup
-        if (isCatchingUp)
-        {
-            speedBeforeCatchup += speedIncrement * Time.deltaTime;
-        }
+        UpdateSpeed();
     }
 
     /// <summary>
@@ -114,7 +101,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void Init()
     {
-        speedBeforeCatchup = Speed;
+        baseSpeed = Speed;
         GameoverPanel.SetActive(false);
         tileManager.InitTileGrid();
         SpawnPlayer();
@@ -158,13 +145,40 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Update the speed of the game
+    /// </summary>
+    private void UpdateSpeed()
+    {
+        // Check if the player is in the catchup zone
+        if (playerInCatchupZone)
+        {
+            // accelerate to catchup speed to catch up to the player
+            Catchup();
+        }
+        else
+        {
+            // decelerate to the base speed
+            StopCatchup();
+        }
+
+        // Until we reach the max base speed, increase the base speed
+        if (baseSpeed < maxBaseSpeed)
+        {
+            baseSpeed += speedIncrement * Time.deltaTime;
+        }
+
+        // if not catching up, set the actual speed to the base speed
+        if (isCatchingUp == false)
+        {
+            Speed = baseSpeed;
+        }
+    }
+
+    /// <summary>
     /// Increase game speed to catch up to the player
     /// </summary>
     private void Catchup()
     {
-        // If we are not already catching up, store the speed before catchup
-        if (!isCatchingUp) { speedBeforeCatchup = Speed; }
-
         // accelerate to catchup speed
         Speed = Mathf.SmoothDamp(Speed, catchupSpeed, ref currentVelocity, accelerationCurve);
 
@@ -176,15 +190,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void StopCatchup()
     {
-        if (isCatchingUp == false) return;
-
         // decelerate from catchup speed to the speed before catchup
-        Speed = Mathf.SmoothDamp(Speed, speedBeforeCatchup, ref currentVelocity, decelerationCurve);
+        Speed = Mathf.SmoothDamp(Speed, baseSpeed, ref currentVelocity, decelerationCurve);
 
         // if we are close enough to the speed before catchup, stop catching up
-        if (Mathf.Abs(Speed - speedBeforeCatchup) < decelerationTolerance)
+        if (Mathf.Abs(Speed - baseSpeed) < decelerationTolerance)
         {
-            Speed = speedBeforeCatchup;
             isCatchingUp = false;
         }
     }
