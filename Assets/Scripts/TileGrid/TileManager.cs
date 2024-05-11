@@ -18,7 +18,6 @@ public class TileManager : MonoBehaviour
     public UnityEvent GridRepositioned;
 
     [Header("Tile Settings")]
-    //public Vector2 playerStartCoords = new(1, 7);    // The starting coordinates of the player  NOTE: is this unused? there is also a playerstartcoords value in gamemanager
     public TileData defaultTileData;    // The default tile data (empty grass tile)
     public Color defaultTileColor = new(200, 183, 65);  // The base color of the tiles, defaults to a hayish color
     public float altRowDarkAmt = 0.9f;  // The amount to darken the alternate rows by
