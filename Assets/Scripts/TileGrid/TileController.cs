@@ -86,9 +86,11 @@ public class TileController : MonoBehaviour
             return null;
         }
         float zAdjust = isRight ? Z_ADJUST_AMT : -Z_ADJUST_AMT;
-        Vector3 relativePosition = new Vector3(0.5f, 0, zAdjust);
+        float xAdjust = isRight ? 0.5f : -0.5f;
+        Vector3 relativePosition = new Vector3(xAdjust, 0, zAdjust);
         Vector3 worldPosition = transform.TransformPoint(relativePosition);
-        GameObject fenceInstance = Instantiate(fencePrefab, worldPosition, fencePrefab.transform.rotation, transform);
+        Quaternion rotation = isRight ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 180, 0);
+        GameObject fenceInstance = Instantiate(fencePrefab, worldPosition, rotation, transform);
         return fenceInstance;
     }
 
