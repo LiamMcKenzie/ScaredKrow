@@ -184,10 +184,10 @@ public class TileGridChunk : MonoBehaviour
             TileData tileData = tileProbability.tileData;
 
             // Check if the tile should only occur outside the boundary
-            if (TileWithinBounds(z, boundaryRight, boundaryLeft) && tileData.onlyOccursOutsideBoundary) { continue; }
+            if (TileWithinBounds(z, boundaryRight, boundaryLeft) && tileProbability.onlyOccursOutsideBoundary) { continue; }
 
             // Check if the tile should only occur inside the boundary
-            if (TileOutsideBounds(z, boundaryRight, boundaryLeft) && tileData.onlyOccursInsideBoundary) { continue; }
+            if (TileOutsideBounds(z, boundaryRight, boundaryLeft) && tileProbability.onlyOccursInsideBoundary) { continue; }
 
             // Add the probability of the current tile to the cumulative probability
             cumulativeProbability += tileProbability.probability;

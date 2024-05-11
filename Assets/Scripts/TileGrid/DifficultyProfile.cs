@@ -16,6 +16,8 @@ public struct TileProbability
 {
     public TileData tileData;   // tile data for this tile
     public float probability;   // probability of this tile (should be between 0 and 100, anything above 100 is effectively 100% and anything below 0 is effectively 0%)
+    public bool onlyOccursInsideBoundary; // Whether this tile can occur outside the boundary
+    public bool onlyOccursOutsideBoundary; // Whether this tile can only occur outside the boundary
 }
 
 /// <summary>

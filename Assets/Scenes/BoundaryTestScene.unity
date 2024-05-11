@@ -210,8 +210,8 @@ MonoBehaviour:
     z: 5
   playerController: {fileID: 0}
   tileManager: {fileID: 1014501489}
-  _speed: 1
-  speedIncrement: 0.1
+  _speed: 0.5
+  speedIncrement: 0.05
   catchupSpeed: 8
   maxBaseSpeed: 3.5
   accelerationCurve: 0.1
@@ -630,7 +630,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 467804831}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1298,14 +1298,24 @@ MonoBehaviour:
     tileProbabilities:
     - tileData: {fileID: 11400000, guid: 31d2e1158995e48c6a87694979091d76, type: 2}
       probability: 5
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 6c788d589fb9042808d2aae67b3da07b, type: 2}
-      probability: 5
+      probability: 10
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: c64f420ad3297486399a3c2a31b0e64d, type: 2}
       probability: 5
+      onlyOccursInsideBoundary: 0
+      onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 1fd4760ec2bb74041bf9129ed8779261, type: 2}
       probability: 50
+      onlyOccursInsideBoundary: 0
+      onlyOccursOutsideBoundary: 1
     - tileData: {fileID: 11400000, guid: c9d6eeee477d547a192c06fcab09335b, type: 2}
       probability: 5
+      onlyOccursInsideBoundary: 0
+      onlyOccursOutsideBoundary: 1
     rowSettings:
     - rowTileData: {fileID: 11400000, guid: 1b49473dfcf5044c893eb75c98da9cac, type: 2}
       amountOfRows: 2
