@@ -109,6 +109,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void Init()
     {
+        speedBeforeCatchup = Speed;
         GameoverPanel.SetActive(false);
         tileManager.InitTileGrid();
         SpawnPlayer();
