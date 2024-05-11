@@ -214,7 +214,9 @@ MonoBehaviour:
   _speed: 0.5
   maxSpeed: 500
   catchupSpeed: 5
-  accelerationCurve: 2.25
+  accelerationCurve: 0.8
+  decelerationCurve: 0.4
+  decelerationTolerance: 0.1
   playerInCatchupZone: 0
 --- !u!4 &101821161
 Transform:
@@ -1164,7 +1166,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 943206378}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1216,7 +1218,7 @@ Transform:
   m_GameObject: {fileID: 943206378}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 12.29, y: 0.003, z: 6.89}
+  m_LocalPosition: {x: 11, y: 0.003, z: 6.89}
   m_LocalScale: {x: 8, y: 16, z: 16}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1317,7 +1319,7 @@ MonoBehaviour:
   viewportBufferArea:
     left: 0.15
     right: 0.04
-    up: 0.04
+    up: 0.06
     down: 0.2
   gameManager: {fileID: 101821160}
 --- !u!4 &1014501491
