@@ -45,7 +45,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _speed = 1; // backing field for Speed property
     [SerializeField] private float maxSpeed = 500; // maximum speed
     [SerializeField] private float catchupSpeed = 2; // The speed at which the player catches up
-    [SerializeField] private float accelerationCurve = 1.5f; // The speed at which the player catches up
+    [SerializeField] private float accelerationCurve = 1.5f; // The speed at which the "camera" catches up to player (lower is faster)
+    [SerializeField] private float decelerationCurve = 0.5f; // The speed at which the "camera" slows back down (lower is faster)
+    [SerializeField] private float decelerationTolerance = 0.1f; // The tolerance for the speed to be considered back to normal
+    private float currentVelocity = 0f;
 
     private float speedBeforeCatchup; // The speed before catchup is initiated
     private bool isCatchingUp;
@@ -155,7 +158,7 @@ public class GameManager : MonoBehaviour
         if (!isCatchingUp) { speedBeforeCatchup = Speed; }
 
         // accelerate to catchup speed
-        Speed = Mathf.Lerp(Speed, catchupSpeed, Time.deltaTime * accelerationCurve);
+        Speed = Mathf.SmoothDamp(Speed, catchupSpeed, ref currentVelocity, accelerationCurve);
 
         isCatchingUp = true;
     }
@@ -168,10 +171,10 @@ public class GameManager : MonoBehaviour
         if (isCatchingUp == false) return;
 
         // decelerate from catchup speed to the speed before catchup
-        Speed = Mathf.Lerp(Speed, speedBeforeCatchup, Time.deltaTime * accelerationCurve);
+        Speed = Mathf.SmoothDamp(Speed, speedBeforeCatchup, ref currentVelocity, decelerationCurve);
 
         // if we are close enough to the speed before catchup, stop catching up
-        if (Mathf.Abs(Speed - speedBeforeCatchup) < 0.1f)
+        if (Mathf.Abs(Speed - speedBeforeCatchup) < decelerationTolerance)
         {
             Speed = speedBeforeCatchup;
             isCatchingUp = false;
