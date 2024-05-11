@@ -102,8 +102,13 @@ public class GameManager : MonoBehaviour
 
         Speed += speedIncrement * Time.deltaTime;
 
-
+        // if catching up, also increaes the speed before catchup
+        if (isCatchingUp)
+        {
+            speedBeforeCatchup += speedIncrement * Time.deltaTime;
+        }
     }
+
     /// <summary>
     /// Initialise game state
     /// </summary>
