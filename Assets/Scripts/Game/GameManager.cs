@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Camera mainCamera; // The main camera
     [SerializeField] private GameoverTriggerArea gameoverTriggerArea; // The game over trigger area
     [SerializeField] private GameObject GameoverPanel; // The game over panel
+    [SerializeField] private int targetFPS = 60; // The target frames per second
 
     [Header("Player Settings")]
     [SerializeField] private GameObject playerPrefab; // The player prefab
@@ -40,7 +41,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TileManager tileManager; // The tile manager
 
     [Header("Speed Settings")]
-    [SerializeField] private float initSpeed = 1; // The initial speed
     [SerializeField] private float speedIncrement = 0.05f; // backing field for Speed property
     [SerializeField] private float _speed = 1; // backing field for Speed property
     [SerializeField] private float maxSpeed = 500; // maximum speed
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float decelerationCurve = 0.5f; // The speed at which the "camera" slows back down (lower is faster)
     [SerializeField] private float decelerationTolerance = 0.1f; // The tolerance for the speed to be considered back to normal
     private float currentVelocity = 0f;
-
+    private float initSpeed = 1; // The initial speed
     private float speedBeforeCatchup; // The speed before catchup is initiated
     private bool isCatchingUp;
     public bool playerInCatchupZone = false;
@@ -77,10 +77,11 @@ public class GameManager : MonoBehaviour
     {
         Speed = _speed;
     }
-
+    
     void Start()
     {
-        speedBeforeCatchup = Speed;
+        Application.targetFrameRate = targetFPS;
+        initSpeed = Speed;
         gameoverTriggerArea.gameoverEvent.AddListener(GameOver);
         Init();
     }
@@ -120,6 +121,7 @@ public class GameManager : MonoBehaviour
     public void Reset()
     {
         Speed = initSpeed;
+        isCatchingUp = false;
         Init();
     }
 
