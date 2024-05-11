@@ -20,7 +20,7 @@ public class CrowManager : MonoBehaviour
 {
     [Header("Prefab Gameobjects")]
     [SerializeField] private GameObject crowModel; //CrowEnemy prefab for the crow
-    [SerializeField] private GameObject playerAlert; //Alert prefab attached to the player
+    [SerializeField] public GameObject playerAlert; //Alert prefab attached to the player
 
     [Header("Crow Movement settings")]
     [SerializeField] private float travelTime = 5f; //How fast the crow moves from inital X pos to end X pos (in seconds)
@@ -94,6 +94,13 @@ public class CrowManager : MonoBehaviour
     /// <returns>WaitForSeconds before hiding gameobject again</returns>
     private IEnumerator ShowAlert()
     {
+        //Initial reference to alert gameobject
+        if (!playerAlert) 
+        { 
+            playerAlert = GameObject.FindWithTag("Alert"); 
+        }
+
+        //Toggle the alert on/off
         playerAlert.SetActive(true);
         yield return new WaitForSeconds(travelTime / 2f);
         playerAlert.SetActive(false);
