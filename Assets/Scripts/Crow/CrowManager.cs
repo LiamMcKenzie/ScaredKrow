@@ -21,6 +21,7 @@ public class CrowManager : MonoBehaviour
     [Header("Prefab Gameobjects")]
     [SerializeField] private GameObject crowModel; //CrowEnemy prefab for the crow
     [SerializeField] public GameObject playerAlert; //Alert prefab attached to the player
+    private bool alertFound = false;
 
     [Header("Crow Movement settings")]
     [SerializeField] private float travelTime = 5f; //How fast the crow moves from inital X pos to end X pos (in seconds)
@@ -95,9 +96,10 @@ public class CrowManager : MonoBehaviour
     private IEnumerator ShowAlert()
     {
         //Initial reference to alert gameobject
-        if (!playerAlert) 
+        if (!alertFound) 
         { 
             playerAlert = GameObject.FindWithTag("Alert"); 
+            alertFound = true;
         }
 
         //Toggle the alert on/off
