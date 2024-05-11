@@ -37,5 +37,5 @@ public struct DifficultyProfile
 {
     public List<TileProbability> tileProbabilities;
     public List<RowSetting> rowSettings;
-    public int boundaryLeft, boundaryRight; // The left and right boundaries of the grid
+    public int boundaryLeft, boundaryRight; // The index of the columns that define the boundary
 }
