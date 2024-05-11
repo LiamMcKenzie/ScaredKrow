@@ -18,6 +18,7 @@ public class TileController : MonoBehaviour
     [SerializeField] private int z; // The z coordinate of the tile
 
     private const float Z_ADJUST_AMT = 0.45f; // The amount to adjust the z position of the fence by
+    private const float X_ADJUST_AMT = 0.5f; // The amount to adjust the x position of the fence by
     private GameObject tilePrefab;  // The prefab of the tile
     private GameObject fencePrefab; // The fence mesh for this tile
     public bool isPassable;    // Can the player walk on this tile //NOTE: changed from private to public. For use in PlayerMovement check -Liam
@@ -86,7 +87,7 @@ public class TileController : MonoBehaviour
             return null;
         }
         float zAdjust = isRight ? Z_ADJUST_AMT : -Z_ADJUST_AMT;
-        float xAdjust = isRight ? 0.5f : -0.5f;
+        float xAdjust = isRight ? X_ADJUST_AMT : -X_ADJUST_AMT;
         Vector3 relativePosition = new Vector3(xAdjust, 0, zAdjust);
         Vector3 worldPosition = transform.TransformPoint(relativePosition);
         Quaternion rotation = isRight ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 180, 0);
