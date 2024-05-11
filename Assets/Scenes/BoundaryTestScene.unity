@@ -202,6 +202,7 @@ MonoBehaviour:
   mainCamera: {fileID: 1915738681}
   gameoverTriggerArea: {fileID: 467804832}
   GameoverPanel: {fileID: 1234380269}
+  targetFPS: 60
   playerPrefab: {fileID: 6404457502676479793, guid: b2ed011ac1ea54524a03634600711f56,
     type: 3}
   playerStartCoords:
@@ -209,9 +210,9 @@ MonoBehaviour:
     z: 5
   playerController: {fileID: 0}
   tileManager: {fileID: 1014501489}
-  speedIncrement: 0.25
+  speedIncrement: 0.1
   _speed: 1
-  maxSpeed: 500
+  maxSpeed: 4
   catchupSpeed: 5
   accelerationCurve: 0.8
   decelerationCurve: 0.4

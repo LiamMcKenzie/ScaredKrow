@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 3}
   fencePrefab: {fileID: 0}
   isPassable: 1
-  isHidingPlace: 0
+  isHidingPlace: 1
   isRotatable: 1
-  occursOutsideBoundary: 0
+  onlyOccursInsideBoundary: 1
   onlyOccursOutsideBoundary: 0

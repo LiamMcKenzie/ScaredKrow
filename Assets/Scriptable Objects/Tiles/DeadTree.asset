@@ -18,5 +18,5 @@ MonoBehaviour:
   isPassable: 0
   isHidingPlace: 0
   isRotatable: 1
-  occursOutsideBoundary: 0
+  onlyOccursInsideBoundary: 1
   onlyOccursOutsideBoundary: 0

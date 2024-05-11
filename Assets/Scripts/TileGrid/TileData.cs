@@ -28,7 +28,7 @@ public class TileData : ScriptableObject
     public bool isPassable = true;  // Can the player walk on this tile
     public bool isHidingPlace = false;  // Can the player hide in this tile
     public bool isRotatable = false;    // Does the tile contain a rotatable mesh (this should be the first child of the tile prefab if so)
-    public bool occursOutsideBoundary = false; // Whether this tile can occur outside the boundary
+    public bool onlyOccursInsideBoundary = false; // Whether this tile can occur outside the boundary
     public bool onlyOccursOutsideBoundary = false; // Whether this tile can only occur outside the boundary
     
 
