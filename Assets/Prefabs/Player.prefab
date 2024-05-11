@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 3140269337965932822}
   - component: {fileID: 3593900074549987354}
   - component: {fileID: 2090794006302226085}
-  - component: {fileID: 220958022235488225}
+  - component: {fileID: 5565693240296418156}
   m_Layer: 0
   m_Name: SK_Mock
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,8 +108,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!64 &220958022235488225
-MeshCollider:
+--- !u!65 &5565693240296418156
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -126,10 +126,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5495902117074765545, guid: bda47c68c1fb1d942bf0dab928accc5e, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.022083445, y: 0.02208345, z: 0.12629895}
+  m_Center: {x: -0.00000006676967, y: 0.0000000039550314, z: -0.008177273}
 --- !u!1 &6404457502676479793
 GameObject:
   m_ObjectHideFlags: 0

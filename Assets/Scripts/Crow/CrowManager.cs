@@ -112,5 +112,5 @@ public class CrowManager : MonoBehaviour
     /// Sets a random z-axis starting position within player move space
     /// </summary>
     /// <returns>z position for new crow spawn location</returns>
-    private int GetRandomZPos() => Random.Range(1, 9);
+    private int GetRandomZPos() => Random.Range(2, 9);
 }
