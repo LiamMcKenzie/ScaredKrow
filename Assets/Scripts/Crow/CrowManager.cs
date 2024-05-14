@@ -46,7 +46,7 @@ public class CrowManager : MonoBehaviour
     /// Instantiates a Crow gameobject at a position offscreen (x-axis) at a random point on the z-axis
     /// Start Coroutine to move the crow
     /// </summary>
-    private void SpawnCrow()
+    public void SpawnCrow()
     {
         zPos = GetRandomZPos();
         crowPosition = new Vector3(startXPos, 0f, zPos);
