@@ -5,6 +5,7 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Manages the game state
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
 {
     #region Singleton
     public static GameManager instance;
+    public UnityEvent gameoverEvent = new UnityEvent();
+
     private void Awake()
     {
         if (instance == null)
@@ -35,7 +38,12 @@ public class GameManager : MonoBehaviour
     [Header("Player Settings")]
     [SerializeField] private GameObject playerPrefab; // The player prefab
     public TileGridCoords playerStartCoords = new(x: 5, z: 5); // The starting coordinates of the player
+    private Vector3 playerStartPosition; // The position of the player
+    private Quaternion playerStartRotation; // The rotation of the player
     public PlayerController playerController; // The player controller
+
+    [Header("Crow Settings")]
+    [SerializeField] private CrowManager crowManager; // The crow manager
 
     [Header("Map Settings")]
     [SerializeField] private TileManager tileManager; // The tile manager
@@ -85,7 +93,7 @@ public class GameManager : MonoBehaviour
     {
         Application.targetFrameRate = targetFPS;
         initSpeed = Speed;
-        gameoverTriggerArea.gameoverEvent.AddListener(GameOver);
+        gameoverEvent.AddListener(GameOver);
         Init();
     }
 
@@ -106,6 +114,8 @@ public class GameManager : MonoBehaviour
         tileManager.InitTileGrid();
         SpawnPlayer();
         gameStarted = true;
+        crowManager.SpawnCrow();
+
     }
 
     /// <summary>
@@ -115,6 +125,7 @@ public class GameManager : MonoBehaviour
     {
         Speed = initSpeed;
         isCatchingUp = false;
+        
         Init();
     }
 
@@ -133,7 +144,7 @@ public class GameManager : MonoBehaviour
     {
         gameStarted = false;
         GameoverPanel.SetActive(true);
-        Destroy(playerController.gameObject);
+        playerController.MoveToRoot();
     }
 
     /// <summary>
@@ -141,7 +152,20 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void SpawnPlayer()
     {
-        playerController = tileManager.InstantiateOnTile(playerPrefab, playerStartCoords).GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            playerController = tileManager.InstantiateOnTile(playerPrefab, playerStartCoords).GetComponent<PlayerController>();
+            playerStartPosition = playerController.transform.position;
+            playerStartRotation = playerController.transform.rotation;
+        }
+        else
+        {
+            playerController.transform.position = playerStartPosition;
+            playerController.transform.rotation = playerStartRotation;
+            tileManager.masterTileControllerList[playerStartCoords.x][playerStartCoords.z].PlayerEntersTile(playerController.transform);
+            playerController.ResetPlayer();
+        }
+        
     }
 
     /// <summary>
