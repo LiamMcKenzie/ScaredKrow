@@ -37,15 +37,6 @@ public class CrowManager : MonoBehaviour
     private int zPos = 0; //Initial z-axis location before updating with random value
 
     /// <summary>
-    /// Spawn an initial crow at a location
-    /// </summary>
-    public void Start()
-    {
-        GetAlertFromPlayer();
-        SpawnCrow();
-    }
-
-    /// <summary>
     /// Instantiates a Crow gameobject at a position offscreen (x-axis) at a random point on the z-axis
     /// Start Coroutine to move the crow
     /// </summary>
@@ -100,6 +91,19 @@ public class CrowManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Gets object tagged 'Alert' attached to the player, disable active until shown in MoveCrow()
+    /// </summary>
+    public void GetAlertFromPlayer()
+    {
+        //Initial reference to alert gameobject
+        if (playerAlert == null)
+        {
+            playerAlert = GameObject.FindWithTag("Alert");
+            playerAlert.SetActive(false);
+        }
+    }
+
+    /// <summary>
     /// Toggles the alert above the player to be active for half the crow travel time
     /// </summary>
     /// <returns>WaitForSeconds before hiding gameobject again</returns>
@@ -124,18 +128,5 @@ public class CrowManager : MonoBehaviour
     {
         StopAllCoroutines();
         spawnedCrow.transform.position = new Vector3(30f, 0f, 30f);
-    }
-
-    /// <summary>
-    /// Gets object tagged 'Alert' attached to the player, disable active until shown in MoveCrow()
-    /// </summary>
-    public void GetAlertFromPlayer()
-    {
-        //Initial reference to alert gameobject
-        if (playerAlert == null)
-        {
-            playerAlert = GameObject.FindWithTag("Alert");
-            playerAlert.SetActive(false);
-        }
     }
 }

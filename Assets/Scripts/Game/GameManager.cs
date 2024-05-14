@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour
     {
         gameStarted = false;
         GameoverPanel.SetActive(true);
-        ResetCrow();
+        CrowGameOver();
         Destroy(playerController.gameObject);
     }
 
@@ -150,22 +150,22 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets a reference to the manager script attached to scene object and calls Start() to spawn a new crow
+    /// Gets a reference to new player alert object and spawns a new crow
     /// </summary>
     private void SpawnCrow()
     {
         crowManager = crowManagerParent.GetComponent<CrowManager>();
-        crowManager.GetAlertFromPlayer(); //Needed for when new player spawned after reset to remove console error
-        crowManager.Start();
+        crowManager.GetAlertFromPlayer(); //Get alert reference for newly spawned player
+        crowManager.SpawnCrow(); //Spawn crow/start movement
     }
 
     /// <summary>
     /// Stops any more crow movement and moves to offscreen location for game reset
     /// </summary>
-    private void ResetCrow()
+    private void CrowGameOver()
     {
         crowManager = crowManagerParent.GetComponent<CrowManager>();
-        crowManager.GameOver();
+        crowManager.GameOver(); //Stop any crow movement and shift offscreen
     }
 
     /// <summary>

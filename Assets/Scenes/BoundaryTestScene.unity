@@ -217,6 +217,7 @@ MonoBehaviour:
   accelerationCurve: 0.1
   decelerationCurve: 0.3
   playerInCatchupZone: 0
+  crowManagerParent: {fileID: 1067131672}
 --- !u!4 &101821161
 Transform:
   m_ObjectHideFlags: 0
