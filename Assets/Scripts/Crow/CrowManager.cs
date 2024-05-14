@@ -48,6 +48,8 @@ public class CrowManager : MonoBehaviour
     /// </summary>
     public void SpawnCrow()
     {
+        if (GameManager.instance.gameStarted == false) { return; }
+
         zPos = GetRandomZPos();
         crowPosition = new Vector3(startXPos, 0f, zPos);
 
