@@ -39,6 +39,12 @@ public class CrowManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        //Initial reference to alert gameobject
+        if (playerAlert == null)
+        {
+            playerAlert = GameObject.FindWithTag("Alert");
+        }
+
         SpawnCrow();
     }
 
@@ -102,12 +108,6 @@ public class CrowManager : MonoBehaviour
     /// <returns>WaitForSeconds before hiding gameobject again</returns>
     private IEnumerator ShowAlert()
     {
-        //Initial reference to alert gameobject
-        if (playerAlert == null) 
-        { 
-            playerAlert = GameObject.FindWithTag("Alert"); 
-        }
-
         //Toggle the alert on/off
         playerAlert.SetActive(true);
         yield return new WaitForSeconds(travelTime / 2f);
