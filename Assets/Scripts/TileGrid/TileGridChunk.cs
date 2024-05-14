@@ -100,6 +100,15 @@ public class TileGridChunk : MonoBehaviour
                         tileController.BuildFence(isRight);
                     }
                 }
+            
+                else if(tileData.isHidingPlace == false && tileData.isPassable == true)
+                {
+                    if(Random.Range(0,100) < gameManager.PickupProbability)
+                    {
+                        tileController.InstantiateOnThisTile(tileManager.pickupPrefab);
+                    }
+                    
+                }
 
                 // Add the tile controller to the row list
                 row.Add(tileController);

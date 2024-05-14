@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 {
     #region Singleton
     public static GameManager instance;
+    public float PickupProbability = 5f;
+
     private void Awake()
     {
         if (instance == null)
