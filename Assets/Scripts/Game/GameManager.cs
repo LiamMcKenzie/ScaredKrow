@@ -137,6 +137,7 @@ public class GameManager : MonoBehaviour
     {
         gameStarted = false;
         GameoverPanel.SetActive(true);
+        ResetCrow();
         Destroy(playerController.gameObject);
     }
 
@@ -154,7 +155,14 @@ public class GameManager : MonoBehaviour
     private void SpawnCrow()
     {
         crowManager = crowManagerParent.GetComponent<CrowManager>();
+        crowManager.GetAlertFromPlayer();
         crowManager.Start();
+    }
+
+    private void ResetCrow()
+    {
+        crowManager = crowManagerParent.GetComponent<CrowManager>();
+        crowManager.GameOver();
     }
 
     /// <summary>

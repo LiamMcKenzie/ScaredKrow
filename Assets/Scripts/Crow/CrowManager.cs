@@ -14,7 +14,9 @@
  */
 
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class CrowManager : MonoBehaviour
 {
@@ -39,12 +41,7 @@ public class CrowManager : MonoBehaviour
     /// </summary>
     public void Start()
     {
-        //Initial reference to alert gameobject
-        if (playerAlert == null)
-        {
-            playerAlert = GameObject.FindWithTag("Alert");
-        }
-
+        GetAlertFromPlayer();
         SpawnCrow();
     }
 
@@ -54,7 +51,7 @@ public class CrowManager : MonoBehaviour
     /// </summary>
     public void SpawnCrow()
     {
-        if (GameManager.instance.gameStarted == false) { return; }
+        //if (GameManager.instance.gameStarted == false) { return; } //Removed as causing issues with 'Play again' reset
 
         zPos = GetRandomZPos();
         crowPosition = new Vector3(startXPos, 0f, zPos);
@@ -119,4 +116,26 @@ public class CrowManager : MonoBehaviour
     /// </summary>
     /// <returns>z position for new crow spawn location</returns>
     private int GetRandomZPos() => Random.Range(2, 9);
+
+    /// <summary>
+    /// Stops movement of crow and moves offscreen for new game spawning 
+    /// </summary>
+    public void GameOver()
+    {
+        StopAllCoroutines();
+        spawnedCrow.transform.position = new Vector3(30f, 0f, 30f);
+    }
+
+    /// <summary>
+    /// Gets object tagged 'Alert' attached to the player, disable active until shown in MoveCrow()
+    /// </summary>
+    public void GetAlertFromPlayer()
+    {
+        //Initial reference to alert gameobject
+        if (playerAlert == null)
+        {
+            playerAlert = GameObject.FindWithTag("Alert");
+            playerAlert.SetActive(false);
+        }
+    }
 }
