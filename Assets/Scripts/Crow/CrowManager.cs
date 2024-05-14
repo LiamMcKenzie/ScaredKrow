@@ -33,7 +33,7 @@ public class CrowManager : MonoBehaviour
 
     [Header("Constant/Initial movement axis values")]
     private const int startXPos = 16; //Offscreen X location 'ahead' of the player
-    private const int endXPos = -5; //Offscreen X location 'behind' the player
+    private const int endXPos = -10; //Offscreen X location 'behind' the player
     private int zPos = 0; //Initial z-axis location before updating with random value
 
     /// <summary>

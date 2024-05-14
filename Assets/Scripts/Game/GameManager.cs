@@ -155,10 +155,13 @@ public class GameManager : MonoBehaviour
     private void SpawnCrow()
     {
         crowManager = crowManagerParent.GetComponent<CrowManager>();
-        crowManager.GetAlertFromPlayer();
+        crowManager.GetAlertFromPlayer(); //Needed for when new player spawned after reset to remove console error
         crowManager.Start();
     }
 
+    /// <summary>
+    /// Stops any more crow movement and moves to offscreen location for game reset
+    /// </summary>
     private void ResetCrow()
     {
         crowManager = crowManagerParent.GetComponent<CrowManager>();
