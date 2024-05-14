@@ -31,19 +31,20 @@ public class PlayerMovement : MonoBehaviour
         //This is obviously not a great way of doing this.
         //This could be changed with the new input system but I just wanted to quickly test this.
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) )
         {
             BufferDirection(Vector3.right * moveDistance);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             BufferDirection(Vector3.left * moveDistance);
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
             BufferDirection(Vector3.forward * moveDistance);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             BufferDirection(Vector3.back * moveDistance);
         }
