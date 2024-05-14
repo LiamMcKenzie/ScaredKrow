@@ -203,7 +203,7 @@ MonoBehaviour:
   gameoverTriggerArea: {fileID: 467804832}
   GameoverPanel: {fileID: 1234380269}
   targetFPS: 60
-  playerPrefab: {fileID: 6404457502676479793, guid: b2ed011ac1ea54524a03634600711f56,
+  playerPrefab: {fileID: 6404457502676479793, guid: bc2412041f862244791ad02d37978d69,
     type: 3}
   playerStartCoords:
     x: 5
