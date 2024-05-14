@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     #region Singleton
     public static GameManager instance;
+    public int score = 0;
+    private PlayerMovement player;
     private void Awake()
     {
         if (instance == null)
@@ -38,6 +40,14 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
+    void Update()
+    {
+        if (gameStarted)
+        {
+            CalculateScore();
+        }
+    }
+
     /// <summary>
     /// Start the game by initializing the tile grid and spawning the player
     /// </summary>
@@ -54,6 +64,12 @@ public class GameManager : MonoBehaviour
     private void SpawnPlayer()
     {
         tileManager.InstantiateOnTile(playerPrefab, playerStartCoords);
+        player = FindObjectOfType<PlayerMovement>();
+    }
+
+    void CalculateScore()
+    {
+        score = (int)player.gridPosition.x;
     }
 }
 
