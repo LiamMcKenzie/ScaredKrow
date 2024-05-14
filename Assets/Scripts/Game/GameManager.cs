@@ -47,16 +47,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float maxBaseSpeed = 4; // The maximum speed of the game independent of the catchup mechanic
     [SerializeField] private float accelerationCurve = 1.5f; // The speed at which the "camera" catches up to player (lower is faster)
     [SerializeField] private float decelerationCurve = 0.5f; // The speed at which the "camera" slows back down (lower is faster)
-    
+
     private float baseSpeed; // The speed of the game independent of the catchup mechanic
     private float initSpeed = 1; // The initial speed  
     private float decelerationTolerance = 0.1f; // The tolerance for the speed to be considered back to normal
     private float currentVelocity = 0f;
-  
+
 
     private bool isCatchingUp;
     public bool playerInCatchupZone = false;
 
+    [Header("Crow settings")]
+    [SerializeField] private GameObject crowManagerParent;
+    private CrowManager crowManager;
 
     /// <summary>
     /// The speed at which the tiles move
@@ -105,6 +108,7 @@ public class GameManager : MonoBehaviour
         GameoverPanel.SetActive(false);
         tileManager.InitTileGrid();
         SpawnPlayer();
+        SpawnCrow();
         gameStarted = true;
     }
 
@@ -142,6 +146,15 @@ public class GameManager : MonoBehaviour
     private void SpawnPlayer()
     {
         playerController = tileManager.InstantiateOnTile(playerPrefab, playerStartCoords).GetComponent<PlayerController>();
+    }
+
+    /// <summary>
+    /// Gets a reference to the manager script attached to scene object and calls Start() to spawn a new crow
+    /// </summary>
+    private void SpawnCrow()
+    {
+        crowManager = crowManagerParent.GetComponent<CrowManager>();
+        crowManager.Start();
     }
 
     /// <summary>

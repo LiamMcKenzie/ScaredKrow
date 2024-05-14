@@ -37,7 +37,7 @@ public class CrowManager : MonoBehaviour
     /// <summary>
     /// Spawn an initial crow at a location
     /// </summary>
-    private void Start()
+    public void Start()
     {
         //Initial reference to alert gameobject
         if (playerAlert == null)
