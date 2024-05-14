@@ -468,6 +468,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileManager: {fileID: 1014501489}
   gameManager: {fileID: 101821160}
+--- !u!1 &757880235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 757880236}
+  - component: {fileID: 757880237}
+  m_Layer: 0
+  m_Name: CrowManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &757880236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757880235}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1615355416}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &757880237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757880235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d62d4345ab864c748a19358fa7a69f2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crowModel: {fileID: 4727883945757891228, guid: 084589d1b073c7e41a49e1b6f810a258,
+    type: 3}
+  playerAlert: {fileID: 0}
+  travelTime: 5
+  minSpawnDelay: 2
+  maxSpawnDelay: 5
 --- !u!1 &794834109
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,9 +581,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db641637c3f34406b04f97d3a0c2923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GridRepositioned:
+    m_PersistentCalls:
+      m_Calls: []
   playerPrefab: {fileID: 6404457502676479793, guid: b2ed011ac1ea54524a03634600711f56,
     type: 3}
-  playerStartCoords: {x: 1, y: 7}
   defaultTileData: {fileID: 11400000, guid: 58e5549279d5346a6aece000213abde3, type: 2}
   defaultTileColor: {r: 0.7830189, g: 0.71665215, b: 0.25485048, a: 0}
   altRowDarkAmt: 0.9
@@ -699,6 +751,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1615355415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1615355416}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1615355416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615355415}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23.855524, y: 21.466072, z: 2.4849052}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 757880236}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1717241408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,3 +1141,4 @@ SceneRoots:
   - {fileID: 1014501491}
   - {fileID: 1442115071}
   - {fileID: 286670813}
+  - {fileID: 1615355416}
