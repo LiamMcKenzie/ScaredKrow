@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 844188866782233806, guid: 58097f4976e8345cb81847d708f6e99b,
     type: 3}
+  fencePrefab: {fileID: 6740059651317319079, guid: 9d9b9c948c89947f2832e2361a4cbe61,
+    type: 3}
   isPassable: 1
   isHidingPlace: 0
   isRotatable: 0

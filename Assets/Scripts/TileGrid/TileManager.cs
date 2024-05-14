@@ -7,7 +7,6 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Tilemaps;
 using UnityEngine.Events;
 
 /// <summary>
@@ -17,25 +16,21 @@ using UnityEngine.Events;
 public class TileManager : MonoBehaviour
 {
     public UnityEvent GridRepositioned;
-    public GameObject playerPrefab;
+
     [Header("Tile Settings")]
-    //public Vector2 playerStartCoords = new(1, 7);    // The starting coordinates of the player  NOTE: is this unused? there is also a playerstartcoords value in gamemanager
     public TileData defaultTileData;    // The default tile data (empty grass tile)
     public Color defaultTileColor = new(200, 183, 65);  // The base color of the tiles, defaults to a hayish color
     public float altRowDarkAmt = 0.9f;  // The amount to darken the alternate rows by
+    public float outOfBoundsDarkAmt = 0.75f;  // The amount to darken out of bounds tiles by
 
     [Header("Tile Generation Settings")]
     public DifficultyProfile difficultyProfile; // The difficulty profile, a struct containing the tile probabilities and the amount of water rows
 
     [Header("Grid Settings")]
     [SerializeField] private TileGridChunk[] gridChunks = new TileGridChunk[2]; // The two grid chunks, should be game objects with a TileGridChunk component
-    [SerializeField] private int tilesWide = 15;    // width of each grid chunk (z-axis)
+    [SerializeField] public int tilesWide = 15;    // width of each grid chunk (z-axis)
     [SerializeField] public int tilesHigh = 10;   // height of each grid chunk (x-axis)
     [SerializeField] private float tileSize = 1f;   // size of each tile
-
-    [Header("Speed Settings")]
-    [SerializeField] private float _speed = 1; // backing field for Speed property
-    [SerializeField] private float maxSpeed = 500; // maximum speed
 
     [Header("Optimisation Settings")]
     [SerializeField] private bool deactivateTilesOutsideViewport = true; // Whether to optimise the tiles (turns them off when they are not visible)
@@ -62,33 +57,11 @@ public class TileManager : MonoBehaviour
     }
     #endregion
 
-    /// <summary>
-    /// The speed at which the tiles move
-    /// </summary>
-    /// <value>Speed should be greater than or equal to 0</value>
-    public float Speed
-    {
-        get { return _speed; }
-        set 
-        {
-            // Ensure _speed is proper range
-            _speed = Mathf.Clamp(value, 0, maxSpeed);
-        }
-    }
 
     /// <summary>
     /// The starting position of the upper chunk
     /// </summary>
     private Vector3 UpperChunkPosition => new(tilesHigh * tileSize, 0, 0);
-
-    /// <summary>
-    /// This is called when the script is loaded or a value is changed in the inspector
-    /// Its a workaround for Unity not serializing properties, so the setter logic can be applied when the value is changed in the inspector
-    /// </summary>
-    void OnValidate()
-    {
-        Speed = _speed;
-    }
 
     /// <summary>
     /// On Start, generate the tile chunks and populate the master grid list
@@ -106,7 +79,7 @@ public class TileManager : MonoBehaviour
         if (gameManager.gameStarted == false) return;
         foreach (TileGridChunk gridChunk in gridChunks)
         {
-            gridChunk.MoveTiles(Speed);
+            gridChunk.MoveTiles(gameManager.Speed);
         }
 
         CheckAndRepositionGridChunks();
@@ -122,7 +95,6 @@ public class TileManager : MonoBehaviour
     /// </summary>
     public void InitTileGrid()
     {
-        
         gridChunks[0].transform.position = Vector3.zero;
         gridChunks[1].transform.position = UpperChunkPosition;
 
@@ -233,6 +205,7 @@ public class TileManager : MonoBehaviour
             foreach (var tile in row)
             {
                 bool isTileInViewport = tile.IsInViewport(mainCamera, viewportBufferArea);
+
                 // check if the active state matches the bool returned by IsInViewport
                 // this is to avoid unnecessary calls to SetActive which can be expensive
                 if (tile.gameObject.activeSelf != isTileInViewport)
@@ -272,8 +245,9 @@ public class TileManager : MonoBehaviour
     /// </summary>
     /// <param name="prefab">The prefab to instantiate</param>
     /// <param name="coords">The coordinates of the tile to instantiate the prefab on</param>
-    public void InstantiateOnTile(GameObject prefab, TileGridCoords coords)
+    public GameObject InstantiateOnTile(GameObject prefab, TileGridCoords coords)
     {
-        masterTileControllerList[coords.x][coords.z].InstantiateOnThisTile(prefab);
+        GameObject newObject = masterTileControllerList[coords.x][coords.z].InstantiateOnThisTile(prefab);
+        return newObject;
     }
 }
