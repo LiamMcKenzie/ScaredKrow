@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
         {
             gameObject.transform.SetParent(TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z].gameObject.transform); //sets he players parent
             gridPosition = desiredGridPosition; //updates the grid position to the desired position
-
+            GameManager.instance.CalculateScore(movement); //This updates the score, because in order for this code to run the player must have made a successful move
         }
 
         //after the player is assigned a new parent, its position relative to the parent will be off by 1 unit roughly.
