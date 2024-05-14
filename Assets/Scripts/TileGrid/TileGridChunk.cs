@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// This class is used by TileManager to generate the grid of tiles
@@ -24,7 +25,6 @@ public class TileGridChunk : MonoBehaviour
         // log if gameManger is null
         if (gameManager == null) { Debug.Log("GameManager is null"); }
         tileManager = TileManager.instance;
-
     }
 
     /// <summary>
@@ -38,6 +38,11 @@ public class TileGridChunk : MonoBehaviour
     /// </summary>
     public void RecenterTiles() => transform.position = Vector3.zero;
 
+    /// These bool expressions are used to determine if a tile is within the boundaries or if a fence should be built
+    private bool TileWithinBounds(int z, int boundaryRight, int boundaryLeft) => z > boundaryRight && z < tileManager.tilesWide - boundaryLeft;
+    private bool TileOutsideBounds(int z, int boundaryRight, int boundaryLeft) => z < boundaryRight || z > tileManager.tilesWide - boundaryLeft;
+    private bool TileIsBoundary(int z, int boundaryRight, int boundaryLeft) => z == boundaryRight || z == tileManager.tilesWide - boundaryLeft;
+
     /// <summary>
     /// Generate a chunk of the tile grid
     /// </summary>
@@ -48,6 +53,9 @@ public class TileGridChunk : MonoBehaviour
     /// <param name="difficultyProfile">Contains the probabilities/amounts of the various tile types</param>
     public void GenerateTileGrid(int tilesWide, int tilesHigh, float tileSize, DifficultyProfile difficultyProfile)
     {
+        int boundaryLeft = difficultyProfile.boundaryLeft;
+        int boundaryRight = difficultyProfile.boundaryRight;
+
         // Clear the existing chunk
         ClearTiles();
 
@@ -64,7 +72,7 @@ public class TileGridChunk : MonoBehaviour
             for (int z = 0; z < tilesWide; z++)
             {
                 // Get the tile data for this cell
-                TileData tileData = SelectTileData(x, rowDictionary, difficultyProfile.tileProbabilities);
+                TileData tileData = SelectTileData(x, z, rowDictionary, difficultyProfile.tileProbabilities, boundaryLeft, boundaryRight);
 
                 // Create a tile controller for this cell
                 TileController tileController = tileData.CreateTileController(transform, x, z);
@@ -72,8 +80,26 @@ public class TileGridChunk : MonoBehaviour
                 // Calculate the world position of the cell
                 Vector3 worldPosition = CalculateWorldPosition(x, z, tileSize);
 
+                bool evenRow = x % 2 == 0;
+
                 // Instantiate the tile prefab at the world position
-                tileController.InstantiateTile(worldPosition, this, x % 2 == 0);
+                // Every other row has darker tiles
+                tileController.InstantiateTile(worldPosition, this, light: evenRow);
+
+                // Check if outside bounds
+                if (TileWithinBounds(z,boundaryRight, boundaryLeft) == false)
+                {
+                    // Darken the tile
+                    tileController.SetColor(tileManager.defaultTileColor * tileManager.outOfBoundsDarkAmt);
+
+                    // Check if it should be a fence tile
+                    if (TileIsBoundary(z, boundaryRight, boundaryLeft))
+                    {
+                        // Check if the fence should be on the right or left side of tile
+                        bool isRight = z <= boundaryRight;
+                        tileController.BuildFence(isRight);
+                    }
+                }
 
                 // Add the tile controller to the row list
                 row.Add(tileController);
@@ -93,7 +119,7 @@ public class TileGridChunk : MonoBehaviour
         // This dictionary will store the row number (x) and the tile data for that row
         Dictionary<int, TileData> rowDictionary = new();
 
-        
+
         // Iterate through each row setting
         foreach (RowSetting rowSetting in rowSettings)
         {
@@ -105,7 +131,7 @@ public class TileGridChunk : MonoBehaviour
 
                 // If the row number is not already in the dictionary, add it
                 // This could be a while loop to ensure each row is added, but the distribution seems pretty good as is
-                if (rowDictionary.ContainsKey(randomRow) == false )
+                if (rowDictionary.ContainsKey(randomRow) == false)
                 {
                     rowDictionary.Add(randomRow, rowSetting.rowTileData);
                 }
@@ -121,11 +147,11 @@ public class TileGridChunk : MonoBehaviour
     /// <param name="x">This is the loop counter from the outer for loop in GenerateTileGrid. This corresponds to the row number of the grid chunk.</param>
     /// <param name="rowDictionary">A dictionary containing random row number indices (x) and the tile data for that row</param>
     /// <param name="tileProbabilities">A list of tile probabilities. These are structs that contain the tile data and the probability of that tile appearing</param>
-    private TileData SelectTileData(int x, Dictionary<int, TileData> rowDictionary, List<TileProbability> tileProbabilities)
+    private TileData SelectTileData(int x, int z, Dictionary<int, TileData> rowDictionary, List<TileProbability> tileProbabilities, int boundaryLeft, int boundaryRight)
     {
         // make the player start row a default tile
-        if (gameManager.gameStarted == false && x == gameManager.playerStartCoords.x ) 
-        { 
+        if (gameManager.gameStarted == false && x == gameManager.playerStartCoords.x)
+        {
             return tileManager.defaultTileData;
         }
 
@@ -134,6 +160,13 @@ public class TileGridChunk : MonoBehaviour
         {
             return rowDictionary[x];
         }
+
+        // Check if the tile is a fence tile
+        if (TileIsBoundary(z, boundaryRight, boundaryLeft))
+        {
+            return tileManager.defaultTileData;
+        }
+
         // Otherwise, select a tile data based on the probabilities    
 
         // There's a total probability of 100% for all tiles
@@ -143,13 +176,22 @@ public class TileGridChunk : MonoBehaviour
         float randomProbability = Random.Range(0, totalProbability);
 
         // This will be used to calculate the cumulative probability
-        float cumulativeProbability = 0;    
+        float cumulativeProbability = 0;
 
         // Iterate through the tile probabilities
         foreach (TileProbability tileProbability in tileProbabilities)
         {
+            TileData tileData = tileProbability.tileData;
+
+            // Check if the tile should only occur outside the boundary
+            if (TileWithinBounds(z, boundaryRight, boundaryLeft) && tileProbability.onlyOccursOutsideBoundary) { continue; }
+
+            // Check if the tile should only occur inside the boundary
+            if (TileOutsideBounds(z, boundaryRight, boundaryLeft) && tileProbability.onlyOccursInsideBoundary) { continue; }
+
             // Add the probability of the current tile to the cumulative probability
             cumulativeProbability += tileProbability.probability;
+
             // If the random probability is less than or equal to the cumulative probability, return that tile data
             if (randomProbability <= cumulativeProbability)
             {
@@ -178,7 +220,7 @@ public class TileGridChunk : MonoBehaviour
     private void ClearTiles()
     {
         if (tileControllerList.Count == 0) { return; }
-        
+
         foreach (var row in tileControllerList)
         {
             foreach (var tileController in row)
