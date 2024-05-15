@@ -58,8 +58,7 @@ public class GameManager : MonoBehaviour
     public bool playerInCatchupZone = false;
 
     [Header("Crow settings")]
-    [SerializeField] private GameObject crowManagerParent;
-    private CrowManager crowManager;
+    [SerializeField] private CrowManager crowManager;
 
     /// <summary>
     /// The speed at which the tiles move
@@ -154,7 +153,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void SpawnCrow()
     {
-        crowManager = crowManagerParent.GetComponent<CrowManager>();
         crowManager.GetAlertFromPlayer(); //Get alert reference for newly spawned player
         crowManager.SpawnCrow(); //Spawn crow/start movement
     }
@@ -164,7 +162,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void CrowGameOver()
     {
-        crowManager = crowManagerParent.GetComponent<CrowManager>();
         crowManager.GameOver(); //Stop any crow movement and shift offscreen
     }
 
