@@ -9,11 +9,13 @@ using UnityEngine;
 
 public class CrowCollision : MonoBehaviour
 {
+
     private void OnTriggerEnter(Collider other)
     {
         // Check if the colliding object is the player.
         if (other.CompareTag("Player"))
         {
+            GameManager.instance.gameoverEvent.Invoke();
             Debug.Log("Crow collided with the player!");
             //Add more functionality later (i.e damaging player)
         }
