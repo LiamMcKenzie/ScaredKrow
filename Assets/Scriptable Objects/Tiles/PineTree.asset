@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3cea536271ea4d1a8edc43d8e93d40e, type: 3}
+  m_Name: PineTree
+  m_EditorClassIdentifier: 
+  tilePrefab: {fileID: 473080528225809655, guid: 4c899b54132fa4a81a2a111c39cf77ff,
+    type: 3}
+  fencePrefab: {fileID: 0}
+  isPassable: 0
+  isHidingPlace: 0
+  isRotatable: 1
+  occursOutsideBoundary: 1
+  onlyOccursOutsideBoundary: 1

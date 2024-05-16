@@ -20,35 +20,40 @@ public class CrowManager : MonoBehaviour
 {
     [Header("Prefab Gameobjects")]
     [SerializeField] private GameObject crowModel; //CrowEnemy prefab for the crow
-    [SerializeField] private GameObject playerAlert; //Alert prefab attached to the player
+    [SerializeField] public GameObject playerAlert; //Alert prefab attached to the player
 
     [Header("Crow Movement settings")]
     [SerializeField] private float travelTime = 5f; //How fast the crow moves from inital X pos to end X pos (in seconds)
     [SerializeField] private float minSpawnDelay = 2f; //Minimum time (in seconds) before 'respawning' crow in player path
     [SerializeField] private float maxSpawnDelay = 5f; //Maximum time (in seconds) before 'respawning' crow in player path
+    private Vector3 crowPosition; //Spawn position for crow
+    private GameObject spawnedCrow; //Stores Crow gameobject instantiated in SpawnCrow() for movement
 
     [Header("Constant/Initial movement axis values")]
     private const int startXPos = 16; //Offscreen X location 'ahead' of the player
-    private const int endXPos = -5; //Offscreen X location 'behind' the player
+    private const int endXPos = -10; //Offscreen X location 'behind' the player
     private int zPos = 0; //Initial z-axis location before updating with random value
-
-    /// <summary>
-    /// Spawn an initial crow at a location
-    /// </summary>
-    private void Start()
-    {
-        SpawnCrow();
-    }
-
+    private float crowSpeed = 5f;
     /// <summary>
     /// Instantiates a Crow gameobject at a position offscreen (x-axis) at a random point on the z-axis
     /// Start Coroutine to move the crow
     /// </summary>
-    private void SpawnCrow()
+    public void SpawnCrow()
     {
+        //if (GameManager.instance.gameStarted == false) { return; } //Removed as causing issues with 'Play again' reset
+
         zPos = GetRandomZPos();
-        Vector3 spawnPosition = new Vector3(startXPos, 0f, zPos);
-        GameObject spawnedCrow = Instantiate(crowModel, spawnPosition, Quaternion.identity);
+        crowPosition = new Vector3(startXPos, 0f, zPos);
+
+        if (spawnedCrow == null)
+        {
+            spawnedCrow = Instantiate(crowModel, crowPosition, Quaternion.identity);
+        }
+        else
+        {
+            spawnedCrow.transform.position = crowPosition; //Reset position if already spawned
+        }
+
         StartCoroutine(MoveCrow(spawnedCrow));
     }
 
@@ -61,31 +66,39 @@ public class CrowManager : MonoBehaviour
     private IEnumerator MoveCrow(GameObject crow)
     {
         //Show an alert when the crow spawns
+        yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay)); //Wait a random amount before 'respawning'
         StartCoroutine(ShowAlert()); 
 
         //Set values for time and start/end positions
-        float elapsedTime = 0f;
         Vector3 startPos = crow.transform.position;
         Vector3 endPos = new Vector3(endXPos, startPos.y, startPos.z);
 
         //Move the crow over time from a start to end point
-        while (elapsedTime < travelTime)
+        while (crow.transform.position.x > endPos.x)
         {
-            crow.transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / travelTime);
-            elapsedTime += Time.deltaTime;
+            Vector3 position = crow.transform.position;
+            position.x -= Time.deltaTime * (crowSpeed + GameManager.instance.Speed); //Move crow towards end point
+            crow.transform.position = position;
             yield return null;
         }
 
         // Move to a new position offscreen and wait (after reaching the end)
         crow.transform.position = new Vector3(30f, 0f, 30f); //Offscreen location
-        yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay)); //Wait a random amount before 'respawning'
+   
+        SpawnCrow(); //Respawn crow at new location and move again
+    }
 
-        //Get a new z-axiz position for the crow to move along
-        zPos = GetRandomZPos(); 
-
-        // Move crow to new start position and repeat movement coroutine
-        crow.transform.position = new Vector3(startXPos, 0f, zPos);
-        StartCoroutine(MoveCrow(crow));
+    /// <summary>
+    /// Gets object tagged 'Alert' attached to the player, disable active until shown in MoveCrow()
+    /// </summary>
+    public void GetAlertFromPlayer()
+    {
+        //Initial reference to alert gameobject
+        if (playerAlert == null)
+        {
+            playerAlert = GameObject.FindWithTag("Alert");
+            playerAlert.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -94,6 +107,7 @@ public class CrowManager : MonoBehaviour
     /// <returns>WaitForSeconds before hiding gameobject again</returns>
     private IEnumerator ShowAlert()
     {
+        //Toggle the alert on/off
         playerAlert.SetActive(true);
         yield return new WaitForSeconds(travelTime / 2f);
         playerAlert.SetActive(false);
@@ -103,5 +117,14 @@ public class CrowManager : MonoBehaviour
     /// Sets a random z-axis starting position within player move space
     /// </summary>
     /// <returns>z position for new crow spawn location</returns>
-    private int GetRandomZPos() => Random.Range(1, 9);
+    private int GetRandomZPos() => Random.Range(2, 9);
+
+    /// <summary>
+    /// Stops movement of crow and moves offscreen for new game spawning 
+    /// </summary>
+    public void GameOver()
+    {
+        StopAllCoroutines();
+        spawnedCrow.transform.position = new Vector3(30f, 0f, 30f);
+    }
 }
