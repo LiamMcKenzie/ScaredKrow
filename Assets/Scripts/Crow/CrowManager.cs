@@ -18,9 +18,11 @@ using UnityEngine;
 
 public class CrowManager : MonoBehaviour
 {
+    [Header("Game Manager")]
+    [SerializeField] private GameManager gameManager; //Reference to GameManager script
+    
     [Header("Prefab Gameobjects")]
     [SerializeField] private GameObject crowModel; //CrowEnemy prefab for the crow
-    [SerializeField] public GameObject playerAlert; //Alert prefab attached to the player
 
     [Header("Crow Movement settings")]
     [SerializeField] private float travelTime = 5f; //How fast the crow moves from inital X pos to end X pos (in seconds)
@@ -34,14 +36,14 @@ public class CrowManager : MonoBehaviour
     private const int endXPos = -10; //Offscreen X location 'behind' the player
     private int zPos = 0; //Initial z-axis location before updating with random value
     private float crowSpeed = 5f;
+
+
     /// <summary>
     /// Instantiates a Crow gameobject at a position offscreen (x-axis) at a random point on the z-axis
     /// Start Coroutine to move the crow
     /// </summary>
     public void SpawnCrow()
     {
-        //if (GameManager.instance.gameStarted == false) { return; } //Removed as causing issues with 'Play again' reset
-
         zPos = GetRandomZPos();
         crowPosition = new Vector3(startXPos, 0f, zPos);
 
@@ -67,7 +69,7 @@ public class CrowManager : MonoBehaviour
     {
         //Show an alert when the crow spawns
         yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay)); //Wait a random amount before 'respawning'
-        StartCoroutine(ShowAlert()); 
+        gameManager.playerController?.ShowAlert(); //Show alert above player
 
         //Set values for time and start/end positions
         Vector3 startPos = crow.transform.position;
@@ -84,33 +86,8 @@ public class CrowManager : MonoBehaviour
 
         // Move to a new position offscreen and wait (after reaching the end)
         crow.transform.position = new Vector3(30f, 0f, 30f); //Offscreen location
-   
+
         SpawnCrow(); //Respawn crow at new location and move again
-    }
-
-    /// <summary>
-    /// Gets object tagged 'Alert' attached to the player, disable active until shown in MoveCrow()
-    /// </summary>
-    public void GetAlertFromPlayer()
-    {
-        //Initial reference to alert gameobject
-        if (playerAlert == null)
-        {
-            playerAlert = GameObject.FindWithTag("Alert");
-            playerAlert.SetActive(false);
-        }
-    }
-
-    /// <summary>
-    /// Toggles the alert above the player to be active for half the crow travel time
-    /// </summary>
-    /// <returns>WaitForSeconds before hiding gameobject again</returns>
-    private IEnumerator ShowAlert()
-    {
-        //Toggle the alert on/off
-        playerAlert.SetActive(true);
-        yield return new WaitForSeconds(travelTime / 2f);
-        playerAlert.SetActive(false);
     }
 
     /// <summary>
