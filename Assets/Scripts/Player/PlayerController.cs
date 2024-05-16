@@ -6,6 +6,7 @@
  */
 
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// This class is used to control the player state
@@ -15,11 +16,32 @@ public class PlayerController : MonoBehaviour
 {
     private GameManager gameManager;
     private PlayerMovement playerMovement;
+    [SerializeField] GameObject playerAlert;
 
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         gameManager = GameManager.instance;
+    }
+
+    /// <summary>
+    /// Toggles the alert above the player to be active for half the crow travel time
+    /// </summary>
+    /// <returns>WaitForSeconds before hiding gameobject again</returns>
+    private IEnumerator AlertOnOff()
+    {
+        //Toggle the alert on/off
+        playerAlert.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
+        playerAlert.SetActive(false);
+    }
+
+    /// <summary>
+    /// Run the alert coroutine
+    /// </summary>
+    public void ShowAlert()
+    {
+        StartCoroutine(AlertOnOff());
     }
 
     /// <summary>

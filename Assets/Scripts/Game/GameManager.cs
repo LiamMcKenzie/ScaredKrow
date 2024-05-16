@@ -5,6 +5,7 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Manages the game state
@@ -15,7 +16,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public int score = 0;
     private int backMovements = 0;
-    private PlayerMovement player;
     private void Awake()
     {
         if (instance == null)
@@ -31,14 +31,16 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     public bool gameStarted; // Whether the game has started
     [SerializeField] private Camera mainCamera; // The main camera
-    [SerializeField] private GameoverTriggerArea gameoverTriggerArea; // The game over trigger area
     [SerializeField] private GameObject GameoverPanel; // The game over panel
     [SerializeField] private int targetFPS = 60; // The target frames per second
+    public UnityEvent gameoverEvent = new UnityEvent(); // The event to fire when the player is caught
 
     [Header("Player Settings")]
     [SerializeField] private GameObject playerPrefab; // The player prefab
     public TileGridCoords playerStartCoords = new(x: 5, z: 5); // The starting coordinates of the player
-    public PlayerController playerController; // The player controller
+    public GameObject player; // The player object
+    public PlayerMovement playerMovement; // The player movement script
+    public PlayerController playerController; // The player controller script
 
     [Header("Map Settings")]
     [SerializeField] private TileManager tileManager; // The tile manager
@@ -85,12 +87,12 @@ public class GameManager : MonoBehaviour
     {
         Speed = _speed;
     }
-    
+
     void Start()
     {
         Application.targetFrameRate = targetFPS;
         initSpeed = Speed;
-        gameoverTriggerArea.gameoverEvent.AddListener(GameOver);
+        gameoverEvent.AddListener(GameOver);
         Init();
     }
 
@@ -110,7 +112,7 @@ public class GameManager : MonoBehaviour
         GameoverPanel.SetActive(false);
         tileManager.InitTileGrid();
         SpawnPlayer();
-        SpawnCrow();
+        crowManager.SpawnCrow();
         gameStarted = true;
     }
 
@@ -121,6 +123,8 @@ public class GameManager : MonoBehaviour
     {
         Speed = initSpeed;
         isCatchingUp = false;
+        score = 0;
+        backMovements = 0;
         Init();
     }
 
@@ -138,9 +142,10 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameStarted = false;
+        // destroy player
+        Destroy(player);
         GameoverPanel.SetActive(true);
-        CrowGameOver();
-        Destroy(playerController.gameObject);
+        crowManager.GameOver();
     }
 
     /// <summary>
@@ -148,9 +153,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void SpawnPlayer()
     {
-        playerController = tileManager.InstantiateOnTile(playerPrefab, playerStartCoords).GetComponent<PlayerController>();
-        tileManager.InstantiateOnTile(playerPrefab, playerStartCoords);
-        player = FindObjectOfType<PlayerMovement>();
+        if (player != null) { return; }
+        player = tileManager.InstantiateOnTile(playerPrefab, playerStartCoords);
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerController = player.GetComponent<PlayerController>();
     }
 
     /// <summary>
@@ -162,34 +168,19 @@ public class GameManager : MonoBehaviour
     {
         if (movement == Vector3.right) //checks if player is moving forward. (for some reason vector.right is forward)
         {
-            if(backMovements > 0) //backmovements checks the amount of times the player has moved back without moving forward.
+            if (backMovements > 0) //backmovements checks the amount of times the player has moved back without moving forward.
             {
                 backMovements--;
-            }else{ 
+            }
+            else
+            {
                 score++; //increases the score by 1
             }
         }
         else if (movement == Vector3.left)
         {
             backMovements++;
-        
-    }
-
-    /// <summary>
-    /// Gets a reference to new player alert object and spawns a new crow
-    /// </summary>
-    private void SpawnCrow()
-    {
-        crowManager.GetAlertFromPlayer(); //Get alert reference for newly spawned player
-        crowManager.SpawnCrow(); //Spawn crow/start movement
-    }
-
-    /// <summary>
-    /// Stops any more crow movement and moves to offscreen location for game reset
-    /// </summary>
-    private void CrowGameOver()
-    {
-        crowManager.GameOver(); //Stop any crow movement and shift offscreen
+        }
     }
 
     /// <summary>
