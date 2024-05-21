@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 3}
   fencePrefab: {fileID: 8280825420172610302, guid: e01339e6007be49b7a4a84b8b26dfb9f,
     type: 3}
-  crossingPrefab: {fileID: 7826409104962140363, guid: 0c21f4898a13a48b3b583ffe74a0adf3,
+  crossingPrefab: {fileID: 4858953291012886776, guid: 0c21f4898a13a48b3b583ffe74a0adf3,
     type: 3}
   isPassable: 0
   isHidingPlace: 0

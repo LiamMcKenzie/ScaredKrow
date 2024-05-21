@@ -188,6 +188,9 @@ public class TileController : MonoBehaviour
         isACrossing = true;
         isPassable = true;
         GameObject crossing = InstantiateOnThisTile(crossingPrefab);
+        // crossing rotation y random
+        crossing.transform.Rotate(new Vector3(0, Random.Range(-30, 30), 0));
+
         crossing.transform.localPosition = new Vector3(0, CROSSING_Y_OFFSET, 0);
     }
 
