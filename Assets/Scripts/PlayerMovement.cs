@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveDistance = 1f;
     public float moveTime = 0.2f; //Time in seconds
     private bool isMoving = false;
+    public bool isHiding = false;
     public TileGridCoords gridPosition; 
 
     private Vector3 bufferedDirection = Vector3.zero;
