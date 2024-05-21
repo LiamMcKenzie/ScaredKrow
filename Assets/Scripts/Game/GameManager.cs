@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     #endregion
     [Header("Game Settings")]
     public bool gameStarted; // Whether the game has started
+    public bool gameOver = false; // Whether the game has ended
     [SerializeField] private Camera mainCamera; // The main camera
     [SerializeField] private GameObject GameoverPanel; // The game over panel
     [SerializeField] private GameObject titlePanel;
@@ -152,6 +153,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameStarted = false;
+        gameOver = true;
         // destroy player
         Destroy(player);
         GameoverPanel.SetActive(true);
