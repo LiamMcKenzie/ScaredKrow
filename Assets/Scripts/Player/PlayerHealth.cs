@@ -110,5 +110,6 @@ public class PlayerHealth : MonoBehaviour
                     break;
             }
         }
+        CheckHealth(); //Ensure current health is correct after removing items
     }
 }
