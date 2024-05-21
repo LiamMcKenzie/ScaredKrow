@@ -14,16 +14,21 @@ using UnityEngine;
 public class TileController : MonoBehaviour
 {
     [Header("Tile Coordinates")]
-    [SerializeField] private int x; // The x coordinate of the tile
-    [SerializeField] private int z; // The z coordinate of the tile
+    [SerializeField] public int x; // The x coordinate of the tile
+    [SerializeField] public int z; // The z coordinate of the tile
 
     private const float Z_ADJUST_AMT = 0.45f; // The amount to adjust the z position of the fence by
     private const float X_ADJUST_AMT = 0.5f; // The amount to adjust the x position of the fence by
+    private const float CROSSING_Y_OFFSET = 0.05f; // The amount to offset the crossing by
+    
     private GameObject tilePrefab;  // The prefab of the tile
     private GameObject fencePrefab; // The fence mesh for this tile
+    private GameObject crossingPrefab;  // The crossing mesh for this tile
     public bool isPassable;    // Can the player walk on this tile //NOTE: changed from private to public. For use in PlayerMovement check -Liam
     private bool isHidingPlace; // Can the player hide in this tile
     private bool isRotatable;   // Does the tile contain a rotatable mesh (this should be the first child of the tile prefab if so) 
+    public bool hasCrossings;  // Is this tile a fence
+    public bool isACrossing;
     public bool containsPlayer;
 
     private const int NAME_LENGTH = 7;  // The length of the name to display in the ToString method
@@ -46,7 +51,9 @@ public class TileController : MonoBehaviour
         isPassable = tileData.isPassable;
         isHidingPlace = tileData.isHidingPlace;
         isRotatable = tileData.isRotatable;
+        hasCrossings = tileData.hasCrossings;
         fencePrefab = tileData.fencePrefab;
+        crossingPrefab = tileData.crossingPrefab;
     }
 
     /// <summary>
@@ -170,6 +177,32 @@ public class TileController : MonoBehaviour
     {
         containsPlayer = true;
         playerTransform.SetParent(transform);
+    }
+
+    /// <summary>
+    /// Adds the crossing asset to the tile and sets the tile to passable
+    /// </summary>
+    public void AddCrossing()
+    {
+        if (crossingPrefab == null) { return; }
+        isACrossing = true;
+        isPassable = true;
+        GameObject crossing = InstantiateOnThisTile(crossingPrefab);
+        crossing.transform.localPosition = new Vector3(0, CROSSING_Y_OFFSET, 0);
+    }
+
+    /// <summary>
+    /// Change this to a passable tile (used on tiles adjacent a crossing)
+    /// </summary>
+    public void MakePassable()
+    {
+        if (isPassable) { return; }
+        
+        isPassable = true;
+        // destroy first child of first child (this is the mesh for an obstacle tile)
+        Destroy(transform.GetChild(0)?.GetChild(0)?.gameObject);
+        // append MadePassable to the name
+        gameObject.name += "-MadePassable";
     }
 }
 
