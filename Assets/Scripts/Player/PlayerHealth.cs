@@ -79,10 +79,10 @@ public class PlayerHealth : MonoBehaviour
     public void Damage()
     {
         // List of worn clothing items
-        List<string> wornItems = new List<string>(); 
-        if (hatWorn) wornItems.Add("hat");
-        if (shirtWorn) wornItems.Add("shirt");
-        if (pantsWorn) wornItems.Add("pants");
+        List<string> wornItems = new List<string>();
+        if (hatWorn) { wornItems.Add("hat"); }
+        if (shirtWorn) { wornItems.Add("shirt"); }
+        if (pantsWorn) { wornItems.Add("pants"); }
 
         if (wornItems.Count == 0)
         {
