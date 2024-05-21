@@ -24,7 +24,6 @@ public class TileGridChunk : MonoBehaviour
 
     void Start()
     {
-        // log if gameManger is null
         if (gameManager == null) { Debug.Log("GameManager is null"); }
         tileManager = TileManager.instance;
     }
@@ -40,7 +39,7 @@ public class TileGridChunk : MonoBehaviour
     /// </summary>
     public void RecenterTiles() => transform.position = Vector3.zero;
 
-    /// These bool expressions are used to determine if a tile is within the boundaries or if a fence should be built
+    /// These bool expressions are used to determine if a tile is within, outside, or on the boundary of the playable area
     private bool TileWithinBounds(int z, int boundaryRight, int boundaryLeft) => z > boundaryRight && z < tileManager.tilesWide - boundaryLeft;
     private bool TileOutsideBounds(int z, int boundaryRight, int boundaryLeft) => z < boundaryRight || z > tileManager.tilesWide - boundaryLeft;
     private bool TileIsBoundary(int z, int boundaryRight, int boundaryLeft) => z == boundaryRight || z == tileManager.tilesWide - boundaryLeft;
@@ -88,13 +87,13 @@ public class TileGridChunk : MonoBehaviour
                 // Every other row has darker tiles
                 tileController.InstantiateTile(worldPosition, this, light: evenRow);
 
-                // Check if outside bounds
+                // Check if outside bounds (out of playable area)
                 if (TileWithinBounds(z, boundaryRight, boundaryLeft) == false)
                 {
                     // Darken the tile
                     tileController.SetColor(tileManager.defaultTileColor * tileManager.outOfBoundsDarkAmt);
 
-                    // Check if it should be a fence tile
+                    // Check if it should be a fence tile (falls on the boundary of the playable area)
                     if (TileIsBoundary(z, boundaryRight, boundaryLeft))
                     {
                         // Check if the fence should be on the right or left side of tile
@@ -102,11 +101,10 @@ public class TileGridChunk : MonoBehaviour
                         tileController.BuildFence(isRight);
                     }
                 }
-
-                bool tileCouldBeACrossing = TileWithinBounds(z, boundaryRight, boundaryLeft) && tileController.hasCrossings;
-
-                // If the tile is a potential crossing, make it one if it meets the probability
-                if (tileCouldBeACrossing && Random.Range(0, 100) < difficultyProfile.crossingProbability)
+                // The remaining tiles fall within bounds, 
+                // so check whether to make the tile a crossing by checking if it is a crossing type tile 
+                // and if the crossing probability is met
+                else if (tileController.hasCrossings && Random.Range(0, 100) < difficultyProfile.crossingProbability)
                 {
                     makeCrossing(tileController, x, z);
                 }
@@ -115,10 +113,11 @@ public class TileGridChunk : MonoBehaviour
                 row.Add(tileController);
             }
 
-            // Check if the row has crossings, ie a water row
+            // Making sure there is at least one crossing in a crossing type row:
+            // Check if the row was a row that should have crossings, ie a water row
             bool isARowWithCrossings = row[0].hasCrossings;
 
-            // check there is at least one crossing in the row
+            // Check there is at least one crossing in the row
             if (isARowWithCrossings && row.Find(tileController => tileController.isACrossing) == null)
             {
                 // if there isn't, add a crossing to a random tile as long as its within bounds
@@ -130,12 +129,13 @@ public class TileGridChunk : MonoBehaviour
             tileControllerList.Add(row);
         }
         
-        // for all the default tiles, call MakePassable on the corresponding tile controller
+        // for all the tiles that are vertically adjacent to crossings, call MakePassable on the corresponding tile controller
         foreach (TileGridCoords coords in tilesToBeMadePassable)
         {
             tileControllerList[coords.x][coords.z].MakePassable();
         }
 
+        // clear the list for next time
         tilesToBeMadePassable.Clear();
     }
 
