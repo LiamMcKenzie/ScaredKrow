@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 101821161}
   - component: {fileID: 101821160}
   - component: {fileID: 101821162}
+  - component: {fileID: 101821163}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -201,6 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   gameStarted: 0
+  gameOver: 0
   mainCamera: {fileID: 1915738681}
   GameoverPanel: {fileID: 1234380269}
   titlePanel: {fileID: 108399861}
@@ -265,6 +267,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3b921de8f4c224d97d2f8aa703f53e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &101821163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101821159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb346060c15dd0545b0193a944d1c543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &108399861
