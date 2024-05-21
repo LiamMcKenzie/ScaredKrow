@@ -35,6 +35,8 @@ public class CrowManager : MonoBehaviour
     private const int startXPos = 16; //Offscreen X location 'ahead' of the player
     private const int endXPos = -10; //Offscreen X location 'behind' the player
     private int zPos = 0; //Initial z-axis location before updating with random value
+    private const int minZPos = 1; //Boundary Z-pos at right side of screen
+    private const int maxZPos = 10;//Boundary Z-pos at left side of screen
     private float crowSpeed = 5f;
 
 
@@ -94,7 +96,7 @@ public class CrowManager : MonoBehaviour
     /// Sets a random z-axis starting position within player move space
     /// </summary>
     /// <returns>z position for new crow spawn location</returns>
-    private int GetRandomZPos() => Random.Range(2, 9);
+    private int GetRandomZPos() => Random.Range(minZPos, maxZPos);
 
     /// <summary>
     /// Stops movement of crow and moves offscreen for new game spawning 
