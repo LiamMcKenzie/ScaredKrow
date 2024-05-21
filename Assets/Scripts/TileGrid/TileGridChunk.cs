@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 /// <summary>
 /// This class is used by TileManager to generate the grid of tiles
@@ -116,16 +115,15 @@ public class TileGridChunk : MonoBehaviour
                 row.Add(tileController);
             }
 
-            // check if the row has crossings by looking at the first tile controller
-            if (row[0].hasCrossings)
+            // Check if the row has crossings, ie a water row
+            bool isARowWithCrossings = row[0].hasCrossings;
+
+            // check there is at least one crossing in the row
+            if (isARowWithCrossings && row.Find(tileController => tileController.isACrossing) == null)
             {
-                // check there is at least one crossing in the row
-                if (row.Find(tileController => tileController.isACrossing) == null)
-                {
-                    // if there isn't, add a crossing to a random tile as long as its within bounds
-                    int zIndex = Random.Range(boundaryRight + 1, tilesWide - boundaryLeft);
-                    makeCrossing(row[zIndex], x, zIndex);
-                }
+                // if there isn't, add a crossing to a random tile as long as its within bounds
+                int zIndex = Random.Range(boundaryRight + 1, tilesWide - boundaryLeft);
+                makeCrossing(row[zIndex], x, zIndex);
             }
 
             // Add the row to the outer layer of the 2D list
