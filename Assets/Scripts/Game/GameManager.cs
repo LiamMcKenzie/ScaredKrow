@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     public bool gameStarted; // Whether the game has started
     [SerializeField] private Camera mainCamera; // The main camera
     [SerializeField] private GameObject GameoverPanel; // The game over panel
+    [SerializeField] private GameObject titlePanel;
+    [SerializeField] private GameObject scorePanel; // The game over panel
     [SerializeField] private int targetFPS = 60; // The target frames per second
     public UnityEvent gameoverEvent = new UnityEvent(); // The event to fire when the player is caught
 
@@ -110,10 +112,18 @@ public class GameManager : MonoBehaviour
     {
         baseSpeed = Speed;
         GameoverPanel.SetActive(false);
+        titlePanel.SetActive(true);
+        scorePanel.SetActive(false);
         tileManager.InitTileGrid();
         SpawnPlayer();
+    }
+
+    public void StartGame()
+    {
         crowManager.SpawnCrow();
         gameStarted = true;
+        titlePanel.SetActive(false);
+        scorePanel.SetActive(true);
     }
 
     /// <summary>
