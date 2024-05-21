@@ -1548,11 +1548,11 @@ MonoBehaviour:
     rowSettings:
     - rowTileData: {fileID: 11400000, guid: 1b49473dfcf5044c893eb75c98da9cac, type: 2}
       amountOfRows: 3
-      minimumRowsApart: 3
+      minimumRowsApart: 4
     - rowTileData: {fileID: 11400000, guid: 298ca93e2e30c40b8ba06e3f037219c0, type: 2}
       amountOfRows: 2
       minimumRowsApart: 1
-    crossingProbability: 45
+    crossingProbability: 40
     boundaryLeft: 4
     boundaryRight: 0
   gridChunks:
