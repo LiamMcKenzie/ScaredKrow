@@ -19,8 +19,8 @@ public class TileController : MonoBehaviour
 
     private const float Z_ADJUST_AMT = 0.45f; // The amount to adjust the z position of the fence by
     private const float X_ADJUST_AMT = 0.5f; // The amount to adjust the x position of the fence by
-    private const float CROSSING_Y_OFFSET = 0.05f; // The amount to offset the crossing by
-    
+    private const float CROSSING_Y_OFFSET = 0.02f; // The amount to offset the crossing by
+
     private GameObject tilePrefab;  // The prefab of the tile
     private GameObject fencePrefab; // The fence mesh for this tile
     private GameObject crossingPrefab;  // The crossing mesh for this tile
