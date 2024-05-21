@@ -227,8 +227,8 @@ MonoBehaviour:
   playerMovement: {fileID: 0}
   playerController: {fileID: 0}
   tileManager: {fileID: 1014501489}
-  _speed: 0.5
-  speedIncrement: 0.05
+  _speed: 0
+  speedIncrement: 0
   catchupSpeed: 8
   maxBaseSpeed: 3.5
   accelerationCurve: 0.1
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   difficultyProfile:
     tileProbabilities:
     - tileData: {fileID: 11400000, guid: 31d2e1158995e48c6a87694979091d76, type: 2}
-      probability: 5
+      probability: 6.5
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 6c788d589fb9042808d2aae67b3da07b, type: 2}
@@ -1530,7 +1530,7 @@ MonoBehaviour:
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: c64f420ad3297486399a3c2a31b0e64d, type: 2}
-      probability: 7.5
+      probability: 8
       onlyOccursInsideBoundary: 0
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 1fd4760ec2bb74041bf9129ed8779261, type: 2}
@@ -1552,7 +1552,7 @@ MonoBehaviour:
     - rowTileData: {fileID: 11400000, guid: 298ca93e2e30c40b8ba06e3f037219c0, type: 2}
       amountOfRows: 2
       minimumRowsApart: 1
-    crossingProbability: 33
+    crossingProbability: 45
     boundaryLeft: 4
     boundaryRight: 0
   gridChunks:

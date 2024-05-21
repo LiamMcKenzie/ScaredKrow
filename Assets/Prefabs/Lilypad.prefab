@@ -92,6 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 978155489241315533}
+  - component: {fileID: 670231213049658429}
   m_Layer: 0
   m_Name: Lilypad
   m_TagString: Untagged
@@ -115,3 +116,18 @@ Transform:
   - {fileID: 7262727252451076720}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &670231213049658429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7826409104962140363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6b67f10e67a46b494808c6af7731f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bobSpeed: 3
+  bobHeight: -0.01
+  bobWidth: -0.03
