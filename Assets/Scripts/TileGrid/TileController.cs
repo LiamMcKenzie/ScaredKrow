@@ -20,6 +20,7 @@ public class TileController : MonoBehaviour
     private const float Z_ADJUST_AMT = 0.45f; // The amount to adjust the z position of the fence by
     private const float X_ADJUST_AMT = 0.5f; // The amount to adjust the x position of the fence by
     private const float CROSSING_Y_OFFSET = 0.02f; // The amount to offset the crossing by
+    private const int CROSSING_ROTATION = 30; // The amount to rotate the crossing by
 
     private GameObject tilePrefab;  // The prefab of the tile
     private GameObject fencePrefab; // The fence mesh for this tile
@@ -189,7 +190,7 @@ public class TileController : MonoBehaviour
         isPassable = true;
         GameObject crossing = InstantiateOnThisTile(crossingPrefab);
         // crossing rotation y random
-        crossing.transform.Rotate(new Vector3(0, Random.Range(-30, 30), 0));
+        crossing.transform.Rotate(new Vector3(0, Random.Range(-CROSSING_ROTATION, CROSSING_ROTATION), 0));
 
         crossing.transform.localPosition = new Vector3(0, CROSSING_Y_OFFSET, 0);
     }
