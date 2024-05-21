@@ -227,8 +227,8 @@ MonoBehaviour:
   playerMovement: {fileID: 0}
   playerController: {fileID: 0}
   tileManager: {fileID: 1014501489}
-  _speed: 0
-  speedIncrement: 0
+  _speed: 0.5
+  speedIncrement: 0.05
   catchupSpeed: 8
   maxBaseSpeed: 3.5
   accelerationCurve: 0.1
