@@ -129,8 +129,8 @@ public class TileGridChunk : MonoBehaviour
             // Add the row to the outer layer of the 2D list
             tileControllerList.Add(row);
         }
-        // for all the default tiles, call MakeDefaultTile on the corresponding tile controller
-        // iterate through tilesToBeMadePassable with nested for
+        
+        // for all the default tiles, call MakePassable on the corresponding tile controller
         foreach (TileGridCoords coords in tilesToBeMadePassable)
         {
             tileControllerList[coords.x][coords.z].MakePassable();
