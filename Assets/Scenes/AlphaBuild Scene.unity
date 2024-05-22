@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18178011, g: 0.22745012, b: 0.3074199, a: 1}
+  m_IndirectSpecularColor: {r: 0.18178049, g: 0.22745068, b: 0.3074211, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1756,7 +1756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 101821160}
-  crowModel: {fileID: 4727883945757891228, guid: 084589d1b073c7e41a49e1b6f810a258,
+  crowModel: {fileID: 5125962944405977321, guid: b416834be1688654687207e7c286d44f,
     type: 3}
   travelTime: 5
   minSpawnDelay: 2
