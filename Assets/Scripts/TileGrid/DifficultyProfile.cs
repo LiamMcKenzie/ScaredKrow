@@ -37,12 +37,13 @@ public struct RowSetting
 /// This is used by TileGridChunk.GenerateTileGrid to generate a chunk of tiles
 /// </summary>
 [System.Serializable]
-public struct DifficultyProfile
+public class DifficultyProfile
 {
     public List<TileProbability> tileProbabilities;
     public List<RowSetting> rowSettings;
 
     [Tooltip("Should be between 1 and 100, but there will always be at least one crossing")]
-    public float crossingProbability;
+    public int minCrossings = 1;
+    public int maxCrossings = 4;
     public int boundaryLeft, boundaryRight; // The index of the columns that define the boundary
 }
