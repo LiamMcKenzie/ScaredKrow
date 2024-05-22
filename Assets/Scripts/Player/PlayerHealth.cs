@@ -1,3 +1,10 @@
+/*
+ * File: PlayerHealth.cs
+ * Purpose: Manages the player's health and clothing
+ * Author: Johnathan and Devon
+ * Contributions: Assisted by GitHub Copilot
+ */
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,14 +33,10 @@ public class PlayerHealth : MonoBehaviour
 
     public List<ClothingItem> CurrentOutfit => clothingItems.FindAll(item => item.worn);
 
-    public void MakeNude()
-    {
-        foreach (var item in clothingItems)
-        {
-            item.worn = false;
-        }
-    }
-
+    /// <summary>
+    /// Puts on a piece of clothing
+    /// </summary>
+    /// <param name="type">The type of clothing to put on</param>
     public void PutOnClothing(ClothingType type)
     {
         var item = clothingItems.Find(i => i.type == type);
@@ -43,6 +46,9 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Removes a random piece of clothing
+    /// </summary>
     private void RemoveRandomClothing()
     {
         if (IsNude) { return; }
@@ -52,6 +58,10 @@ public class PlayerHealth : MonoBehaviour
         wornItems[randomItem].worn = false;
     }
 
+    /// <summary>
+    /// Damages the player by removing a piece of clothing,
+    /// or ending the game if the player is already nude
+    /// </summary>
     [ContextMenu("Damage Player")]
     public void Damage()
     {
@@ -67,7 +77,6 @@ public class PlayerHealth : MonoBehaviour
 
     public override string ToString()
     {
-
         string status = "Current Outfit:\n";
         status += "Amount of clothing items: " + CurrentOutfit.Count + "\n";
         foreach (var item in clothingItems)
