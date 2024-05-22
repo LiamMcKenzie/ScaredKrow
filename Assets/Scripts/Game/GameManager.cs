@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
     {
         Speed = initSpeed;
         isCatchingUp = false;
+        playerInCatchupZone = false;
         score = 0;
         backMovements = 0;
         Init();
