@@ -1756,7 +1756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 101821160}
-  crowModel: {fileID: 5125962944405977321, guid: b416834be1688654687207e7c286d44f,
+  crowModel: {fileID: 4727883945757891228, guid: 084589d1b073c7e41a49e1b6f810a258,
     type: 3}
   travelTime: 5
   minSpawnDelay: 2
