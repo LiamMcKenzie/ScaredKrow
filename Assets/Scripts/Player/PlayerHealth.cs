@@ -16,23 +16,15 @@ public class ClothingItem
 
 public class PlayerHealth : MonoBehaviour
 {
-    private const int STARTING_HP = 1;
-    [field: SerializeField] public int CurrentHP { get; private set;}
-
     private List<ClothingItem> clothingItems = new List<ClothingItem>() {
-        new ClothingItem { type = ClothingType.Hat, worn = true },
-        new ClothingItem { type = ClothingType.Shirt, worn = true },
-        new ClothingItem { type = ClothingType.Pants, worn = true }
+        new ClothingItem { type = ClothingType.Hat, worn = false },
+        new ClothingItem { type = ClothingType.Shirt, worn = false },
+        new ClothingItem { type = ClothingType.Pants, worn = false }
     };
 
-    public bool IsNude => CurrentHP <= STARTING_HP;
+    public bool IsNude => CurrentOutfit.Count == 0;
 
     public List<ClothingItem> CurrentOutfit => clothingItems.FindAll(item => item.worn);
-
-    private void Start()
-    {
-        CalculateHealth();
-    }
 
     public void MakeNude()
     {
@@ -40,12 +32,15 @@ public class PlayerHealth : MonoBehaviour
         {
             item.worn = false;
         }
-        CurrentHP = STARTING_HP;
     }
 
-    private void CalculateHealth()
+    public void PutOnClothing(ClothingType type)
     {
-        CurrentHP = STARTING_HP + CurrentOutfit.Count;
+        var item = clothingItems.Find(i => i.type == type);
+        if (item != null)
+        {
+            item.worn = true;
+        }
     }
 
     private void RemoveRandomClothing()
@@ -55,25 +50,26 @@ public class PlayerHealth : MonoBehaviour
         var wornItems = CurrentOutfit;
         int randomItem = Random.Range(0, wornItems.Count);
         wornItems[randomItem].worn = false;
-
-        CalculateHealth();
     }
 
     [ContextMenu("Damage Player")]
     public void Damage()
     {
-        RemoveRandomClothing();
         if (IsNude)
         {
-            CurrentHP = 0;
             GameManager.instance.gameoverEvent.Invoke();
+        }
+        else
+        {
+            RemoveRandomClothing();
         }
     }
 
     public override string ToString()
     {
-        string status = $"Player Health: {CurrentHP}\n";
-        status += "Current Outfit:\n";
+
+        string status = "Current Outfit:\n";
+        status += "Amount of clothing items: " + CurrentOutfit.Count + "\n";
         foreach (var item in clothingItems)
         {
             status += $"{item.type}: {(item.worn ? "Worn" : "Not Worn")}\n";
