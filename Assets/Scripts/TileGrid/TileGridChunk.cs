@@ -105,7 +105,8 @@ public class TileGridChunk : MonoBehaviour
                 {
                     if(Random.Range(0,100) < gameManager.PickupProbability)
                     {
-                        tileController.InstantiateOnThisTile(tileManager.pickupPrefab);
+                        GameObject pickup = tileController.InstantiateOnThisTile(tileManager.pickupPrefab);
+                        pickup.transform.position = new Vector3(pickup.transform.position.x, -0.3f, pickup.transform.position.z);
                     }
                     
                 }
