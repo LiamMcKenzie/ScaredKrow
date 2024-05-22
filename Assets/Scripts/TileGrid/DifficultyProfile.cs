@@ -6,6 +6,7 @@
  */
 
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// A struct containing a tile data and its probability
@@ -28,6 +29,7 @@ public struct RowSetting
 {
     public TileData rowTileData;    // tile for this row, ie water or road
     public int amountOfRows;  // amount of rows to occur on each grid chunk
+    public int minimumRowsApart;    // minimum amount of rows to occur between each row
 }
 
 /// <summary>
@@ -39,5 +41,8 @@ public struct DifficultyProfile
 {
     public List<TileProbability> tileProbabilities;
     public List<RowSetting> rowSettings;
+
+    [Tooltip("Should be between 1 and 100, but there will always be at least one crossing")]
+    public float crossingProbability;
     public int boundaryLeft, boundaryRight; // The index of the columns that define the boundary
 }
