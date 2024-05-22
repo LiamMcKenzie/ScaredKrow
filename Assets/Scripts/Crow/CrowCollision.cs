@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class CrowCollision : MonoBehaviour
 {
-    private PlayerHealth playerHealth;
+    private PlayerController player;
 
     /// <summary>
     /// Checks if the colliding object is the player and infilicts damage
@@ -20,13 +20,13 @@ public class CrowCollision : MonoBehaviour
         // Check if the colliding object is the player.
         if (other.CompareTag("Player"))
         {
-            if (!playerHealth) 
+            if (player == null) 
             {
                 //Get the player health script if not referenced already
-                playerHealth = other.GetComponentInParent<PlayerHealth>(); 
+                player = other.transform.parent.GetComponent<PlayerController>();
             } 
 
-            playerHealth.Damage();
+            player?.TakeHit();
         }
     }
 }
