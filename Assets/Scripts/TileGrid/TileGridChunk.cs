@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using System.Linq;
 
 /// <summary>
 /// This class is used by TileManager to generate the grid of tiles
@@ -17,12 +17,14 @@ using UnityEngine.Tilemaps;
 public class TileGridChunk : MonoBehaviour
 {
     public List<List<TileController>> tileControllerList = new(); // 2D list of tile controllers in this chunk
+
+    private List<TileGridCoords> tilesToBeMadePassable = new(); // these tiles will be made passable after the chunk is generated, used for tiles vertically adjacent crossings
+
     public TileManager tileManager;
     public GameManager gameManager;
 
     void Start()
     {
-        // log if gameManger is null
         if (gameManager == null) { Debug.Log("GameManager is null"); }
         tileManager = TileManager.instance;
     }
@@ -38,7 +40,7 @@ public class TileGridChunk : MonoBehaviour
     /// </summary>
     public void RecenterTiles() => transform.position = Vector3.zero;
 
-    /// These bool expressions are used to determine if a tile is within the boundaries or if a fence should be built
+    /// These bool expressions are used to determine if a tile is within, outside, or on the boundary of the playable area
     private bool TileWithinBounds(int z, int boundaryRight, int boundaryLeft) => z > boundaryRight && z < tileManager.tilesWide - boundaryLeft;
     private bool TileOutsideBounds(int z, int boundaryRight, int boundaryLeft) => z < boundaryRight || z > tileManager.tilesWide - boundaryLeft;
     private bool TileIsBoundary(int z, int boundaryRight, int boundaryLeft) => z == boundaryRight || z == tileManager.tilesWide - boundaryLeft;
@@ -67,6 +69,33 @@ public class TileGridChunk : MonoBehaviour
         {
             // This list will store the tile controllers for each row
             List<TileController> row = new();
+            
+            // This list will store the indexes of the tiles that will have crossings
+            List<int> crossingIndexes = new List<int>();
+
+            // Check if x is in row dictionary and if the row is a row with crossings
+            if (rowDictionary.ContainsKey(x) && rowDictionary[x].hasCrossings)
+            {
+                // Generate the amount of crossings for this row
+                int amountOfCrossings = Random.Range(difficultyProfile.minCrossings, difficultyProfile.maxCrossings + 1);
+                // Generate a list of possible indexes for crossings
+                List<int> possibleIndexes = Enumerable.Range(boundaryRight + 1, tilesWide - boundaryLeft - 1).ToList();
+
+                // Shuffle possibleIndexes
+                for (int i = 0; i < possibleIndexes.Count; i++)
+                {
+                    int temp = possibleIndexes[i];
+                    int randomIndex = Random.Range(i, possibleIndexes.Count);
+                    possibleIndexes[i] = possibleIndexes[randomIndex];
+                    possibleIndexes[randomIndex] = temp;
+                }
+
+                // Take the first amountOfCrossings numbers
+                for (int i = 0; i < amountOfCrossings; i++)
+                {
+                    crossingIndexes.Add(possibleIndexes[i]);
+                }
+            }
 
             // Begin iterating through the cells in the row
             for (int z = 0; z < tilesWide; z++)
@@ -86,13 +115,17 @@ public class TileGridChunk : MonoBehaviour
                 // Every other row has darker tiles
                 tileController.InstantiateTile(worldPosition, this, light: evenRow);
 
-                // Check if outside bounds
-                if (TileWithinBounds(z,boundaryRight, boundaryLeft) == false)
+                if (crossingIndexes.Contains(z))
+                {
+                    makeCrossing(tileController, x, z);
+                }
+                // Check if outside bounds (out of playable area)
+                else if (TileWithinBounds(z, boundaryRight, boundaryLeft) == false)
                 {
                     // Darken the tile
                     tileController.SetColor(tileManager.defaultTileColor * tileManager.outOfBoundsDarkAmt);
 
-                    // Check if it should be a fence tile
+                    // Check if it should be a fence tile (falls on the boundary of the playable area)
                     if (TileIsBoundary(z, boundaryRight, boundaryLeft))
                     {
                         // Check if the fence should be on the right or left side of tile
@@ -100,13 +133,32 @@ public class TileGridChunk : MonoBehaviour
                         tileController.BuildFence(isRight);
                     }
                 }
-
                 // Add the tile controller to the row list
                 row.Add(tileController);
             }
+
             // Add the row to the outer layer of the 2D list
             tileControllerList.Add(row);
         }
+
+        // for all the tiles that are vertically adjacent to crossings, call MakePassable on the corresponding tile controller
+        foreach (TileGridCoords coords in tilesToBeMadePassable)
+        {
+            tileControllerList[coords.x][coords.z].MakePassable();
+        }
+
+        // clear the list for next time
+        tilesToBeMadePassable.Clear();
+    }
+
+    /// <summary>
+    /// Call the AddCrossing method on the tile controller and add the adjacent vertical tiles to the tilesToBeMadePassable list
+    /// </summary>
+    private void makeCrossing(TileController tileController, int x, int z)
+    {
+        tileController.AddCrossing();
+        tilesToBeMadePassable.Add(new TileGridCoords(x + 1, z));
+        tilesToBeMadePassable.Add(new TileGridCoords(x - 1, z));
     }
 
     /// <summary>
@@ -127,11 +179,23 @@ public class TileGridChunk : MonoBehaviour
             for (int i = 0; i < rowSetting.amountOfRows; i++)
             {
                 // Generate a random row number within the bounds of the grid
-                int randomRow = Random.Range(0, tilesHigh);
+                int randomRow = Random.Range(1, tilesHigh - 1);
+
+                bool noAdjacentRow = true;
+
+                // Check if the row is outside the rowSetting.minimumRowsApart from the previous row
+                foreach (var row in rowDictionary)
+                {
+                    if (Mathf.Abs(randomRow - row.Key) <= rowSetting.minimumRowsApart)
+                    {
+                        noAdjacentRow = false;
+                        break;
+                    }
+                }
 
                 // If the row number is not already in the dictionary, add it
                 // This could be a while loop to ensure each row is added, but the distribution seems pretty good as is
-                if (rowDictionary.ContainsKey(randomRow) == false)
+                if (rowDictionary.ContainsKey(randomRow) == false && noAdjacentRow)
                 {
                     rowDictionary.Add(randomRow, rowSetting.rowTileData);
                 }
