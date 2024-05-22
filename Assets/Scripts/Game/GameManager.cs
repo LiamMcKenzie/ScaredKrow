@@ -5,6 +5,7 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Manages the game state
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public float PickupProbability = 5f;
 
+    public int score = 0;
+    private int backMovements = 0;
     private void Awake()
     {
         if (instance == null)
@@ -30,14 +33,16 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     public bool gameStarted; // Whether the game has started
     [SerializeField] private Camera mainCamera; // The main camera
-    [SerializeField] private GameoverTriggerArea gameoverTriggerArea; // The game over trigger area
     [SerializeField] private GameObject GameoverPanel; // The game over panel
     [SerializeField] private int targetFPS = 60; // The target frames per second
+    public UnityEvent gameoverEvent = new UnityEvent(); // The event to fire when the player is caught
 
     [Header("Player Settings")]
     [SerializeField] private GameObject playerPrefab; // The player prefab
     public TileGridCoords playerStartCoords = new(x: 5, z: 5); // The starting coordinates of the player
-    public PlayerController playerController; // The player controller
+    public GameObject player; // The player object
+    public PlayerMovement playerMovement; // The player movement script
+    public PlayerController playerController; // The player controller script
 
     [Header("Map Settings")]
     [SerializeField] private TileManager tileManager; // The tile manager
@@ -49,16 +54,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float maxBaseSpeed = 4; // The maximum speed of the game independent of the catchup mechanic
     [SerializeField] private float accelerationCurve = 1.5f; // The speed at which the "camera" catches up to player (lower is faster)
     [SerializeField] private float decelerationCurve = 0.5f; // The speed at which the "camera" slows back down (lower is faster)
-    
+
     private float baseSpeed; // The speed of the game independent of the catchup mechanic
     private float initSpeed = 1; // The initial speed  
     private float decelerationTolerance = 0.1f; // The tolerance for the speed to be considered back to normal
     private float currentVelocity = 0f;
-  
+
 
     private bool isCatchingUp;
     public bool playerInCatchupZone = false;
 
+    [Header("Crow settings")]
+    [SerializeField] private CrowManager crowManager;
 
     /// <summary>
     /// The speed at which the tiles move
@@ -82,12 +89,12 @@ public class GameManager : MonoBehaviour
     {
         Speed = _speed;
     }
-    
+
     void Start()
     {
         Application.targetFrameRate = targetFPS;
         initSpeed = Speed;
-        gameoverTriggerArea.gameoverEvent.AddListener(GameOver);
+        gameoverEvent.AddListener(GameOver);
         Init();
     }
 
@@ -107,6 +114,7 @@ public class GameManager : MonoBehaviour
         GameoverPanel.SetActive(false);
         tileManager.InitTileGrid();
         SpawnPlayer();
+        crowManager.SpawnCrow();
         gameStarted = true;
     }
 
@@ -117,6 +125,9 @@ public class GameManager : MonoBehaviour
     {
         Speed = initSpeed;
         isCatchingUp = false;
+        playerInCatchupZone = false;
+        score = 0;
+        backMovements = 0;
         Init();
     }
 
@@ -134,8 +145,10 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameStarted = false;
+        // destroy player
+        Destroy(player);
         GameoverPanel.SetActive(true);
-        Destroy(playerController.gameObject);
+        crowManager.GameOver();
     }
 
     /// <summary>
@@ -143,7 +156,34 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void SpawnPlayer()
     {
-        playerController = tileManager.InstantiateOnTile(playerPrefab, playerStartCoords).GetComponent<PlayerController>();
+        if (player != null) { return; }
+        player = tileManager.InstantiateOnTile(playerPrefab, playerStartCoords);
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerController = player.GetComponent<PlayerController>();
+    }
+
+    /// <summary>
+    /// calculate the score based on the players movement.
+    /// The function is called in the playermovement script.
+    /// </summary>
+    /// <param name="movement"></param>
+    public void CalculateScore(Vector3 movement)
+    {
+        if (movement == Vector3.right) //checks if player is moving forward. (for some reason vector.right is forward)
+        {
+            if (backMovements > 0) //backmovements checks the amount of times the player has moved back without moving forward.
+            {
+                backMovements--;
+            }
+            else
+            {
+                score++; //increases the score by 1
+            }
+        }
+        else if (movement == Vector3.left)
+        {
+            backMovements++;
+        }
     }
 
     /// <summary>

@@ -13,9 +13,8 @@ using UnityEngine.Events;
 /// </summary>
 public class GameoverTriggerArea : MonoBehaviour
 {
-    [System.NonSerialized]
-    public UnityEvent gameoverEvent = new UnityEvent(); // The event to fire when the player is caught
-
+    [SerializeField] private GameManager gameManager; // The game manager
+    
     /// <summary>
     /// The trigger area for gameover is entered
     /// Thsi should be the bottom of the playfield
@@ -27,6 +26,6 @@ public class GameoverTriggerArea : MonoBehaviour
         if (other.gameObject.CompareTag("Player") == false) return;
 
         // fire event
-        gameoverEvent.Invoke();
+        gameManager.gameoverEvent.Invoke();
     }
 }
