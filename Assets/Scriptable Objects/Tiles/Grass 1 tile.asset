@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3cea536271ea4d1a8edc43d8e93d40e, type: 3}
-  m_Name: DeadTree
+  m_Name: Grass 1 tile
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 6256688731233862309, guid: 0e890f07ee738485ab06923892bbd482,
+  tilePrefab: {fileID: 844188866782233806, guid: 019d728f41ef9d24ea62619b7f37ecdb,
     type: 3}
   fencePrefab: {fileID: 0}
   crossingPrefab: {fileID: 0}
-  isPassable: 0
+  isPassable: 1
   isHidingPlace: 0
   isRotatable: 1
   hasCrossings: 0

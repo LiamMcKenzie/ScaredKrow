@@ -75,6 +75,8 @@ public class GameManager : MonoBehaviour
 
     private bool isCatchingUp;
     public bool playerInCatchupZone = false;
+    public float timeOnGameover = 0;
+    public float timeToRestart = 10f;
 
     [Header("Crow settings")]
     [SerializeField] private CrowManager crowManager;
@@ -112,9 +114,19 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if(gameOver == true)
+        {
+            timeOnGameover -= Time.deltaTime;
+            if(timeOnGameover <= 0)
+            {
+                RestartScene.instance.Restart();
+            }
+        }
+        
         if (gameStarted == false) return;
 
         UpdateSpeed();
+        
     }
 
     /// <summary>
@@ -167,6 +179,7 @@ public class GameManager : MonoBehaviour
         AudioManager.PlaySound(5, 10f); // Game over sound
         gameStarted = false;
         gameOver = true;
+        timeOnGameover = timeToRestart;
         // destroy player
         Destroy(player);
         GameoverPanel.SetActive(true);
