@@ -1528,15 +1528,15 @@ MonoBehaviour:
   difficultyProfile:
     tileProbabilities:
     - tileData: {fileID: 11400000, guid: 31d2e1158995e48c6a87694979091d76, type: 2}
-      probability: 5
+      probability: 6.5
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 6c788d589fb9042808d2aae67b3da07b, type: 2}
-      probability: 2
+      probability: 3
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: c64f420ad3297486399a3c2a31b0e64d, type: 2}
-      probability: 5
+      probability: 8
       onlyOccursInsideBoundary: 0
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 1fd4760ec2bb74041bf9129ed8779261, type: 2}
@@ -1547,11 +1547,18 @@ MonoBehaviour:
       probability: 5
       onlyOccursInsideBoundary: 0
       onlyOccursOutsideBoundary: 1
+    - tileData: {fileID: 11400000, guid: 0b019da770e8f4f2080fb7cb076a1572, type: 2}
+      probability: 0.5
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
     rowSettings:
     - rowTileData: {fileID: 11400000, guid: 1b49473dfcf5044c893eb75c98da9cac, type: 2}
-      amountOfRows: 2
+      amountOfRows: 3
+      minimumRowsApart: 4
     - rowTileData: {fileID: 11400000, guid: 298ca93e2e30c40b8ba06e3f037219c0, type: 2}
       amountOfRows: 2
+      minimumRowsApart: 1
+    crossingProbability: 40
     boundaryLeft: 4
     boundaryRight: 0
   gridChunks:

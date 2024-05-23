@@ -41,8 +41,14 @@ public class GameManager : MonoBehaviour
     [Header("Player Settings")]
     [SerializeField] private GameObject playerPrefab; // The player prefab
     public TileGridCoords playerStartCoords = new(x: 5, z: 5); // The starting coordinates of the player
+    
+    [HideInInspector]
     public GameObject player; // The player object
+
+    [HideInInspector]
     public PlayerMovement playerMovement; // The player movement script
+    
+    [HideInInspector]
     public PlayerController playerController; // The player controller script
 
     [Header("Map Settings")]
