@@ -20,10 +20,14 @@ public class CrowCollision : MonoBehaviour
 
             if (!player.isHiding)
             {
+                AudioManager.PlaySound(6, 10f); //hit sound
                 GameManager.instance.gameoverEvent.Invoke();
                 Debug.Log("Crow collided with the player!");
                 //Add more functionality later (i.e damaging player)
             }
+
+
+
         }
     }
 }

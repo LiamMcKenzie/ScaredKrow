@@ -76,11 +76,11 @@ public class CrowManager : MonoBehaviour
         //Show an alert when the crow spawns
         yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay)); //Wait a random amount before 'respawning'
         gameManager.playerController?.ShowAlert(); //Show alert above player
-        AudioManager.PlaySound(2); //Alert Sound
+        AudioManager.PlaySound(2, 1f); //Alert Sound
 
         yield return new WaitForSeconds(1f); //add delay between alert and crow spawning
 
-        AudioManager.PlaySound(4); //crow flyover
+        AudioManager.PlaySound(4, 0.5f); //crow flyover
         
         //Set values for time and start/end positions
         Vector3 startPos = crow.transform.position;

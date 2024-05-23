@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
 
         animator.Play("player_jump", 0, 0); //plays the jump animation
 
-        AudioManager.PlaySound(0); //plays the jump sound
+        AudioManager.PlaySound(0, 2f); //plays the jump sound
         
         /*
         if(TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z].isPassable == false) //checks if the desired tile is not passable.  

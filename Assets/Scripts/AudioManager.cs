@@ -37,7 +37,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void onPlaySound(int soundIndex)
+    private void onPlaySound(int soundIndex, float volume)
     {
         Debug.Log("Playing sound: " + audioClips[soundIndex].name);
         if (soundIndex >= 0 && soundIndex < audioClips.Length)
@@ -54,15 +54,16 @@ public class AudioManager : MonoBehaviour
     /// Plays a sound from the audio manager.
     /// Requests a sound index to play.
     /// </summary>
-    /// <param name="soundIndex"></param>
+    /// <param name="soundIndex">The index of the sound to play</param>
+    /// <param name="volume">The volume of the sound</param>
 
     //Example: AudioManager.PlaySound(0); //plays jump sound    
-    public static void PlaySound(int soundIndex)
+    public static void PlaySound(int soundIndex, float volume)
     {
         
         if (Instance != null)
         {
-            Instance.onPlaySound(soundIndex);
+            Instance.onPlaySound(soundIndex, volume);
         }else
         {
             Debug.LogWarning("Audio manager not assigned.");

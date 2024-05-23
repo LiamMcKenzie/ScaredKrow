@@ -159,6 +159,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
+        AudioManager.PlaySound(5, 10f); // Game over sound
         gameStarted = false;
         gameOver = true;
         // destroy player
