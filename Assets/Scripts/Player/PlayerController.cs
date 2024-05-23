@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour
 
     public void PickupModule(ModuleType type) => outfitController.SetModule(type);
 
+    /// <summary>
+    /// Take a hit and remove a module if the player is not nude
+    /// If the player is nude, game over
+    /// </summary>
     public void TakeHit()
     {
         if (outfitController.IsNude)
