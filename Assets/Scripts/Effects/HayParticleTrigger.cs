@@ -20,6 +20,7 @@ public class HayParticleTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             hayParticles.Play();
+            AudioManager.PlaySound(1);
         }
     }
 
