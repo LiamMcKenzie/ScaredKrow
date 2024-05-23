@@ -43,13 +43,13 @@ public class GameManager : MonoBehaviour
     [Header("Player Settings")]
     [SerializeField] private GameObject playerPrefab; // The player prefab
     public TileGridCoords playerStartCoords = new(x: 5, z: 5); // The starting coordinates of the player
-    
+
     [HideInInspector]
     public GameObject player; // The player object
 
     [HideInInspector]
     public PlayerMovement playerMovement; // The player movement script
-    
+
     [HideInInspector]
     public PlayerController playerController; // The player controller script
 
@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _speed = 1; // backing field for Speed property (this is the actual speed of the game)
     [SerializeField] private float speedIncrement = 0.05f; // amount to increase the speed by as the game progresses
     [SerializeField] private float catchupSpeed = 8; // speed to catch up to the player
+    [SerializeField] private float hidingSpeed = 0.1f; // speed to hide from the player
     [SerializeField] private float maxBaseSpeed = 4; // The maximum speed of the game independent of the catchup mechanic
     [SerializeField] private float accelerationCurve = 1.5f; // The speed at which the "camera" catches up to player (lower is faster)
     [SerializeField] private float decelerationCurve = 0.5f; // The speed at which the "camera" slows back down (lower is faster)
@@ -68,6 +69,8 @@ public class GameManager : MonoBehaviour
     private float initSpeed = 1; // The initial speed  
     private float decelerationTolerance = 0.1f; // The tolerance for the speed to be considered back to normal
     private float currentVelocity = 0f;
+
+    bool isHidingSlowdown = false;
 
 
     private bool isCatchingUp;
@@ -223,7 +226,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void UpdateSpeed()
     {
-        // Check if the player is in the catchup zone
+        //Check if the player is in the catchup zone
         if (playerInCatchupZone)
         {
             // accelerate to catchup speed to catch up to the player
@@ -235,6 +238,16 @@ public class GameManager : MonoBehaviour
             StopCatchup();
         }
 
+        
+        if (playerMovement.isHiding && isCatchingUp == false)
+        {
+            HidingSlowdown();
+        }
+        else
+        {
+            StopHidingSlowdown();
+        }
+
         // Until we reach the max base speed, increase the base speed
         if (baseSpeed < maxBaseSpeed)
         {
@@ -242,7 +255,7 @@ public class GameManager : MonoBehaviour
         }
 
         // if not catching up, set the actual speed to the base speed
-        if (isCatchingUp == false)
+        if (isCatchingUp == false && isHidingSlowdown == false)
         {
             Speed = baseSpeed;
         }
@@ -264,6 +277,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void StopCatchup()
     {
+        if (isHidingSlowdown) return;
         // decelerate from catchup speed to the speed before catchup
         Speed = Mathf.SmoothDamp(Speed, baseSpeed, ref currentVelocity, decelerationCurve);
 
@@ -272,6 +286,35 @@ public class GameManager : MonoBehaviour
         {
             isCatchingUp = false;
         }
+    }
+
+    /// <summary>
+    /// Decrease game speed to hide from the player
+    /// </summary>
+    private void HidingSlowdown()
+    {
+        Debug.Log("Hiding slowdown");
+        // decelerate to hiding speed
+        Speed = Mathf.SmoothDamp(Speed, hidingSpeed, ref currentVelocity, accelerationCurve);
+
+        isHidingSlowdown = true;
+    }
+
+    /// <summary>
+    /// Stop hiding from the player
+    /// </summary>
+    private void StopHidingSlowdown()
+    {
+        isHidingSlowdown  = false;
+        /*
+        // accelerate from hiding speed to the speed before hiding
+        Speed = Mathf.SmoothDamp(Speed, baseSpeed, ref currentVelocity, accelerationCurve);
+
+        // if we are close enough to the speed before hiding, stop hiding
+        if (Mathf.Abs(Speed - baseSpeed) < decelerationTolerance)
+        {
+            isHidingSlowdown  = false;
+        }*/
     }
 }
 
