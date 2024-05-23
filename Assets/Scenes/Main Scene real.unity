@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96701d1631e2644c9890b09518e59fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PickupProbability: 0.5
+  PickupProbability: 0.1
   score: 0
   gameStarted: 0
   gameOver: 0
