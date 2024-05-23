@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Tux Head
   m_EditorClassIdentifier: 
   type: 0
-  style: 
-  prefab: {fileID: 0}
+  style: Tux
+  prefab: {fileID: 919132149155446097, guid: 944adaec0df05f34a9f3f9f6410b4cac, type: 3}

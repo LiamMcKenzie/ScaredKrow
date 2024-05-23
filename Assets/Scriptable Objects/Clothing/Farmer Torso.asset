@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   style: Farmer
-  prefab: {fileID: 1362583160027980161, guid: 45d079d4b94c14d8a990a071f6af943a, type: 3}
+  prefab: {fileID: 919132149155446097, guid: da2754c1546f5e244bec93dc0d7f5545, type: 3}
