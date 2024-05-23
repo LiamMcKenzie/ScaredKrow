@@ -8,20 +8,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// public enum ClothingType
-// {
-//     Hat,
-//     Shirt,
-//     Pants
-// }
+public enum ClothingType
+{
+    Hat,
+    Shirt,
+    Pants
+}
 
-// public class ClothingItem
-// {
-//     public ClothingType type;
-//     public bool worn;
-// }
+public class ClothingItem
+{
+    public ClothingType type;
+    public bool worn;
+}
 
-public class PlayerHealth : MonoBehaviour
+public class OutfitController2 : MonoBehaviour
 {
     private List<ClothingItem> clothingItems = new List<ClothingItem>() {
         new ClothingItem { type = ClothingType.Hat, worn = false },

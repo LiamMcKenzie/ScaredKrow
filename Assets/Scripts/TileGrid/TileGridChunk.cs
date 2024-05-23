@@ -133,13 +133,16 @@ public class TileGridChunk : MonoBehaviour
                         tileController.BuildFence(isRight);
                     }
                 }
-            
                 else if(tileData.isHidingPlace == false && tileData.isPassable == true)
                 {
-                    if(Random.Range(0,100) < gameManager.PickupProbability)
+                    bool isStartingTile = gameManager.gameStarted == false && x == gameManager.playerStartCoords.x && z == gameManager.playerStartCoords.z; 
+                    if(isStartingTile == false && Random.Range(0,100) < gameManager.PickupProbability)
                     {
                         GameObject pickup = tileController.InstantiateOnThisTile(tileManager.pickupPrefab);
-                        pickup.transform.position = new Vector3(pickup.transform.position.x, -0.3f, pickup.transform.position.z);
+                        //pickup.transform.position = new Vector3(pickup.transform.position.x, 0.3f, pickup.transform.position.z);
+                        // get pickup controller
+                        PickupController pickupController = pickup.GetComponent<PickupController>();
+                        pickupController.SetPickupType();
                     }
                     
                 }

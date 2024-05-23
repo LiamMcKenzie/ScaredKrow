@@ -16,12 +16,29 @@ public class PlayerController : MonoBehaviour
 {
     private GameManager gameManager;
     private PlayerMovement playerMovement;
-    [SerializeField] GameObject playerAlert;
+    [SerializeField] private GameObject playerAlert;
+    [SerializeField] private OutfitController outfitController;
 
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         gameManager = GameManager.instance;
+        // player alert scale is 1
+        playerAlert.transform.localScale = new Vector3(1, 1, 1);
+    }
+
+    public void PickupModule(ModuleType type) => outfitController.SetModule(type);
+
+    public void TakeHit()
+    {
+        if (outfitController.IsNude)
+        {
+            gameManager.GameOver();
+        }
+        else
+        {
+            outfitController.RemoveModule();
+        }
     }
 
     /// <summary>
@@ -30,6 +47,7 @@ public class PlayerController : MonoBehaviour
     /// <returns>WaitForSeconds before hiding gameobject again</returns>
     private IEnumerator AlertOnOff()
     {
+        Debug.Log("Alerting player");
         //Toggle the alert on/off
         playerAlert.SetActive(true);
         yield return new WaitForSeconds(2.5f);
