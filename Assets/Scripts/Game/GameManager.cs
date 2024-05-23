@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 {
     #region Singleton
     public static GameManager instance;
+    public float PickupProbability = 5f;
+
     public int score = 0;
     private int backMovements = 0;
     private void Awake()

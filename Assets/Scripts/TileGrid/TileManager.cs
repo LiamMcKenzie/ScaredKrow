@@ -25,6 +25,8 @@ public class TileManager : MonoBehaviour
 
     [Header("Tile Generation Settings")]
     public DifficultyProfile difficultyProfile; // The difficulty profile, a struct containing the tile probabilities and the amount of water rows
+    public GameObject pickupPrefab;
+
 
     [Header("Grid Settings")]
     [SerializeField] private TileGridChunk[] gridChunks = new TileGridChunk[2]; // The two grid chunks, should be game objects with a TileGridChunk component
@@ -36,6 +38,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] private bool deactivateTilesOutsideViewport = true; // Whether to optimise the tiles (turns them off when they are not visible)
     [SerializeField] private BufferArea viewportBufferArea = new(0.2f, 0.2f, 0.2f, 0.2f); // The buffer area around the camera viewport
     [SerializeField] private GameManager gameManager; // The game manager
+    
 
     private Camera mainCamera;  // The main camera
 

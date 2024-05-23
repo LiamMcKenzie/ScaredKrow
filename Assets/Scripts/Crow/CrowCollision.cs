@@ -1,28 +1,36 @@
 /*
  * File: CrowCollsion.cs
- * Purpose: Checks if the Crows 'shadow' collider has hit the player    
+ * Purpose: Checks if the Crows 'shadow' collider has hit the player
+ *          Inflicts damage to player on collision
  * Author: Devon
- * Notes:  - Just a very basic implementation at this stage (Debug log). 
- *         - Will have more functionality of decreasing the players health when we have that added
  */
+
 using UnityEngine;
 
 public class CrowCollision : MonoBehaviour
 {
+    private PlayerController player;
+    PlayerMovement playerMovement;
 
+    /// <summary>
+    /// Checks if the colliding object is the player and infilicts damage
+    /// </summary>
+    /// <param name="other">Collision object collider</param>
     private void OnTriggerEnter(Collider other)
     {
         // Check if the colliding object is the player.
         if (other.CompareTag("Player"))
         {
-            //Get isHiding bool value from parent component
-            PlayerMovement player = other.GetComponentInParent<PlayerMovement>();
-
-            if (!player.isHiding)
+            if (player == null) 
             {
-                GameManager.instance.gameoverEvent.Invoke();
-                Debug.Log("Crow collided with the player!");
-                //Add more functionality later (i.e damaging player)
+                //Get the player health script if not referenced already
+                player = other.transform.parent.GetComponent<PlayerController>();
+                playerMovement = player.playerMovement;
+            } 
+         
+            if (!playerMovement.isHiding)
+            {
+                player.TakeHit();
             }
         }
     }

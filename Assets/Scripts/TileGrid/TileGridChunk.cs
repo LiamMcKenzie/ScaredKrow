@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// This class is used by TileManager to generate the grid of tiles
@@ -68,6 +69,33 @@ public class TileGridChunk : MonoBehaviour
         {
             // This list will store the tile controllers for each row
             List<TileController> row = new();
+            
+            // This list will store the indexes of the tiles that will have crossings
+            List<int> crossingIndexes = new List<int>();
+
+            // Check if x is in row dictionary and if the row is a row with crossings
+            if (rowDictionary.ContainsKey(x) && rowDictionary[x].hasCrossings)
+            {
+                // Generate the amount of crossings for this row
+                int amountOfCrossings = Random.Range(difficultyProfile.minCrossings, difficultyProfile.maxCrossings + 1);
+                // Generate a list of possible indexes for crossings
+                List<int> possibleIndexes = Enumerable.Range(boundaryRight + 1, tilesWide - boundaryLeft - 1).ToList();
+
+                // Shuffle possibleIndexes
+                for (int i = 0; i < possibleIndexes.Count; i++)
+                {
+                    int temp = possibleIndexes[i];
+                    int randomIndex = Random.Range(i, possibleIndexes.Count);
+                    possibleIndexes[i] = possibleIndexes[randomIndex];
+                    possibleIndexes[randomIndex] = temp;
+                }
+
+                // Take the first amountOfCrossings numbers
+                for (int i = 0; i < amountOfCrossings; i++)
+                {
+                    crossingIndexes.Add(possibleIndexes[i]);
+                }
+            }
 
             // Begin iterating through the cells in the row
             for (int z = 0; z < tilesWide; z++)
@@ -87,8 +115,12 @@ public class TileGridChunk : MonoBehaviour
                 // Every other row has darker tiles
                 tileController.InstantiateTile(worldPosition, this, light: evenRow);
 
+                if (crossingIndexes.Contains(z))
+                {
+                    makeCrossing(tileController, x, z);
+                }
                 // Check if outside bounds (out of playable area)
-                if (TileWithinBounds(z, boundaryRight, boundaryLeft) == false)
+                else if (TileWithinBounds(z, boundaryRight, boundaryLeft) == false)
                 {
                     // Darken the tile
                     tileController.SetColor(tileManager.defaultTileColor * tileManager.outOfBoundsDarkAmt);
@@ -101,34 +133,28 @@ public class TileGridChunk : MonoBehaviour
                         tileController.BuildFence(isRight);
                     }
                 }
-                // The remaining tiles fall within bounds, 
-                // so check whether to make the tile a crossing by checking if it is a crossing type tile 
-                // and if the crossing probability is met
-                else if (tileController.hasCrossings && Random.Range(0, 100) < difficultyProfile.crossingProbability)
+                else if(tileData.isHidingPlace == false && tileData.isPassable == true)
                 {
-                    makeCrossing(tileController, x, z);
+                    bool isStartingTile = gameManager.gameStarted == false && x == gameManager.playerStartCoords.x && z == gameManager.playerStartCoords.z; 
+                    if(isStartingTile == false && Random.Range(0,100) < gameManager.PickupProbability)
+                    {
+                        GameObject pickup = tileController.InstantiateOnThisTile(tileManager.pickupPrefab);
+                        //pickup.transform.position = new Vector3(pickup.transform.position.x, 0.3f, pickup.transform.position.z);
+                        // get pickup controller
+                        PickupController pickupController = pickup.GetComponent<PickupController>();
+                        pickupController.SetPickupType();
+                    }
+                    
                 }
 
                 // Add the tile controller to the row list
                 row.Add(tileController);
             }
 
-            // Making sure there is at least one crossing in a crossing type row:
-            // Check if the row was a row that should have crossings, ie a water row
-            bool isARowWithCrossings = row[0].hasCrossings;
-
-            // Check there is at least one crossing in the row
-            if (isARowWithCrossings && row.Find(tileController => tileController.isACrossing) == null)
-            {
-                // if there isn't, add a crossing to a random tile as long as its within bounds
-                int zIndex = Random.Range(boundaryRight + 1, tilesWide - boundaryLeft);
-                makeCrossing(row[zIndex], x, zIndex);
-            }
-
             // Add the row to the outer layer of the 2D list
             tileControllerList.Add(row);
         }
-        
+
         // for all the tiles that are vertically adjacent to crossings, call MakePassable on the corresponding tile controller
         foreach (TileGridCoords coords in tilesToBeMadePassable)
         {
