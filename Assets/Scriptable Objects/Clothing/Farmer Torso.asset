@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e23a87741fb344b988fbb85a848698e3, type: 3}
   m_Name: Farmer Torso
   m_EditorClassIdentifier: 
-  type: 0
-  style: 
-  prefab: {fileID: 0}
+  type: 1
+  style: Farmer
+  prefab: {fileID: 1362583160027980161, guid: 45d079d4b94c14d8a990a071f6af943a, type: 3}
