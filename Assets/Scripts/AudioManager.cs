@@ -14,7 +14,6 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
     
-    [HideInInspector] //This is assigned automatically
     public AudioSource audioSource;
 
     public AudioClip[] audioClips;      //Assign audio clips in editor
@@ -29,11 +28,18 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        audioSource = GetComponent<AudioSource>();
+
+        if(audioSource != null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }else{
+            Debug.LogWarning("Audio source not assigned to audio manager.");
+        }
     }
 
     private void onPlaySound(int soundIndex)
     {
+        Debug.Log("Playing sound: " + audioClips[soundIndex].name);
         if (soundIndex >= 0 && soundIndex < audioClips.Length)
         {
             audioSource.PlayOneShot(audioClips[soundIndex]);
@@ -49,11 +55,17 @@ public class AudioManager : MonoBehaviour
     /// Requests a sound index to play.
     /// </summary>
     /// <param name="soundIndex"></param>
+
+    //Example: AudioManager.PlaySound(0); //plays jump sound    
     public static void PlaySound(int soundIndex)
     {
+        
         if (Instance != null)
         {
             Instance.onPlaySound(soundIndex);
+        }else
+        {
+            Debug.LogWarning("Audio manager not assigned.");
         }
     }
 }

@@ -76,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
         TileGridCoords desiredGridPosition = new(gridPosition.x + Mathf.FloorToInt(movement.x), gridPosition.z + Mathf.FloorToInt(movement.z));
 
         animator.Play("player_jump", 0, 0); //plays the jump animation
+
+        AudioManager.PlaySound(0); //plays the jump sound
         
         /*
         if(TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z].isPassable == false) //checks if the desired tile is not passable.  
