@@ -10,6 +10,7 @@ using UnityEngine;
 public class CrowCollision : MonoBehaviour
 {
     private PlayerController player;
+    PlayerMovement playerMovement;
 
     /// <summary>
     /// Checks if the colliding object is the player and infilicts damage
@@ -24,18 +25,12 @@ public class CrowCollision : MonoBehaviour
             {
                 //Get the player health script if not referenced already
                 player = other.transform.parent.GetComponent<PlayerController>();
+                playerMovement = player.playerMovement;
             } 
-
-            player?.TakeHit();
-
-            //Get isHiding bool value from parent component
-            PlayerMovement playerMovement = other.GetComponentInParent<PlayerMovement>();
-
+         
             if (!playerMovement.isHiding)
             {
-                GameManager.instance.gameoverEvent.Invoke();
-                Debug.Log("Crow collided with the player!");
-                //Add more functionality later (i.e damaging player)
+                player.TakeHit();
             }
         }
     }

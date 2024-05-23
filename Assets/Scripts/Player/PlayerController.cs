@@ -15,7 +15,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     private GameManager gameManager;
-    private PlayerMovement playerMovement;
+    public PlayerMovement playerMovement;
     [SerializeField] private GameObject playerAlert;
     [SerializeField] private OutfitController outfitController;
 
