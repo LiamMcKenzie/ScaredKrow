@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e23a87741fb344b988fbb85a848698e3, type: 3}
   m_Name: Farmer Legs
   m_EditorClassIdentifier: 
-  type: 0
-  style: 
-  prefab: {fileID: 0}
+  type: 2
+  style: Farmer
+  prefab: {fileID: 3485394784326117661, guid: 94a39542e77fa41209a5b738f762a2d1, type: 3}
