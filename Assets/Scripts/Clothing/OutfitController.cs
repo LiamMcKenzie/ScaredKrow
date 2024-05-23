@@ -127,6 +127,8 @@ public class OutfitController : MonoBehaviour
         foreach (var moduleInfo in moduleInfos)
         {
             Debug.Log(moduleInfo.ModuleParent.Type + " is adorned: " + moduleInfo.IsAdorned);
+            Debug.Log("Current Outfit Count: " + CurrentOutfit.Count);
+            Debug.Log("Is Nude: " + IsNude);
         }
     }
 }
