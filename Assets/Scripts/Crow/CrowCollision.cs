@@ -15,9 +15,15 @@ public class CrowCollision : MonoBehaviour
         // Check if the colliding object is the player.
         if (other.CompareTag("Player"))
         {
-            GameManager.instance.gameoverEvent.Invoke();
-            Debug.Log("Crow collided with the player!");
-            //Add more functionality later (i.e damaging player)
+            //Get isHiding bool value from parent component
+            PlayerMovement player = other.GetComponentInParent<PlayerMovement>();
+
+            if (!player.isHiding)
+            {
+                GameManager.instance.gameoverEvent.Invoke();
+                Debug.Log("Crow collided with the player!");
+                //Add more functionality later (i.e damaging player)
+            }
         }
     }
 }
