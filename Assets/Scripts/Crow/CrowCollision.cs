@@ -27,6 +27,16 @@ public class CrowCollision : MonoBehaviour
             } 
 
             player?.TakeHit();
+
+            //Get isHiding bool value from parent component
+            PlayerMovement playerMovement = other.GetComponentInParent<PlayerMovement>();
+
+            if (!playerMovement.isHiding)
+            {
+                GameManager.instance.gameoverEvent.Invoke();
+                Debug.Log("Crow collided with the player!");
+                //Add more functionality later (i.e damaging player)
+            }
         }
     }
 }

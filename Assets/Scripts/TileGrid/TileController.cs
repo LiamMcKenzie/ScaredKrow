@@ -26,7 +26,7 @@ public class TileController : MonoBehaviour
     private GameObject fencePrefab; // The fence mesh for this tile
     private GameObject crossingPrefab;  // The crossing mesh for this tile
     public bool isPassable;    // Can the player walk on this tile //NOTE: changed from private to public. For use in PlayerMovement check -Liam
-    private bool isHidingPlace; // Can the player hide in this tile
+    public bool isHidingPlace; // Can the player hide in this tile
     private bool isRotatable;   // Does the tile contain a rotatable mesh (this should be the first child of the tile prefab if so) 
     public bool hasCrossings;  // Is this tile a fence
     public bool isACrossing;
@@ -178,6 +178,10 @@ public class TileController : MonoBehaviour
     {
         containsPlayer = true;
         playerTransform.SetParent(transform);
+
+        //Get the player hiding bool from object and set to current tile value
+        PlayerMovement playerMovement = playerTransform.gameObject.GetComponent<PlayerMovement>();
+        playerMovement.isHiding = isHidingPlace;
     }
 
     /// <summary>

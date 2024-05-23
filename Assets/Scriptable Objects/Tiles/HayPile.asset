@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3cea536271ea4d1a8edc43d8e93d40e, type: 3}
   m_Name: HayPile
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 7748578564259642011, guid: 60212b285a52845108e11d410e7864e2,
+  tilePrefab: {fileID: 7748578564259642011, guid: e6a2a20f9a429ed47b8f98e06006f347,
     type: 3}
   fencePrefab: {fileID: 0}
   isPassable: 1
   isHidingPlace: 1
   isRotatable: 1
-  onlyOccursInsideBoundary: 1
-  onlyOccursOutsideBoundary: 0

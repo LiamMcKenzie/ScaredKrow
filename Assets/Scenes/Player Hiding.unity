@@ -1595,7 +1595,7 @@ MonoBehaviour:
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 6c788d589fb9042808d2aae67b3da07b, type: 2}
-      probability: 10
+      probability: 3
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: c64f420ad3297486399a3c2a31b0e64d, type: 2}
