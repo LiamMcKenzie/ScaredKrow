@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         //This could be changed with the new input system but I just wanted to quickly test this.
 
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) )
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.X))
         {
             BufferDirection(Vector3.right * moveDistance);
         }
