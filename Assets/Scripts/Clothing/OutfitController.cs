@@ -77,7 +77,8 @@ public class OutfitController : MonoBehaviour
 
     void OnDestroy()
     {
-        Debug.Log("Destroying OutfitController");
+        // null check
+        if (moduleManager == null) { return; }
         foreach (var moduleInfo in moduleInfos)
         {
             if (moduleInfo.IsAdorned)
