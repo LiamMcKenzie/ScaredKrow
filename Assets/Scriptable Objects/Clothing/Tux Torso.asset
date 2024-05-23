@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e23a87741fb344b988fbb85a848698e3, type: 3}
   m_Name: Tux Torso
   m_EditorClassIdentifier: 
-  type: 1
-  style: Tux
-  prefab: {fileID: 919132149155446097, guid: a7d372634681c714691a2c97be038d6c, type: 3}
+  <Type>k__BackingField: 1
+  <Style>k__BackingField: Tux
+  <Prefab>k__BackingField: {fileID: 919132149155446097, guid: a7d372634681c714691a2c97be038d6c,
+    type: 3}

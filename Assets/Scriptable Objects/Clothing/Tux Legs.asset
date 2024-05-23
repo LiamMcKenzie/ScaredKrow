@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e23a87741fb344b988fbb85a848698e3, type: 3}
   m_Name: Tux Legs
   m_EditorClassIdentifier: 
-  type: 2
-  style: Tux
-  prefab: {fileID: 919132149155446097, guid: c0212c967c1e0ee4eaa43b50cf2d3883, type: 3}
+  <Type>k__BackingField: 2
+  <Style>k__BackingField: Tux
+  <Prefab>k__BackingField: {fileID: 919132149155446097, guid: c0212c967c1e0ee4eaa43b50cf2d3883,
+    type: 3}
