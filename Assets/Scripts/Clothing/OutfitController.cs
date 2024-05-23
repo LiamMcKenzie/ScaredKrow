@@ -16,7 +16,7 @@ public enum ModuleType { Head, Torso, Legs }
 /// This struct is used to hold the parent object for a module and a reference to the base module
 /// </summary>
 [Serializable]
-public struct ModuleSlot
+public struct ModuleParent
 {
     [field: SerializeField] public ModuleType Type { get; private set; }
     [field: SerializeField] public GameObject Parent { get; private set; }
@@ -24,17 +24,17 @@ public struct ModuleSlot
 }
 
 /// <summary>
-/// This class maintains a reference to the module controller currently in a slot
+/// This class maintains a reference to the module controller currently in the parent object
 /// </summary>
-public class ModuleSlotInfo
+public class ModuleInfo
 {
-    public ModuleSlot ModuleSlot { get; private set; }
+    public ModuleParent ModuleParent { get; private set; }
     public ModuleController CurrentAdornment { get; set; }
     public bool IsAdorned => CurrentAdornment != null;
 
-    public ModuleSlotInfo(ModuleSlot moduleParent)
+    public ModuleInfo(ModuleParent moduleParent)
     {
-        ModuleSlot = moduleParent;
+        ModuleParent = moduleParent;
         CurrentAdornment = null;
     }
 }
@@ -45,19 +45,21 @@ public class ModuleSlotInfo
 /// </summary>
 public class OutfitController : MonoBehaviour
 {
+    [SerializeField] private List<ModuleParent> moduleParents = new();
     private ModuleManager moduleManager;
+    private List<ModuleInfo> moduleInfos = new(); // Assign the parent objects and base modules in the inspector
+
+
+    private List<ModuleInfo> CurrentOutfit => moduleInfos.Where(info => info.IsAdorned).ToList();
     public bool IsNude => CurrentOutfit.Count == 0;
-    [SerializeField] private List<ModuleSlot> moduleSlots = new(); // Assign the parent objects and base modules in the inspector
-    private List<ModuleSlotInfo> moduleSlotInfos = new();
-    private List<ModuleSlotInfo> CurrentOutfit => moduleSlotInfos.Where(info => info.IsAdorned).ToList();
-    private ModuleSlotInfo GetModuleSlotInfo(ModuleType type) => moduleSlotInfos.First(info => info.ModuleSlot.Type == type);
+    private ModuleInfo GetModuleInfo(ModuleType type) => moduleInfos.First(info => info.ModuleParent.Type == type);
 
     void Start()
     {
         moduleManager = ModuleManager.Instance;
-        foreach (var moduleParent in moduleSlots)
+        foreach (var moduleParent in moduleParents)
         {
-            moduleSlotInfos.Add(new ModuleSlotInfo(moduleParent));
+            moduleInfos.Add(new ModuleInfo(moduleParent));
         }
     }
 
@@ -68,8 +70,8 @@ public class OutfitController : MonoBehaviour
     public void SetModule(ModuleType type)
     {
         // Get the module slot info
-        var moduleInfo = GetModuleSlotInfo(type);
-        var moduleParent = moduleInfo.ModuleSlot;
+        var moduleInfo = GetModuleInfo(type);
+        var moduleParent = moduleInfo.ModuleParent;
 
         // Deactivate the base module
         moduleParent.BaseModule.SetActive(false);
@@ -83,7 +85,7 @@ public class OutfitController : MonoBehaviour
             moduleManager.ReturnModule(moduleInfo.CurrentAdornment);
         }
 
-        // Store a reference to the new module in the slot info
+        // Store a reference to the new module in the module info
         moduleInfo.CurrentAdornment = module;
 
         // Set the module's parent and position
@@ -101,7 +103,7 @@ public class OutfitController : MonoBehaviour
         var moduleInfo = CurrentOutfit[UnityEngine.Random.Range(0, CurrentOutfit.Count)];
         moduleManager.ReturnModule(moduleInfo.CurrentAdornment);
         moduleInfo.CurrentAdornment = null;
-        moduleInfo.ModuleSlot.BaseModule.SetActive(true);
+        moduleInfo.ModuleParent.BaseModule.SetActive(true);
     }
 
     /// <summary>
@@ -109,9 +111,8 @@ public class OutfitController : MonoBehaviour
     /// </summary>
     void OnDestroy()
     {
-        // null check
         if (moduleManager == null) { return; }
-        foreach (var moduleInfo in moduleSlotInfos)
+        foreach (var moduleInfo in moduleInfos)
         {
             if (moduleInfo.IsAdorned)
             {
@@ -123,9 +124,9 @@ public class OutfitController : MonoBehaviour
     [ContextMenu("Log Outfit")]
     private void LogOutfit()
     {
-        foreach (var moduleInfo in moduleSlotInfos)
+        foreach (var moduleInfo in moduleInfos)
         {
-            Debug.Log(moduleInfo.ModuleSlot.Type + " is adorned: " + moduleInfo.IsAdorned);
+            Debug.Log(moduleInfo.ModuleParent.Type + " is adorned: " + moduleInfo.IsAdorned);
         }
     }
 }
