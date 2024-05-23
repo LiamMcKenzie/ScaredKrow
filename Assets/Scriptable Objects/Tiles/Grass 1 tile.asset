@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3cea536271ea4d1a8edc43d8e93d40e, type: 3}
-  m_Name: Water
+  m_Name: Grass 1 tile
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 5936917539223392631, guid: dff3be43b8cdc4dc7aca89848b3e2bca,
+  tilePrefab: {fileID: 844188866782233806, guid: 019d728f41ef9d24ea62619b7f37ecdb,
     type: 3}
-  fencePrefab: {fileID: 8280825420172610302, guid: e01339e6007be49b7a4a84b8b26dfb9f,
-    type: 3}
-  crossingPrefab: {fileID: 919132149155446097, guid: 6466b6443914f594c9e8849076316fde,
-    type: 3}
-  isPassable: 0
+  fencePrefab: {fileID: 0}
+  crossingPrefab: {fileID: 0}
+  isPassable: 1
   isHidingPlace: 0
-  isRotatable: 0
-  hasCrossings: 1
+  isRotatable: 1
+  hasCrossings: 0

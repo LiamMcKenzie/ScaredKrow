@@ -1637,6 +1637,10 @@ MonoBehaviour:
       probability: 5
       onlyOccursInsideBoundary: 0
       onlyOccursOutsideBoundary: 1
+    - tileData: {fileID: 11400000, guid: 8a9aa7a79406b464b8bb1c02e1b8135b, type: 2}
+      probability: 50
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
     rowSettings:
     - rowTileData: {fileID: 11400000, guid: 1b49473dfcf5044c893eb75c98da9cac, type: 2}
       amountOfRows: 2
