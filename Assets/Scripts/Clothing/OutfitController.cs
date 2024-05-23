@@ -40,7 +40,6 @@ public class OutfitController : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("OutfitController started");
         moduleManager = ModuleManager.Instance;
         foreach (var moduleParent in moduleParents)
         {
@@ -50,19 +49,20 @@ public class OutfitController : MonoBehaviour
 
     public void SetModule(ModuleType type)
     {
-        var module = moduleManager.GetModule(type);
         var moduleInfo = GetModuleInfo(type);
         var moduleParent = moduleInfo.ModuleParent;
-        // if (moduleInfo.IsAdorned)
-        // {
-        //     moduleManager.ReturnModule(moduleInfo.CurrentAdornment);
-        // }
         moduleParent.BaseModule.SetActive(false);
+
+        var module = moduleManager.GetModule(type);
+        if (moduleInfo.IsAdorned)
+        {
+            moduleManager.ReturnModule(moduleInfo.CurrentAdornment);
+        }
+
         moduleInfo.CurrentAdornment = module;
-        Debug.Log("Module " + moduleParent.Type + " is adorned: " + moduleInfo.IsAdorned);
+
         module.transform.SetParent(moduleParent.Parent.transform);
         module.transform.localPosition = Vector3.zero;
-        // set y rotation to match the base module
         module.transform.localRotation = moduleParent.BaseModule.transform.localRotation;
     }
 
