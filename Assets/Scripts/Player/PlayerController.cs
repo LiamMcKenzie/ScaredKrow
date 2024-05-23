@@ -47,7 +47,6 @@ public class PlayerController : MonoBehaviour
     /// <returns>WaitForSeconds before hiding gameobject again</returns>
     private IEnumerator AlertOnOff()
     {
-        Debug.Log("Alerting player");
         //Toggle the alert on/off
         playerAlert.SetActive(true);
         yield return new WaitForSeconds(2.5f);
