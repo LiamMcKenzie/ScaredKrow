@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0843b48117e7f41ec81639dbc5437e4a,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 20
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0843b48117e7f41ec81639dbc5437e4a,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 10.450114
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0843b48117e7f41ec81639dbc5437e4a,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 16.140755
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0843b48117e7f41ec81639dbc5437e4a,
         type: 3}
@@ -41,12 +41,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0843b48117e7f41ec81639dbc5437e4a,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071067
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0843b48117e7f41ec81639dbc5437e4a,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071069
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0843b48117e7f41ec81639dbc5437e4a,
         type: 3}
@@ -78,10 +78,16 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: 0843b48117e7f41ec81639dbc5437e4a,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 6010347462592203986, guid: cca1ee6cb8878f845bd4ad7202b6aa46,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: 0843b48117e7f41ec81639dbc5437e4a,
         type: 3}
       propertyPath: m_Name
-      value: SK_Set1_Head 1
+      value: Farmer Head Prefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
