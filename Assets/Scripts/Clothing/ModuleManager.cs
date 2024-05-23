@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ModuleManager : MonoBehaviour
 {
     [SerializeField] private List<ModuleData> ModuleData;
     public List<ModuleController> ModulePool { get; private set; } = new();
     private GameObject ModulePoolParent;
-    
+
     #region Singleton
     public static ModuleManager Instance { get; private set; }
     private void Awake()
@@ -32,28 +33,42 @@ public class ModuleManager : MonoBehaviour
             ModuleController newModule = data.CreateModule();
             ModulePool.Add(newModule);
             newModule.gameObject.SetActive(false);
-            newModule.transform.SetParent(ModulePoolParent.transform);          
+            newModule.transform.SetParent(ModulePoolParent.transform);
         }
     }
 
     public ModuleController GetModule(ModuleType type)
     {
-        foreach (var module in ModulePool)
+        var modules = ModulePool.Where(m => m.type == type).ToList();
+
+        LogModules(modules);
+
+        // choose random module from list
+        if (modules.Count > 0)
         {
-            if (module.type == type)
-            {
-                module.gameObject.SetActive(true);
-                Debug.Log("Module " + module.type + " is active");
-                
-                return module;
-            }
+            var module = modules[Random.Range(0, modules.Count)];
+            module.gameObject.SetActive(true);
+            // remove module from pool
+            ModulePool.Remove(module);
+            return module;
         }
+
         return null;
-    }   
+    }
 
     public void ReturnModule(ModuleController module)
     {
         module.gameObject.SetActive(false);
+        // add module back to pool
+        ModulePool.Add(module);
         module.transform.SetParent(ModulePoolParent.transform);
+    }
+    private void LogModules(List<ModuleController> modules)
+    {
+        string logMessage = "";
+        foreach (var module in modules)
+        {
+            logMessage += $"{module.name} {module.type}, ";
+        }
     }
 }
