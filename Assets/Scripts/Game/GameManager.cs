@@ -239,7 +239,7 @@ public class GameManager : MonoBehaviour
         }
 
         
-        if (playerMovement.isHiding && isCatchingUp == false)
+        if (playerMovement.isHiding )//&& isCatchingUp == false
         {
             HidingSlowdown();
         }
@@ -295,9 +295,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Hiding slowdown");
         // decelerate to hiding speed
+        isHidingSlowdown = true;
+
         Speed = Mathf.SmoothDamp(Speed, hidingSpeed, ref currentVelocity, accelerationCurve);
 
-        isHidingSlowdown = true;
     }
 
     /// <summary>

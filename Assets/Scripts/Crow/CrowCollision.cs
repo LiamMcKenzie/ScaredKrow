@@ -32,6 +32,7 @@ public class CrowCollision : MonoBehaviour
          
             if (!playerMovement.isHiding)
             {
+                AudioManager.PlaySound(5, 10f); //also plays game over sound because hit sound is too quiet
                 AudioManager.PlaySound(6, 10f); //hit sound
                 player.TakeHit();
             }
