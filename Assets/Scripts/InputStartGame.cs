@@ -25,6 +25,8 @@ public class InputStartGame : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             StartGameplay();
+        }else if(Input.GetKeyDown(KeyCode.X)){ //I noticed some playtesters would try to start the game using the first arcade button (which is X key)
+            StartGameplay();
         }
     }
 

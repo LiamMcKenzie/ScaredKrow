@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18178025, g: 0.22745031, b: 0.30742037, a: 1}
+  m_IndirectSpecularColor: {r: 0.18178049, g: 0.22745068, b: 0.3074211, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96701d1631e2644c9890b09518e59fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PickupProbability: 5
+  PickupProbability: 0.5
   score: 0
   gameStarted: 0
   gameOver: 0
@@ -212,7 +212,7 @@ MonoBehaviour:
   gameoverEvent:
     m_PersistentCalls:
       m_Calls: []
-  playerPrefab: {fileID: 6404457502676479793, guid: bc2412041f862244791ad02d37978d69,
+  playerPrefab: {fileID: 2565618440836229010, guid: d8128884893154929b82c382daab555f,
     type: 3}
   playerStartCoords:
     x: 5
@@ -1013,6 +1013,74 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &614053997
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1378895235748882315, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378895235748882315, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378895235748882315, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378895235748882315, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378895235748882315, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378895235748882315, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378895235748882315, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378895235748882315, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378895235748882315, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378895235748882315, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5906403259726956585, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: m_Name
+      value: ModuleManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dc254d4f4cca54306ba8809cc9827b69, type: 3}
 --- !u!1 &628793743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1550,15 +1618,15 @@ MonoBehaviour:
   difficultyProfile:
     tileProbabilities:
     - tileData: {fileID: 11400000, guid: 31d2e1158995e48c6a87694979091d76, type: 2}
-      probability: 6.5
+      probability: 5
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 6c788d589fb9042808d2aae67b3da07b, type: 2}
-      probability: 3
+      probability: 2
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: c64f420ad3297486399a3c2a31b0e64d, type: 2}
-      probability: 8
+      probability: 5
       onlyOccursInsideBoundary: 0
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 1fd4760ec2bb74041bf9129ed8779261, type: 2}
@@ -1569,22 +1637,18 @@ MonoBehaviour:
       probability: 5
       onlyOccursInsideBoundary: 0
       onlyOccursOutsideBoundary: 1
-    - tileData: {fileID: 11400000, guid: 0b019da770e8f4f2080fb7cb076a1572, type: 2}
-      probability: 0.5
-      onlyOccursInsideBoundary: 1
-      onlyOccursOutsideBoundary: 0
     rowSettings:
     - rowTileData: {fileID: 11400000, guid: 1b49473dfcf5044c893eb75c98da9cac, type: 2}
-      amountOfRows: 3
+      amountOfRows: 2
       minimumRowsApart: 4
     - rowTileData: {fileID: 11400000, guid: 298ca93e2e30c40b8ba06e3f037219c0, type: 2}
       amountOfRows: 2
       minimumRowsApart: 1
-    minCrossings: 1
+    minCrossings: 3
     maxCrossings: 4
     boundaryLeft: 4
     boundaryRight: 0
-  pickupPrefab: {fileID: 6199456570658865853, guid: 6d9111aae125bbe4080528e8cc84f3a5,
+  pickupPrefab: {fileID: 6199456570658865853, guid: 92301b163d56e4606963ce6721716fe1,
     type: 3}
   gridChunks:
   - {fileID: 21613309}
@@ -2355,7 +2419,7 @@ GameObject:
   - component: {fileID: 1893370303}
   - component: {fileID: 1893370302}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Controller Input
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3039,3 +3103,4 @@ SceneRoots:
   - {fileID: 1067131674}
   - {fileID: 1893370303}
   - {fileID: 628793744}
+  - {fileID: 614053997}
