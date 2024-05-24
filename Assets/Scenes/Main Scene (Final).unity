@@ -1698,7 +1698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a11ffe5bc8640709150a1894cc6f28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 3809df7d3a0db4381a38b751dd0c773e, type: 2}
+  material: {fileID: 2100000, guid: 20e777ecccba3174a9e7823b28f3ca7f, type: 2}
   speed: 0.5
   amplitude: 0.009
   frequency: 7
