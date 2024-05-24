@@ -6,12 +6,29 @@ using UnityEngine.SceneManagement;
 
 public class RestartScene : MonoBehaviour
 {
+    public static RestartScene instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X) && GameManager.instance.gameOver == true)
+        if(GameManager.instance.gameOver == true)
         {
-            Restart();
+            if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Escape))
+            {
+                Restart();
+            }
         }
+        
     }
 
     public void Restart()

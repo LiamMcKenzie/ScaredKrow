@@ -188,6 +188,7 @@ MonoBehaviour:
   animator: {fileID: 5849940927718526724}
   moveDistance: 1
   moveTime: 0.2
+  isHiding: 0
   gridPosition:
     x: 0
     z: 0
@@ -203,6 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d705e2bdfed48c3824cc0adc18f806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 0}
   playerAlert: {fileID: 5775353642085798587}
   outfitController: {fileID: 3373695649182912505}
 --- !u!114 &3373695649182912505
@@ -413,7 +415,7 @@ Transform:
   m_GameObject: {fileID: 6749042361325017495}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0.1}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 1
   m_Children:

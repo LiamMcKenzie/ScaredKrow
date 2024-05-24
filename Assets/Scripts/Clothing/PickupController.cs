@@ -41,6 +41,7 @@ public class PickupController : MonoBehaviour
             PlayerController player = other.transform.parent.GetComponent<PlayerController>();
             player.PickupModule(type);   
             
+            AudioManager.PlaySound(7, 2f); //pickup sound
             Destroy(gameObject);
         }
     }

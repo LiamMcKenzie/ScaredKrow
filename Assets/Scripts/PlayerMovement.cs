@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         //This could be changed with the new input system but I just wanted to quickly test this.
 
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) )
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.X))
         {
             BufferDirection(Vector3.right * moveDistance);
         }
@@ -76,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
         TileGridCoords desiredGridPosition = new(gridPosition.x + Mathf.FloorToInt(movement.x), gridPosition.z + Mathf.FloorToInt(movement.z));
 
         animator.Play("player_jump", 0, 0); //plays the jump animation
+
+        AudioManager.PlaySound(0, 2f); //plays the jump sound
         
         /*
         if(TileManager.instance.masterTileControllerList[desiredGridPosition.x][desiredGridPosition.z].isPassable == false) //checks if the desired tile is not passable.  
