@@ -10,6 +10,7 @@ Hop through a field, avoid obstacles and hide from swooping crows, whilst collec
 - Liam McKenzie
 - Johnathan Glasgow
 - Devon Henderson
+- Carlson Lee
 
 ### Design Team
 - Jade Meikle
