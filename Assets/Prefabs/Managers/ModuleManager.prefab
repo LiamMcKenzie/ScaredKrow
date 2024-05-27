@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5906403259726956585
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1378895235748882315}
+  - component: {fileID: 3080894633010049385}
+  m_Layer: 0
+  m_Name: ModuleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1378895235748882315
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5906403259726956585}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3080894633010049385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5906403259726956585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc8d7a3982b748afbc59b71472fe120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ModuleData:
+  - {fileID: 11400000, guid: 83764e8fcbea349f38d0fd42e7a4d8f1, type: 2}
+  - {fileID: 11400000, guid: 00b6c09851a0145f7a3c63ea40da6694, type: 2}
+  - {fileID: 11400000, guid: 5cf5ce2ccc0ef4c8581754ee83acd98e, type: 2}
+  - {fileID: 11400000, guid: 77cb171c7ff104bdea1e52c313a08ded, type: 2}
+  - {fileID: 11400000, guid: d32f7a478ecaf423f82cea82ebb02396, type: 2}
+  - {fileID: 11400000, guid: cac43f50305e34d0ea3b749e47377986, type: 2}
+  - {fileID: 11400000, guid: 900d0ba938067453f845072240621075, type: 2}
+  - {fileID: 11400000, guid: 5d785f47ab3504f0394460e0dfd29578, type: 2}
+  - {fileID: 11400000, guid: c138a1b4d285546a9812855b4789496d, type: 2}
