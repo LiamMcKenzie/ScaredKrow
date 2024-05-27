@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e23a87741fb344b988fbb85a848698e3, type: 3}
   m_Name: Farmer Head
   m_EditorClassIdentifier: 
-  type: 0
-  style: Farmer
-  prefab: {fileID: 4222972175575967786, guid: 0afd590546e054516a18e59fa03c33ce, type: 3}
+  <Type>k__BackingField: 0
+  <Style>k__BackingField: Farmer
+  <Prefab>k__BackingField: {fileID: 919132149155446097, guid: cca1ee6cb8878f845bd4ad7202b6aa46,
+    type: 3}

@@ -39,10 +39,9 @@ public class PickupController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerController player = other.transform.parent.GetComponent<PlayerController>();
-            Debug.Log(player);
             player.PickupModule(type);   
-            Debug.Log(type + " box collided with the player!");
             
+            AudioManager.PlaySound(7, 2f); //pickup sound
             Destroy(gameObject);
         }
     }

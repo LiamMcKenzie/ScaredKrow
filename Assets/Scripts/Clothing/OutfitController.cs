@@ -1,3 +1,10 @@
+/*
+ * File: OutfitController.cs
+ * Purpose: Swaps in and out clothing modules
+ * Author: Johnathan
+ * Contributions: Assisted by GitHub Copilot
+ */
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +12,9 @@ using System.Linq;
 
 public enum ModuleType { Head, Torso, Legs }
 
+/// <summary>
+/// This struct is used to hold the parent object for a module and a reference to the base module
+/// </summary>
 [Serializable]
 public struct ModuleParent
 {
@@ -13,6 +23,9 @@ public struct ModuleParent
     [field: SerializeField] public GameObject BaseModule { get; private set; }
 }
 
+/// <summary>
+/// This class maintains a reference to the module controller currently in the parent object
+/// </summary>
 public class ModuleInfo
 {
     public ModuleParent ModuleParent { get; private set; }
@@ -26,21 +39,23 @@ public class ModuleInfo
     }
 }
 
-
+/// <summary>
+/// This class is used to control the player's outfit
+/// It works in tandem with the ModuleManager to swap in and out clothing modules
+/// </summary>
 public class OutfitController : MonoBehaviour
 {
     [SerializeField] private List<ModuleParent> moduleParents = new();
-    private List<ModuleInfo> moduleInfos = new();
     private ModuleManager moduleManager;
+    private List<ModuleInfo> moduleInfos = new(); // Assign the parent objects and base modules in the inspector
+
 
     private List<ModuleInfo> CurrentOutfit => moduleInfos.Where(info => info.IsAdorned).ToList();
     public bool IsNude => CurrentOutfit.Count == 0;
-
     private ModuleInfo GetModuleInfo(ModuleType type) => moduleInfos.First(info => info.ModuleParent.Type == type);
 
     void Start()
     {
-        Debug.Log("OutfitController started");
         moduleManager = ModuleManager.Instance;
         foreach (var moduleParent in moduleParents)
         {
@@ -48,24 +63,40 @@ public class OutfitController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set the module of the specified type
+    /// </summary>
+    /// <param name="type">The type of module to set</param>
     public void SetModule(ModuleType type)
     {
-        var module = moduleManager.GetModule(type);
+        // Get the module slot info
         var moduleInfo = GetModuleInfo(type);
         var moduleParent = moduleInfo.ModuleParent;
-        // if (moduleInfo.IsAdorned)
-        // {
-        //     moduleManager.ReturnModule(moduleInfo.CurrentAdornment);
-        // }
+
+        // Deactivate the base module
         moduleParent.BaseModule.SetActive(false);
+
+        // Get the module from ModuleManager
+        var module = moduleManager.GetModule(type);
+
+        // Return the currently adorned module to ModuleManager if there is one
+        if (moduleInfo.IsAdorned)
+        {
+            moduleManager.ReturnModule(moduleInfo.CurrentAdornment);
+        }
+
+        // Store a reference to the new module in the module info
         moduleInfo.CurrentAdornment = module;
-        Debug.Log("Module " + moduleParent.Type + " is adorned: " + moduleInfo.IsAdorned);
+
+        // Set the module's parent and position
         module.transform.SetParent(moduleParent.Parent.transform);
         module.transform.localPosition = Vector3.zero;
-        // set y rotation to match the base module
         module.transform.localRotation = moduleParent.BaseModule.transform.localRotation;
     }
 
+    /// <summary>
+    /// Remove a random module from the outfit
+    /// </summary>
     public void RemoveModule()
     {
         if (IsNude) { return; }
@@ -75,9 +106,12 @@ public class OutfitController : MonoBehaviour
         moduleInfo.ModuleParent.BaseModule.SetActive(true);
     }
 
+    /// <summary>
+    /// Return all adorned modules to the ModuleManager when OutfitController is destroyed; ie when the player dies
+    /// </summary>
     void OnDestroy()
     {
-        Debug.Log("Destroying OutfitController");
+        if (moduleManager == null) { return; }
         foreach (var moduleInfo in moduleInfos)
         {
             if (moduleInfo.IsAdorned)
@@ -93,6 +127,8 @@ public class OutfitController : MonoBehaviour
         foreach (var moduleInfo in moduleInfos)
         {
             Debug.Log(moduleInfo.ModuleParent.Type + " is adorned: " + moduleInfo.IsAdorned);
+            Debug.Log("Current Outfit Count: " + CurrentOutfit.Count);
+            Debug.Log("Is Nude: " + IsNude);
         }
     }
 }

@@ -28,6 +28,10 @@ public class CrowManager : MonoBehaviour
     [SerializeField] private float travelTime = 5f; //How fast the crow moves from inital X pos to end X pos (in seconds)
     [SerializeField] private float minSpawnDelay = 2f; //Minimum time (in seconds) before 'respawning' crow in player path
     [SerializeField] private float maxSpawnDelay = 5f; //Maximum time (in seconds) before 'respawning' crow in player path
+
+    [Tooltip("How long between alert displaying and crow spawning (in seconds)")]
+    public float alertDelay = 1f;
+
     private Vector3 crowPosition; //Spawn position for crow
     private GameObject spawnedCrow; //Stores Crow gameobject instantiated in SpawnCrow() for movement
 
@@ -72,14 +76,24 @@ public class CrowManager : MonoBehaviour
         //Show an alert when the crow spawns
         yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay)); //Wait a random amount before 'respawning'
         gameManager.playerController?.ShowAlert(); //Show alert above player
+        AudioManager.PlaySound(2, 1f); //Alert Sound
 
+        yield return new WaitForSeconds(1f); //add delay between alert and crow spawning
+
+        AudioManager.PlaySound(4, 0.5f); //crow flyover
+        
         //Set values for time and start/end positions
         Vector3 startPos = crow.transform.position;
         Vector3 endPos = new Vector3(endXPos, startPos.y, startPos.z);
 
+
+        
+
         //Move the crow over time from a start to end point
         while (crow.transform.position.x > endPos.x)
         {
+            
+
             Vector3 position = crow.transform.position;
             position.x -= Time.deltaTime * (crowSpeed + GameManager.instance.Speed); //Move crow towards end point
             crow.transform.position = position;

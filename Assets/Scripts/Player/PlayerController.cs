@@ -15,7 +15,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     private GameManager gameManager;
-    private PlayerMovement playerMovement;
+    public PlayerMovement playerMovement;
     [SerializeField] private GameObject playerAlert;
     [SerializeField] private OutfitController outfitController;
 
@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour
 
     public void PickupModule(ModuleType type) => outfitController.SetModule(type);
 
+    /// <summary>
+    /// Take a hit and remove a module if the player is not nude
+    /// If the player is nude, game over
+    /// </summary>
     public void TakeHit()
     {
         if (outfitController.IsNude)
@@ -47,7 +51,6 @@ public class PlayerController : MonoBehaviour
     /// <returns>WaitForSeconds before hiding gameobject again</returns>
     private IEnumerator AlertOnOff()
     {
-        Debug.Log("Alerting player");
         //Toggle the alert on/off
         playerAlert.SetActive(true);
         yield return new WaitForSeconds(2.5f);
