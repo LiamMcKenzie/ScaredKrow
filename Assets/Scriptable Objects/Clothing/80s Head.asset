@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 0
   <Style>k__BackingField: 80s
-  <Prefab>k__BackingField: {fileID: 919132149155446097, guid: f333e3e0bccf3f54e822dd99a065f9ae,
+  <Prefab>k__BackingField: {fileID: 919132149155446097, guid: 37c39a8ce36eb1d49a60edadc90e63a1,
     type: 3}
