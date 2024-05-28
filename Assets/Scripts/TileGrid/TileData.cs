@@ -21,7 +21,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class TileData : ScriptableObject
 {
-    public GameObject sunflowerTilePrefab; //
     public GameObject tilePrefab;   // The prefab of the tile
     public GameObject fencePrefab;    // The fence mesh for this tile
     public GameObject crossingPrefab; // The crossing mesh for this tile
