@@ -25,6 +25,7 @@ public class TileController : MonoBehaviour
     private GameObject tilePrefab;  // The prefab of the tile
     private GameObject fencePrefab; // The fence mesh for this tile
     private GameObject crossingPrefab;  // The crossing mesh for this tile
+    private GameObject sunflowerTilePrefab; // The tile prefab with passable sunflowers
     public bool isPassable;    // Can the player walk on this tile //NOTE: changed from private to public. For use in PlayerMovement check -Liam
     public bool isHidingPlace; // Can the player hide in this tile
     private bool isRotatable;   // Does the tile contain a rotatable mesh (this should be the first child of the tile prefab if so) 
@@ -189,15 +190,29 @@ public class TileController : MonoBehaviour
     /// </summary>
     public void AddCrossing()
     {
-        if (crossingPrefab == null) { return; }
+        if (crossingPrefab == null || tilePrefab == null || sunflowerTilePrefab == null) { return; }
+
         isACrossing = true;
         isPassable = true;
-        GameObject crossing = InstantiateOnThisTile(crossingPrefab);
+
+        // Instantiate the crossing on this tile
+        GameObject crossing = Instantiate(crossingPrefab, transform.position, Quaternion.identity, transform);
+
         // crossing rotation y random
         crossing.transform.Rotate(new Vector3(0, Random.Range(-CROSSING_ROTATION, CROSSING_ROTATION), 0));
-
         crossing.transform.localPosition = new Vector3(0, CROSSING_Y_OFFSET, 0);
+
+        // Destroy the tile and replace it with sunflowerTilePrefab
+        Destroy(gameObject); // Destroy the current tile
+
+        // Instantiate sunflowerTilePrefab in place of the destroyed tile
+        GameObject sunflowerTile = Instantiate(sunflowerTilePrefab, transform.position, transform.rotation);
+
+        // Assuming sunflowerTilePrefab needs the same components or setup as the original tilePrefab,
+        // you might need to copy components or setup data from tilePrefab to sunflowerTilePrefab here.
     }
+
+
 
     /// <summary>
     /// Change this to a passable tile (used on tiles adjacent a crossing)
