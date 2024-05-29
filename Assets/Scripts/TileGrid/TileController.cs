@@ -195,7 +195,8 @@ public class TileController : MonoBehaviour
         GameObject crossing = InstantiateOnThisTile(crossingPrefab);
         // crossing rotation y random
         crossing.transform.Rotate(new Vector3(0, Random.Range(-CROSSING_ROTATION, CROSSING_ROTATION), 0));
-
+        
+        // hide clipping sunflower on road tile
         crossing.transform.parent.gameObject.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
 
         crossing.transform.localPosition = new Vector3(0, CROSSING_Y_OFFSET, 0);
@@ -211,6 +212,7 @@ public class TileController : MonoBehaviour
         isPassable = true;
         // destroy first child of first child (this is the mesh for an obstacle tile)
         Destroy(transform.GetChild(0)?.GetChild(0)?.gameObject);
+     
         // append MadePassable to the name
         gameObject.name += "-MadePassable";
     }

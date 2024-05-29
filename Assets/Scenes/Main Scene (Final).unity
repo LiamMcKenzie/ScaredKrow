@@ -1661,31 +1661,23 @@ MonoBehaviour:
   outOfBoundsDarkAmt: 0.75
   difficultyProfile:
     tileProbabilities:
-    - tileData: {fileID: 11400000, guid: 31d2e1158995e48c6a87694979091d76, type: 2}
-      probability: 5
-      onlyOccursInsideBoundary: 1
-      onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 6c788d589fb9042808d2aae67b3da07b, type: 2}
-      probability: 1
+      probability: 0.5
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: c64f420ad3297486399a3c2a31b0e64d, type: 2}
-      probability: 5
+      probability: 3
       onlyOccursInsideBoundary: 0
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 1fd4760ec2bb74041bf9129ed8779261, type: 2}
       probability: 50
       onlyOccursInsideBoundary: 0
       onlyOccursOutsideBoundary: 1
-    - tileData: {fileID: 11400000, guid: 1e299e49ab3c8e244816a2afedf246c1, type: 2}
-      probability: 3
-      onlyOccursInsideBoundary: 0
-      onlyOccursOutsideBoundary: 1
-    - tileData: {fileID: 11400000, guid: 8a9aa7a79406b464b8bb1c02e1b8135b, type: 2}
-      probability: 50
+    - tileData: {fileID: 11400000, guid: 0b019da770e8f4f2080fb7cb076a1572, type: 2}
+      probability: 2
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
-    - tileData: {fileID: 11400000, guid: 0897cc43ae0afed4586804dd4b87ea61, type: 2}
+    - tileData: {fileID: 11400000, guid: 31d2e1158995e48c6a87694979091d76, type: 2}
       probability: 1
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
@@ -1697,29 +1689,33 @@ MonoBehaviour:
       probability: 3
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
-    - tileData: {fileID: 11400000, guid: 0b019da770e8f4f2080fb7cb076a1572, type: 2}
-      probability: 2
+    - tileData: {fileID: 11400000, guid: a2f0e8ffc97daa845bd9f3e553811398, type: 2}
+      probability: 3
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
+    - tileData: {fileID: 11400000, guid: 8a9aa7a79406b464b8bb1c02e1b8135b, type: 2}
+      probability: 40
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
+    - tileData: {fileID: 11400000, guid: 0897cc43ae0afed4586804dd4b87ea61, type: 2}
+      probability: 0.8
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: e168b0f7e95699a45a8b52eb7919a572, type: 2}
-      probability: 1
+      probability: 0.8
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: b3fdcbb1efd72fd408b378e0cce00e0b, type: 2}
-      probability: 1
-      onlyOccursInsideBoundary: 1
-      onlyOccursOutsideBoundary: 0
-    - tileData: {fileID: 11400000, guid: b3fdcbb1efd72fd408b378e0cce00e0b, type: 2}
-      probability: 1
+      probability: 0.8
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     rowSettings:
     - rowTileData: {fileID: 11400000, guid: 1b49473dfcf5044c893eb75c98da9cac, type: 2}
       amountOfRows: 2
-      minimumRowsApart: 4
+      minimumRowsApart: 5
     - rowTileData: {fileID: 11400000, guid: 298ca93e2e30c40b8ba06e3f037219c0, type: 2}
       amountOfRows: 2
-      minimumRowsApart: 1
+      minimumRowsApart: 7
     minCrossings: 3
     maxCrossings: 4
     boundaryLeft: 4

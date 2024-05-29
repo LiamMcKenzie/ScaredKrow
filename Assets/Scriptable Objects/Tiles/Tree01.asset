@@ -18,5 +18,5 @@ MonoBehaviour:
   crossingPrefab: {fileID: 0}
   isPassable: 0
   isHidingPlace: 0
-  isRotatable: 1
+  isRotatable: 0
   hasCrossings: 0
