@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManager;
     public PlayerMovement playerMovement;
     [SerializeField] private GameObject playerAlert;
-    [SerializeField] private OutfitController outfitController;
-
+    [SerializeField] private OutfitController outfitController; 
+    [SerializeField] private ParticleSystem hayParticles;
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
@@ -35,6 +35,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void TakeHit()
     {
+        // Play the hay particles
+        //instantiated so that the particle effect can be played after the player dies
+        ParticleSystem instantiatedParticles = Instantiate(hayParticles, transform.position, Quaternion.Euler(90, 0, 0)); 
+
+        instantiatedParticles.Play();
+
         if (outfitController.IsNude)
         {
             gameManager.GameOver();

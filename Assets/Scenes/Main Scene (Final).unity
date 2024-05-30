@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18178049, g: 0.22745068, b: 0.3074211, a: 1}
+  m_IndirectSpecularColor: {r: 0.18178011, g: 0.22745012, b: 0.3074199, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -212,7 +212,7 @@ MonoBehaviour:
   gameoverEvent:
     m_PersistentCalls:
       m_Calls: []
-  playerPrefab: {fileID: 2565618440836229010, guid: d8128884893154929b82c382daab555f,
+  playerPrefab: {fileID: 2565618440836229010, guid: 83b417dee9cad413b81885f2c74973e4,
     type: 3}
   playerStartCoords:
     x: 5
@@ -478,7 +478,7 @@ RectTransform:
   m_GameObject: {fileID: 335050409}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 951848771}
@@ -487,7 +487,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: -300}
+  m_AnchoredPosition: {x: -220, y: -300}
   m_SizeDelta: {x: 238, y: 172}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &335050412
@@ -1074,6 +1074,47 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3080894633010049385, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: ModuleData.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080894633010049385, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: ModuleData.Array.data[9]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3aeb5ca112c70f8459bd1f0a6235ba1f,
+        type: 2}
+    - target: {fileID: 3080894633010049385, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: ModuleData.Array.data[10]
+      value: 
+      objectReference: {fileID: 11400000, guid: 96183edd2fa6a1e41850ec689df5b1ca,
+        type: 2}
+    - target: {fileID: 3080894633010049385, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: ModuleData.Array.data[11]
+      value: 
+      objectReference: {fileID: 11400000, guid: c19a841a13db3684aa96bbc39daaea31,
+        type: 2}
+    - target: {fileID: 3080894633010049385, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: ModuleData.Array.data[12]
+      value: 
+      objectReference: {fileID: 11400000, guid: eedd09064a6e09c40a70f7c600048972,
+        type: 2}
+    - target: {fileID: 3080894633010049385, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: ModuleData.Array.data[13]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4cf03e50ca22f5940866e92943fd0962,
+        type: 2}
+    - target: {fileID: 3080894633010049385, guid: dc254d4f4cca54306ba8809cc9827b69,
+        type: 3}
+      propertyPath: ModuleData.Array.data[14]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2e5a446f7536b28498bb92de9c659173,
+        type: 2}
     - target: {fileID: 5906403259726956585, guid: dc254d4f4cca54306ba8809cc9827b69,
         type: 3}
       propertyPath: m_Name
@@ -1620,37 +1661,61 @@ MonoBehaviour:
   outOfBoundsDarkAmt: 0.75
   difficultyProfile:
     tileProbabilities:
-    - tileData: {fileID: 11400000, guid: 31d2e1158995e48c6a87694979091d76, type: 2}
-      probability: 5
-      onlyOccursInsideBoundary: 1
-      onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 6c788d589fb9042808d2aae67b3da07b, type: 2}
-      probability: 1
+      probability: 0.75
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: c64f420ad3297486399a3c2a31b0e64d, type: 2}
-      probability: 5
+      probability: 2.5
       onlyOccursInsideBoundary: 0
       onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 1fd4760ec2bb74041bf9129ed8779261, type: 2}
       probability: 50
       onlyOccursInsideBoundary: 0
       onlyOccursOutsideBoundary: 1
-    - tileData: {fileID: 11400000, guid: c9d6eeee477d547a192c06fcab09335b, type: 2}
-      probability: 5
-      onlyOccursInsideBoundary: 0
-      onlyOccursOutsideBoundary: 1
+    - tileData: {fileID: 11400000, guid: 0b019da770e8f4f2080fb7cb076a1572, type: 2}
+      probability: 1.75
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
+    - tileData: {fileID: 11400000, guid: 31d2e1158995e48c6a87694979091d76, type: 2}
+      probability: 1
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
+    - tileData: {fileID: 11400000, guid: 1e299e49ab3c8e244816a2afedf246c1, type: 2}
+      probability: 2.5
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
+    - tileData: {fileID: 11400000, guid: 97d916504b1d28341ba4183500f54693, type: 2}
+      probability: 2.5
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
+    - tileData: {fileID: 11400000, guid: a2f0e8ffc97daa845bd9f3e553811398, type: 2}
+      probability: 2.5
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
     - tileData: {fileID: 11400000, guid: 8a9aa7a79406b464b8bb1c02e1b8135b, type: 2}
-      probability: 50
+      probability: 40
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
+    - tileData: {fileID: 11400000, guid: 0897cc43ae0afed4586804dd4b87ea61, type: 2}
+      probability: 0.8
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
+    - tileData: {fileID: 11400000, guid: e168b0f7e95699a45a8b52eb7919a572, type: 2}
+      probability: 0.8
+      onlyOccursInsideBoundary: 1
+      onlyOccursOutsideBoundary: 0
+    - tileData: {fileID: 11400000, guid: b3fdcbb1efd72fd408b378e0cce00e0b, type: 2}
+      probability: 0.8
       onlyOccursInsideBoundary: 1
       onlyOccursOutsideBoundary: 0
     rowSettings:
     - rowTileData: {fileID: 11400000, guid: 1b49473dfcf5044c893eb75c98da9cac, type: 2}
       amountOfRows: 2
-      minimumRowsApart: 4
+      minimumRowsApart: 5
     - rowTileData: {fileID: 11400000, guid: 298ca93e2e30c40b8ba06e3f037219c0, type: 2}
       amountOfRows: 2
-      minimumRowsApart: 1
+      minimumRowsApart: 7
     minCrossings: 3
     maxCrossings: 4
     boundaryLeft: 4
@@ -1963,7 +2028,7 @@ RectTransform:
   m_GameObject: {fileID: 1557354302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 359503397}
@@ -1972,7 +2037,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: -300}
+  m_AnchoredPosition: {x: 220, y: -300}
   m_SizeDelta: {x: 238, y: 172}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1557354304
@@ -2862,7 +2927,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 0, y: -236}
   m_SizeDelta: {x: 983.7, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1919290494
@@ -2997,7 +3062,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 200}
+  m_AnchoredPosition: {x: 0, y: 156}
   m_SizeDelta: {x: 1920, y: 523}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1961185056
@@ -3082,14 +3147,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 2003893859}
   audioClips:
-  - {fileID: 8300000, guid: 176e9a63befd3a445a6ee7231587d948, type: 3}
+  - {fileID: 8300000, guid: c897daf491afaad44beb49cc723d7685, type: 3}
   - {fileID: 8300000, guid: 62d1c0e089399824ca646393a94e75c2, type: 3}
   - {fileID: 8300000, guid: 7388fdef735284e4b9b6c3cda61fd7f7, type: 3}
   - {fileID: 8300000, guid: 7fdbce30fad62a3408d1b46855251f11, type: 3}
-  - {fileID: 8300000, guid: 3e582f42ef9dfaf4783ce05d15d3f5fa, type: 3}
-  - {fileID: 8300000, guid: eca868cb81e530f4f896c27dcb03e83e, type: 3}
+  - {fileID: 8300000, guid: 7424001a3c9ac0c4e8ba419dc4294221, type: 3}
+  - {fileID: 8300000, guid: a9559615e745ad24f9bed478c831bff8, type: 3}
   - {fileID: 8300000, guid: dfeaae9b440d02542a6a36f8c2460a17, type: 3}
-  - {fileID: 8300000, guid: b0962a6b33567734e9d25704892d383d, type: 3}
+  - {fileID: 8300000, guid: 01155c60c815c2941970a82982582f15, type: 3}
 --- !u!82 &2003893859
 AudioSource:
   m_ObjectHideFlags: 0
