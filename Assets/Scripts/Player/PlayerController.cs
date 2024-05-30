@@ -36,7 +36,11 @@ public class PlayerController : MonoBehaviour
     public void TakeHit()
     {
         // Play the hay particles
-        hayParticles.Play();
+        //instantiated so that the particle effect can be played after the player dies
+        ParticleSystem instantiatedParticles = Instantiate(hayParticles, transform.position, Quaternion.Euler(90, 0, 0)); 
+
+        instantiatedParticles.Play();
+
         if (outfitController.IsNude)
         {
             gameManager.GameOver();
