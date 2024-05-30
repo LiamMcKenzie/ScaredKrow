@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManager;
     public PlayerMovement playerMovement;
     [SerializeField] private GameObject playerAlert;
-    [SerializeField] private OutfitController outfitController;
-
+    [SerializeField] private OutfitController outfitController; 
+    [SerializeField] private ParticleSystem hayParticles;
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void TakeHit()
     {
+        // Play the hay particles
+        hayParticles.Play();
         if (outfitController.IsNude)
         {
             gameManager.GameOver();
